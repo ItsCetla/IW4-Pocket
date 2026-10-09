@@ -233,6 +233,8 @@ pub fn valid_file_setting(name: &str, value: &str) -> bool {
         "IW4L_HEAP_RELIEF" => matches!(value, "0" | "1"),
         // Startup commands for iOS (no console there), e.g. `map mp_rust; bot add 5`.
         "IW4L_CMDS" => valid_startup_cmds(value),
+        // Bots added to every hosted match; the console's `bot add` needs a keyboard.
+        "IW4L_BOTS" => value.parse::<u32>().is_ok_and(|n| n <= 20),
         _ => false,
     }
 }
@@ -381,6 +383,10 @@ mod tests {
         assert!(valid_file_setting(IOS_BC_ENV, "0"));
         assert!(!valid_file_setting(IOS_BC_ENV, "yes"));
         assert!(!valid_file_setting(SHADER_WORKERS_ENV, "0"));
+        assert!(valid_file_setting("IW4L_BOTS", "0"));
+        assert!(valid_file_setting("IW4L_BOTS", "20"));
+        assert!(!valid_file_setting("IW4L_BOTS", "21"));
+        assert!(!valid_file_setting("IW4L_BOTS", "-1"));
         assert!(!valid_file_setting("IW4L_GAMES", "/tmp"));
         assert!(!valid_file_setting("IW4L_UNKNOWN", "1"));
         assert!(!valid_file_setting(FPV_CACHE_ENV, "1\0"));

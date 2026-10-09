@@ -11,7 +11,7 @@ use crate::nav::{self, NAV_HULL, NAV_SCHEMA, NavGraph, RouteStats};
 use crate::query::{Budgeted, QueryCounters, QuerySubsystem, TraceBudget};
 use crate::roster::{
     BotAddQueue, BotFireQueue, BotHold, BotRoster, BotTpQueue, BotTpTarget, BotTpWhere,
-    default_class_index,
+    MAX_HOST_BOTS, default_class_index,
 };
 use crate::sensor;
 use frame::{AuthoritySet, BotNavigationReady, ClientSet, HasWorld, MatchTornDown, RuntimeRole};
@@ -107,9 +107,11 @@ impl Plugin for BotsPlugin {
             .init_resource::<BotNav>()
             .init_resource::<BotNavigationReady>()
             .init_resource::<BotMeter>()
+            .init_resource::<BotAutoFill>()
             .add_systems(
                 Update,
                 (
+                    auto_fill_bots,
                     drain_bot_add_queue,
                     evict_bots_claiming_local_client,
                     boot_bots,
@@ -139,6 +141,7 @@ fn reset_roster_on_match_torn_down(
     mut roster: ResMut<BotRoster>,
     mut nav: ResMut<BotNav>,
     mut ready: ResMut<BotNavigationReady>,
+    mut fill: ResMut<BotAutoFill>,
 ) {
     if torn.read().len() == 0 {
         return;
@@ -146,6 +149,47 @@ fn reset_roster_on_match_torn_down(
     *roster = BotRoster::default();
     *nav = BotNav::default();
     *ready = BotNavigationReady::default();
+    *fill = BotAutoFill::default();
+}
+
+const AUTO_FILL_ENV: &str = "IW4L_BOTS";
+
+/// Whether this match already got its `IW4L_BOTS` fill. Reset with the roster.
+#[derive(Resource, Default)]
+struct BotAutoFill {
+    done: bool,
+}
+
+/// `IW4L_BOTS=N` (iw4l-env.txt on iOS) adds N bots to every match this process
+/// hosts, once the world is installed — the same queue `bot add N` feeds, for
+/// devices with no keyboard to open the console.
+fn auto_fill_bots(
+    mut fill: ResMut<BotAutoFill>,
+    mut queue: ResMut<BotAddQueue>,
+    roster: Res<BotRoster>,
+    role: Res<RuntimeRole>,
+    installed: Option<Res<HasWorld>>,
+) {
+    if fill.done || !installed.is_some_and(|installed| installed.0) {
+        return;
+    }
+    fill.done = true;
+    if !matches!(*role, RuntimeRole::Listen | RuntimeRole::Dedicated) {
+        return;
+    }
+    let Some(wanted) = std::env::var(AUTO_FILL_ENV)
+        .ok()
+        .and_then(|value| value.trim().parse::<u32>().ok())
+        .map(|n| n.min(MAX_HOST_BOTS))
+    else {
+        return;
+    };
+    let missing = wanted.saturating_sub(roster.bots.len() as u32);
+    if missing == 0 {
+        return;
+    }
+    queue.push(missing);
+    diag::info!(Sim, "bots: {AUTO_FILL_ENV}={wanted} → queued {missing}");
 }
 
 fn drain_bot_add_queue(
