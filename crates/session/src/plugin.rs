@@ -4,6 +4,7 @@ pub struct SessionPlugin;
 
 impl Plugin for SessionPlugin {
     fn build(&self, app: &mut App) {
+        app.init_resource::<crate::startup::PendingBotAdd>();
         crate::lifecycle::register_lifecycle(app);
         crate::match_apply::register_match_apply_systems(app);
         crate::admission::register_admission(app);

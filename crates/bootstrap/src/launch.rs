@@ -399,7 +399,10 @@ fn run_menu(
         .insert_resource(AppScreen::MainMenu)
         .insert_resource(UiAssetRoot(Some(ui_games.0)))
         .insert_resource(StartupCommands {
-            lines: console::startup_commands(),
+            lines: console::startup_commands()
+                .into_iter()
+                .filter(|line| !line.trim_start().starts_with("map"))
+                .collect(),
         })
         .insert_resource(WorldScene::default())
         .insert_resource(ClearColor(Color::srgb(0.04, 0.045, 0.06)))
@@ -591,7 +594,7 @@ fn run_map(
         ))
         .insert_resource(UiAssetRoot(ui_games_root))
         .insert_resource(StartupCommands {
-            lines: console::startup_commands(),
+            lines: vec![],
         })
         .insert_resource(WorldScene::default())
         .insert_resource(ClearColor(Color::BLACK))

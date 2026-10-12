@@ -21,7 +21,7 @@ use render_fx::{PreparedFxCatalog, PreparedFxModels, PreparedImpactFx, PreparedT
 use std::sync::Arc;
 
 use crate::loadout::{AuthoritativeClassProjection, ClassRow, project_class};
-use crate::startup::{PendingConsoleLines, StartupCommands};
+use crate::startup::{PendingBotAdd, PendingConsoleLines, StartupCommands};
 
 fn log_world_report(report: &[String]) {
     if report.is_empty() {
@@ -56,7 +56,12 @@ pub struct MatchInstallConsole<'w> {
 }
 
 impl MatchInstallConsole<'_> {
-    fn release_startup(&mut self) {
+    fn release_startup(&mut self, bot_add: Option<&PendingBotAdd>) {
+        if let Some(bot_add) = bot_add {
+            if bot_add.count > 0 {
+                self.pending.0.push(format!("bot add {}", bot_add.count));
+            }
+        }
         self.pending.0.append(&mut self.startup.lines);
     }
 }
@@ -88,6 +93,7 @@ pub fn apply_prepared_match(
     mut commands: Commands,
     source: PreparedMatchSource,
     mut console: MatchInstallConsole,
+    bot_add: Option<Res<PendingBotAdd>>,
     authority: MatchInstallAuthority,
     presentation: MatchInstallPresentation,
     occupancy: MatchInstallOccupancy,
@@ -228,7 +234,7 @@ pub fn apply_prepared_match(
                 zone,
                 error: refusal.error,
             });
-            console.release_startup();
+            console.release_startup(bot_add.as_deref());
             return;
         }
     };
@@ -734,7 +740,7 @@ pub fn apply_prepared_match(
             });
         }
     }
-    console.release_startup();
+    console.release_startup(bot_add.as_deref());
 }
 
 /// Everything the install publishes, assembled while a refusal is still free.

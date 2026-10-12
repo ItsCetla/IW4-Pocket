@@ -26,6 +26,7 @@ pub(crate) struct FrontendState {
     lobby_password: String,
     rules_seeded: bool,
     reopen_lobby: Option<u16>,
+    bot_count: usize,
 }
 
 /// MW2 sends the host of a private match back to its lobby, setup kept, when the
@@ -97,6 +98,7 @@ pub(crate) fn register(registry: &mut ConsoleRegistry) {
         "ui_start_match",
         "ui_lobby_privacy",
         "ui_lobby_cheats",
+        "ui_lobby_bot_count",
         "ui_vote_skip",
         "ui_maps",
         "ui_map_pack",
@@ -240,6 +242,9 @@ pub(crate) fn route(
         seed_rules(&mut dvars, config);
         state.rules_seeded = true;
     }
+    if dvars.get("ui_lobby_bot_count").is_none() {
+        dvars.set("ui_lobby_bot_count", "BOTS: OFF");
+    }
     let mut browser_page_changed = false;
     for command in events.read() {
         if command.name.starts_with("ui_browser") || command.name.starts_with("ui_join_lobby") {
@@ -305,6 +310,25 @@ pub(crate) fn route(
                     let cheats = cheats.as_mut().ok_or("Cheats are unavailable")?;
                     cheats.0 = !cheats.0;
                 }
+                "ui_lobby_bot_count" => {
+                    if !party.in_lobby || !party.is_host {
+                        return Err("Only the host can change bot count".into());
+                    }
+                    let delta = command
+                        .args
+                        .first()
+                        .and_then(|arg| arg.parse::<isize>().ok())
+                        .unwrap_or(0);
+                    let new = (state.bot_count as isize + delta).clamp(0, 10) as usize;
+                    if new != state.bot_count {
+                        state.bot_count = new;
+                        dvars.set("ui_lobby_bot_count", if new > 0 {
+                            format!("BOTS: {new}")
+                        } else {
+                            "BOTS: OFF".into()
+                        });
+                    }
+                }
                 "ui_start_match" => {
                     if !party.in_lobby || !party.is_host {
                         return Err("Only the lobby host can start a match".into());
@@ -326,6 +350,11 @@ pub(crate) fn route(
                             "menu: starting {map} {} (swap #{id})",
                             mode.token()
                         ));
+                    }
+                    if state.bot_count > 0 {
+                        commands.insert_resource(session::PendingBotAdd {
+                            count: state.bot_count as u32,
+                        });
                     }
                 }
                 "ui_vote_skip" => services.submit(net::MasterMenuAction::VoteToSkip)?,
@@ -706,6 +735,15 @@ pub(crate) fn route(
             "CHEATS: ON"
         } else {
             "CHEATS: OFF"
+        },
+    );
+    dvars.set(
+        "ui_lobby_bot_count",
+        if state.bot_count > 0 {
+            let bot_count = state.bot_count;
+            format!("BOTS: {bot_count}")
+        } else {
+            "BOTS: OFF".into()
         },
     );
     let label = |map: &str| {
