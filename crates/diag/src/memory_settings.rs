@@ -208,6 +208,8 @@ pub fn valid_file_setting(name: &str, value: &str) -> bool {
         "IW4L_FRAME_LATENCY" => matches!(value, "1" | "2"),
         // 0 keeps the display at 60 Hz instead of asking for 120 Hz in matches.
         "IW4L_PROMOTION" => matches!(value, "0" | "1"),
+        // Seconds in a match at 60 Hz before asking for 120 Hz (default 60).
+        "IW4L_PROMOTION_DELAY" => value.parse::<u32>().is_ok_and(|secs| secs <= 600),
         // Frame pacing (see frame_pacing.rs): presents per second the present is
         // held to (off by default); snap the time step to the vsync grid (acts only
         // with a pace); log the on-screen frame timing every 128 presents.
