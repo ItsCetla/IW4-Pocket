@@ -46,6 +46,7 @@ pub enum UiMenuRequest {
     Focus { menu: String, item: String },
     Key(UiMenuKey),
     Text(String),
+    UpdateDvar { name: String, value: String },
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

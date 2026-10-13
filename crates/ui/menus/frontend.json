@@ -662,6 +662,29 @@
               }
             ]
           },
+          "vis_exp": "1",          "disabled_exp": "0",
+          "float_exp": [],
+          "dvar_flags": 0,
+          "dvar_test": "",
+          "enable_dvar": ""
+        }
+      },
+      {
+        "index": 22,
+        "fields": {
+          "name": "bots",
+          "text_key": "",
+          "text_exp": "op 38 s:75695f626f7473 op 1",
+          "rect": {
+            "y": 148
+          },
+          "handlers": {
+            "action": [
+              {
+                "Script": "play mouse_click; open lobby_bot_setup;"
+              }
+            ]
+          },
           "vis_exp": "1",
           "disabled_exp": "0",
           "float_exp": [],
@@ -669,10 +692,226 @@
           "dvar_test": "",
           "enable_dvar": ""
         }
+      },
+      {
+        "index": 22,
+        "fields": {
+          "name": "bots_subtitle",
+          "text_key": "",
+          "text_exp": "op 38 s:75695f626f74735f706978656c op 1",
+          "rect": {
+            "y": 168
+          },
+          "handlers": {},
+          "vis_exp": "1",
+          "static_flags": 1048576,
+          "text_literal": true,
+          "font_enum": 3,
+          "text_scale": 0.3,
+          "text_align_mode": 8,
+          "text_align_x": 4,
+          "text_align_y": 0,
+          "fore_color": [1, 1, 1, 1]
+        }
       }
     ]
   },
-  {
+
+{
+    "name": "lobby_bot_setup",
+    "base": "popup_gamesetup",
+    "fields": {
+      "float_exp": [
+        [1, "24"],
+        [3, "176"]
+      ]
+    },
+    "item_overrides": [
+      {
+        "index": 2,
+        "fields": {
+          "rect": {"h": 176},
+          "float_exp": []
+        }
+      },
+      {
+        "index": 5,
+        "fields": {
+          "rect": {"h": 176},
+          "float_exp": []
+        }
+      },
+      {
+        "index": 8,
+        "fields": {
+          "rect": {"h": 176},
+          "float_exp": []
+        }
+      },
+      {
+        "index": 12,
+        "fields": {
+          "rect": {"h": 176},
+          "float_exp": []
+        }
+      },
+      {
+        "index": 13,
+        "fields": {
+          "rect": {"y": 176},
+          "float_exp": []
+        }
+      },
+      {
+        "index": 14,
+        "fields": {
+          "rect": {"y": 176},
+          "float_exp": []
+        }
+      },
+      {
+        "index": 15,
+        "fields": {
+          "rect": {"y": 176},
+          "float_exp": []
+        }
+      },
+      {
+        "index": 16,
+        "fields": {
+          "rect": {"h": 176},
+          "float_exp": []
+        }
+      },
+      {
+        "index": 17,
+        "fields": {
+          "rect": {"h": 176},
+          "float_exp": []
+        }
+      },
+      {
+        "index": 19,
+        "fields": {
+          "disabled_exp": "0",
+          "rect": {"y": 80},
+          "text_key": "BOTS",
+          "text_exp": "",
+          "vis_exp": "1",
+          "handlers": {
+            "action": [
+              {
+                "Script": "if (getDvar \"ui_lobby_bot_count\" == \"BOTS: OFF\") exec \"ui_lobby_bot_count 1\"; else exec \"ui_lobby_bot_count -1\";"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "index": 20,
+        "fields": {
+          "disabled_exp": "0",
+          "rect": {"y": 108},
+          "text_key": "BOT COUNT",
+          "text_exp": "",
+          "vis_exp": "1",
+          "handlers": {
+            "action": [
+              {
+                "Script": "play mouse_click; exec \"ui_lobby_bot_count 1\";"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "index": 21,
+        "fields": {
+          "disabled_exp": "0"
+        }
+      },
+      {
+        "index": 22,
+        "fields": {
+          "text_key": "",
+          "text_exp": "op 38 s:75695f626f74735f6f6666 op 1",
+          "rect": {"y": 140},
+          "vis_exp": "1",
+          "disabled_exp": "0",
+          "handlers": {
+            "action": [
+              {
+                "Script": "play mouse_click; exec \"ui_lobby_bot_count -1\";"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "index": 23,
+        "fields": {
+          "rect": {"y": 148},
+          "text_key": "@PLATFORM_BACK_CAPS",
+          "vis_exp": "1",
+          "disabled_exp": "0",
+          "handlers": {
+            "action": [
+              {
+                "Script": "play mouse_click; close self;"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "index": 16,
+        "fields": {
+          "rect": {"x": 302, "y": 124, "w": 200},
+          "static_flags": 1048576,
+          "fore_color": [1, 1, 1, 1],
+          "font_enum": 3,
+          "text_scale": 0.3,
+          "text_align_mode": 8,
+          "text_align_x": 4,
+          "text_align_y": 0,
+          "text_key": "/10",
+          "text_exp": ""
+        }
+      },
+      {
+        "index": 17,
+        "fields": {
+          "rect": {"x": 0, "y": 140, "w": 26, "h": 20},
+          "static_flags": 1048576,
+          "fore_color": [1, 1, 1, 1],
+          "font_enum": 3,
+          "text_scale": 0.4,
+          "text_align_mode": 8,
+          "text_align_x": 4,
+          "text_align_y": 2,
+          "text_key": "-",
+          "text_exp": ""
+        }
+      },
+      {
+        "index": 18,
+        "fields": {
+          "rect": {"x": 614, "y": 140, "w": 26, "h": 20},
+          "static_flags": 1048576,
+          "fore_color": [1, 1, 1, 1],
+          "font_enum": 3,
+          "text_scale": 0.4,
+          "text_align_mode": 8,
+          "text_align_x": 4,
+          "text_align_y": 2,
+          "text_key": "+",
+          "text_exp": ""
+        }
+      }
+    ]
+  },
+
+{
     "name": "game_map_select",
     "base": "settings_map",
     "fields": {
@@ -690,10 +929,8 @@
           }
         ]
       }
-    },
-    "item_overrides": [
-      {
-        "index": 15,
+    },    "item_overrides": [
+      {"index": 15,
         "fields": {
           "vis_exp": "0"
         }
@@ -759,6 +996,7 @@
           "rect": {
             "x": 140,
             "y": 28,
+
             "w": 200
           },
           "text_align_x": -8,

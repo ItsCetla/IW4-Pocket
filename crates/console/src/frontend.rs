@@ -322,10 +322,15 @@ pub(crate) fn route(
                     let new = (state.bot_count as isize + delta).clamp(0, 10) as usize;
                     if new != state.bot_count {
                         state.bot_count = new;
-                        dvars.set("ui_lobby_bot_count", if new > 0 {
+                        let text = if new > 0 {
                             format!("BOTS: {new}")
                         } else {
                             "BOTS: OFF".into()
+                        };
+                        dvars.set("ui_lobby_bot_count", &text);
+                        menus.write(frame::UiMenuRequest::UpdateDvar {
+                            name: "ui_lobby_bot_count".into(),
+                            value: text,
                         });
                     }
                 }

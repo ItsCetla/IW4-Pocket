@@ -311,6 +311,9 @@ pub(crate) fn update_script_menus(
             UiMenuRequest::Key(UiMenuKey::Backspace) => pressed.backspace = true,
             UiMenuRequest::Key(UiMenuKey::Delete) => pressed.delete = true,
             UiMenuRequest::Text(text) => pressed.text.push(text),
+            UiMenuRequest::UpdateDvar { name, value } => {
+                runner.dvars.set(&name, &value);
+            }
         }
     }
     // Reopen after a teardown resets the stack; only acknowledgement clears
