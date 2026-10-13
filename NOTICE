@@ -35,6 +35,8 @@ vendor/winit is winit 0.30.13 (Apache-2.0, licence included in that directory)
 with ONE modified file, src/platform_impl/ios/view.rs (1 line in layoutSubviews,
 marked in the source: the window size uses the view's own scale, so
 IW4L_RENDER_SCALE is not undone by the next layout).
+vendor/wgpu-core is wgpu-core 29.0.4 (MIT OR Apache-2.0, licences included in that
+directory), unmodified.
 
 
 --------------------------------------------------------------------------------

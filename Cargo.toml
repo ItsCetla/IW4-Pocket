@@ -18,6 +18,9 @@ wgpu-hal = { path = "vendor/wgpu-hal" }
 # screen's scale, so IW4L_RENDER_SCALE (crates/bootstrap/src/render_scale.rs) is not
 # undone by the next layout. Without a render scale the two are equal.
 winit = { path = "vendor/winit" }
+# vendor/wgpu-core is wgpu-core 29.0.4 as published (Cargo.lock and
+# .cargo_vcs_info.json dropped, as with vendor/wgpu-hal).
+wgpu-core = { path = "vendor/wgpu-core" }
 
 [workspace]
 resolver = "3"
