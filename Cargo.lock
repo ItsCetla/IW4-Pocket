@@ -2045,6 +2045,7 @@ dependencies = [
  "sim",
  "ui",
  "wgpu-hal",
+ "winit",
 ]
 
 [[package]]

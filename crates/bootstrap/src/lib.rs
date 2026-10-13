@@ -9,6 +9,7 @@ mod launch;
 mod open_url;
 mod plugins;
 mod promotion;
+mod render_scale;
 
 pub use args::{AcceptanceLaunch, LaunchMode, parse_cli};
 pub use launch::launch;

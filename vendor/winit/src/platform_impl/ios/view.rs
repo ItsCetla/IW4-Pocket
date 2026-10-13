@@ -72,7 +72,11 @@ declare_class!(
             let screen = window.screen();
             let screen_space = screen.coordinateSpace();
             let screen_frame = self.convertRect_toCoordinateSpace(window_bounds, &screen_space);
-            let scale_factor = screen.scale();
+            // IW4 Pocket patch (IW4L_RENDER_SCALE): the view's own scale, as `Window::scale_factor`
+            // and `setContentScaleFactor:` report it. It is the screen's scale unless the app
+            // lowered it with `set_scale_factor`, which the screen's scale here would undo on the
+            // next layout.
+            let scale_factor = self.contentScaleFactor();
             let size = crate::dpi::LogicalSize {
                 width: screen_frame.size.width as f64,
                 height: screen_frame.size.height as f64,
