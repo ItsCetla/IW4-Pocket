@@ -49,6 +49,8 @@ pub fn add_runtime_plugins_with_role(app: &mut App, role: RuntimeRole) {
     app.insert_resource(bevy::render::error_handler::RenderErrorHandler(log_then_quit));
     // iOS: ask a 120 Hz display for its full refresh during matches.
     crate::promotion::register(app);
+    // iOS: IW4L_RENDER_SCALE draws below the screen's resolution (off unless set).
+    crate::render_scale::register(app);
     // iOS: no auto-lock while a map loads or a match runs.
     crate::idle_timer::register(app);
     // iOS present pacing, dt snap and frame timing stats; nothing elsewhere.
