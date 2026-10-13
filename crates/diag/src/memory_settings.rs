@@ -224,6 +224,10 @@ pub fn valid_file_setting(name: &str, value: &str) -> bool {
         "IW4L_PIPELINED_RENDERING" => matches!(value, "0" | "1"),
         // Keep the last 45 s of snapshots for the console `clip` command (off on iOS).
         "IW4L_CLIP_RING" => matches!(value, "0" | "1"),
+        // Free each exact-colour shader's compiled data (naga IR) once its
+        // pipelines are built, instead of keeping it for the rest of the run (off
+        // by default; Apple only).
+        "IW4L_LEAN_SHADERS" => matches!(value, "0" | "1"),
         _ => false,
     }
 }
@@ -329,6 +333,11 @@ mod tests {
         assert!(valid_file_setting("IW4L_CLIP_RING", "1"));
         for v in ["on", "off", "2", "", "1\0"] {
             assert!(!valid_file_setting("IW4L_CLIP_RING", v), "{v:?}");
+        }
+        assert!(valid_file_setting("IW4L_LEAN_SHADERS", "0"));
+        assert!(valid_file_setting("IW4L_LEAN_SHADERS", "1"));
+        for v in ["on", "off", "true", "2", "", " 1", "1\0"] {
+            assert!(!valid_file_setting("IW4L_LEAN_SHADERS", v), "{v:?}");
         }
         for name in ["IW4L_DT_SNAP", "IW4L_FRAME_STATS"] {
             assert!(valid_file_setting(name, "0"));
