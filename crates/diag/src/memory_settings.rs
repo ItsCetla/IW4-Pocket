@@ -252,6 +252,16 @@ pub fn valid_startup_cmds(value: &str) -> bool {
         if !matches!(first, "map" | "bot" | "set" | "seta") {
             return false;
         }
+        // `set` may only touch match rules and bot settings, never the menu handlers
+        // (`ui_*`: folder picker, reset of game folders) or paths (`fs_*`).
+        if matches!(first, "set" | "seta") {
+            let name = command.split_whitespace().nth(1).unwrap_or("");
+            let allowed = ["g_", "scr_", "bot_"].iter().any(|p| name.starts_with(p))
+                || matches!(name, "timelimit" | "scorelimit" | "roundlimit");
+            if !allowed {
+                return false;
+            }
+        }
         if !command
             .chars()
             .all(|c| c.is_ascii_alphanumeric() || matches!(c, ' ' | '_' | '.' | '-'))
@@ -386,6 +396,9 @@ mod tests {
         }
         assert!(valid_startup_cmds("map mp_rust; bot add 5"));
         assert!(valid_startup_cmds("set g_gametype dm"));
+        for v in ["set ui_pick_game_folder 1", "set fs_basepath x", "seta ui_pocket_tier low", "set"] {
+            assert!(!valid_startup_cmds(v), "{v:?}");
+        }
         for v in ["", "quit", "exec x", "map a; quit", "map a/b", "map $(x)", "bot add 5;;;;;;;;;;map a;map b;map c;map d;map e;map f;map g;map h"] {
             assert!(!valid_startup_cmds(v), "{v:?}");
         }

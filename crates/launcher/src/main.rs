@@ -139,7 +139,10 @@ fn main() {
         // A run that iOS closed leaves no exit line. Keep its log under a name the next
         // launch does not overwrite (the .prev log is replaced every start).
         if !previous.is_empty() && !previous.contains("process_exit") {
-            let _ = std::fs::write(docs.join("iw4l-boot.crash.log"), &previous);
+            let crash = docs.join("iw4l-boot.crash.log");
+            // Keep the one before it, so a second launch does not erase the evidence.
+            let _ = std::fs::rename(&crash, docs.join("iw4l-boot.crash.prev.log"));
+            let _ = std::fs::write(&crash, &previous);
         }
         diag::ios_env::rotate_log(&docs.join("iw4l-boot.log"));
         diag::boot_crumb("1 main entered, sandbox ready");
