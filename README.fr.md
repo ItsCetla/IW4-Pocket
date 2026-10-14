@@ -68,7 +68,7 @@ Vous avez essayé ? [Ouvrez une issue](https://github.com/MarkusSela/IW4-Pocket/
 - **Manette non détectée** : associez-la d'abord en Bluetooth, puis rouvrez l'app
 - **L'app se ferme sur une carte** : c'est le problème de mémoire connu. Envoyez le journal
 - **Pour limiter les textures** : ajoutez un fichier texte `iw4l-texture-cap.txt` contenant uniquement un nombre, par exemple `256`, puis redémarrez complètement l'app
-- **Avancé :** un fichier texte `iw4l-env.txt` avec des lignes `IW4L_NOM=valeur` règle les interrupteurs du moteur sans recompiler. Seuls les réglages du menu IW4 Pocket sont acceptés (par exemple `IW4L_RENDER_SCALE=0.67`), plus `IW4L_CMDS=map mp_rust; bot add 5` (seulement `map`, `bot` et règles de partie ou de bots). Le reste est ignoré et le journal nomme la ligne
+- **Avancé :** un fichier texte `iw4l-env.txt` avec des lignes `IW4L_NOM=valeur` règle les interrupteurs du moteur sans recompiler. Seuls les réglages du menu IW4 Pocket sont acceptés (par exemple `IW4L_RENDER_SCALE=0.67`), plus `IW4L_BOTS=5` (bots dans chaque partie, aussi dans le lobby), `IW4L_SKIP_CAMO=1` (sans camouflages d'armes) et `IW4L_CMDS=map mp_rust; bot add 5` (seulement `map`, `bot` et règles de partie ou de bots). Le reste est ignoré et le journal nomme la ligne
 
 ## 🛠️ Le compiler soi-même
 
@@ -76,7 +76,7 @@ Lancez le workflow **ios-release** depuis l'onglet Actions (runner macOS) et ind
 
 ## ⚖️ Crédits et mentions légales
 
-Port d'[IW4L](https://github.com/vladtrc/iw4L) par vladtrc et contributeurs (Apache-2.0, voir `LICENSE`, `NOTICE` ; README d'origine dans `README.upstream.md`). Correctifs mémoire, lean shaders, textures BC, pause à 60 Hz, render scale, gestion des images et correctifs du moteur : [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)).
+Port d'[IW4L](https://github.com/vladtrc/iw4L) par vladtrc et contributeurs (Apache-2.0, voir `LICENSE`, `NOTICE` ; README d'origine dans `README.upstream.md`). Correctifs mémoire, lean shaders, textures BC, pause à 60 Hz, render scale, gestion des images et correctifs du moteur : [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)). Bots : [LemonMoo](https://github.com/LemonMoo) et [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Idée des camouflages : [mk2rs2000](https://github.com/mk2rs2000).
 
 > Projet de fan non officiel, sans lien avec Activision, Infinity Ward, Apple ni les auteurs d'IW4L. Call of Duty et Modern Warfare sont des marques de leurs propriétaires. Vous devez posséder une copie légitime du jeu.
 

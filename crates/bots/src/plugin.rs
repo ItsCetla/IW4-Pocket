@@ -108,6 +108,7 @@ impl Plugin for BotsPlugin {
             .init_resource::<BotNavigationReady>()
             .init_resource::<BotMeter>()
             .init_resource::<BotAutoFill>()
+            .init_resource::<BotWanted>()
             .add_systems(
                 Update,
                 (
@@ -154,6 +155,26 @@ fn reset_roster_on_match_torn_down(
 
 const AUTO_FILL_ENV: &str = "IW4L_BOTS";
 
+/// Most bots the phone menus offer. The engine allows `MAX_HOST_BOTS`; more bots cost memory.
+pub const UI_MAX_BOTS: u32 = 10;
+
+/// How many bots every match this process hosts starts with. One value for all the ways to
+/// set it: `IW4L_BOTS` in iw4l-env.txt, the IW4 Pocket options row and the lobby row.
+/// Changing it applies to the next match.
+#[derive(Resource, Clone, Copy, Debug, PartialEq, Eq)]
+pub struct BotWanted(pub u32);
+
+impl Default for BotWanted {
+    fn default() -> Self {
+        Self(
+            std::env::var(AUTO_FILL_ENV)
+                .ok()
+                .and_then(|value| value.trim().parse::<u32>().ok())
+                .map_or(0, |n| n.min(UI_MAX_BOTS)),
+        )
+    }
+}
+
 /// Whether this match already got its `IW4L_BOTS` fill. Reset with the roster.
 #[derive(Resource, Default)]
 struct BotAutoFill {
@@ -168,6 +189,7 @@ fn auto_fill_bots(
     mut queue: ResMut<BotAddQueue>,
     roster: Res<BotRoster>,
     role: Res<RuntimeRole>,
+    wanted: Res<BotWanted>,
     installed: Option<Res<HasWorld>>,
 ) {
     if fill.done || !installed.is_some_and(|installed| installed.0) {
@@ -177,13 +199,7 @@ fn auto_fill_bots(
     if !matches!(*role, RuntimeRole::Listen | RuntimeRole::Dedicated) {
         return;
     }
-    let Some(wanted) = std::env::var(AUTO_FILL_ENV)
-        .ok()
-        .and_then(|value| value.trim().parse::<u32>().ok())
-        .map(|n| n.min(MAX_HOST_BOTS))
-    else {
-        return;
-    };
+    let wanted = wanted.0.min(MAX_HOST_BOTS);
     let missing = wanted.saturating_sub(roster.bots.len() as u32);
     if missing == 0 {
         return;

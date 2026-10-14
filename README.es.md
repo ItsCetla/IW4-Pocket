@@ -68,7 +68,7 @@ No hace falta saber programar. Lleva unos 15 minutos más la copia de archivos.
 - **Mando no detectado**: empárejalo primero en Bluetooth y reabre la app
 - **La app se cierra en un mapa**: es el problema de memoria conocido. Envía el registro
 - **Para limitar texturas**: añade un archivo de texto `iw4l-texture-cap.txt` con solo un número, por ejemplo `256`, y reinicia la app por completo
-- **Avanzado:** un archivo de texto `iw4l-env.txt` con líneas `IW4L_NOMBRE=valor` ajusta los interruptores del motor sin recompilar. Solo se aceptan los ajustes del menú IW4 Pocket (por ejemplo `IW4L_RENDER_SCALE=0.67`), más `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot` y reglas de partida o de bots). Lo demás se ignora y el registro indica la línea
+- **Avanzado:** un archivo de texto `iw4l-env.txt` con líneas `IW4L_NOMBRE=valor` ajusta los interruptores del motor sin recompilar. Solo se aceptan los ajustes del menú IW4 Pocket (por ejemplo `IW4L_RENDER_SCALE=0.67`), más `IW4L_BOTS=5` (bots en cada partida, también en el lobby), `IW4L_SKIP_CAMO=1` (sin camuflajes de armas) y `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot` y reglas de partida o de bots). Lo demás se ignora y el registro indica la línea
 
 ## 🛠️ Compilarlo tú mismo
 
@@ -76,7 +76,7 @@ Ejecuta el workflow **ios-release** desde la pestaña Actions (runner macOS) e i
 
 ## ⚖️ Créditos y aviso legal
 
-Port de [IW4L](https://github.com/vladtrc/iw4L) de vladtrc y colaboradores (Apache-2.0, ver `LICENSE`, `NOTICE`; README original en `README.upstream.md`). Correcciones de memoria, lean shaders, texturas BC, pausa a 60 Hz, render scale, gestión de fotogramas y correcciones del motor: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)).
+Port de [IW4L](https://github.com/vladtrc/iw4L) de vladtrc y colaboradores (Apache-2.0, ver `LICENSE`, `NOTICE`; README original en `README.upstream.md`). Correcciones de memoria, lean shaders, texturas BC, pausa a 60 Hz, render scale, gestión de fotogramas y correcciones del motor: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)). Bots: [LemonMoo](https://github.com/LemonMoo) y [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Idea de los camuflajes: [mk2rs2000](https://github.com/mk2rs2000).
 
 > Proyecto no oficial, sin afiliación con Activision, Infinity Ward, Apple ni los autores de IW4L. Call of Duty y Modern Warfare son marcas de sus propietarios. Necesitas una copia legítima del juego.
 

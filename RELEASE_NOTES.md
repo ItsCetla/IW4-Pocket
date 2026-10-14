@@ -1,16 +1,15 @@
-# IW4 Pocket 0.3.5
+# IW4 Pocket 0.3.6
 
-For phones with a 3 GB memory grant. On an iPhone 13 Pro Max, 0.3.4 loaded `mp_rust` and a match ran for about a minute, then iOS closed the app: the allocator was holding about 450 MiB of free pages that the app was not using but iOS still counted. **Not yet tested on a phone.**
+**Not yet tested on a phone.** Adds bots without the console, an option to leave out weapon camo skins, and builds on 0.3.5 (free spare memory).
+
+**Bots** (issues #4 and #6)
+- One setting, three places, always in step: **Options > IW4 Pocket options > Bots in every match**, the new **BOTS** row in the lobby before a match (game setup), and `IW4L_BOTS=5` in `iw4l-env.txt`. 0 to 10 bots, added when a match starts.
+- `IW4L_CMDS=map mp_rust; bot add 5` also works again (only `map`, `bot`, and `set`/`seta` on match and bot rules).
+- Credits: `IW4L_BOTS` by [LemonMoo](https://github.com/LemonMoo) (Cade Palmer), the lobby bot row by [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Both cherry-picked with their authorship. I changed them to share one value and capped the lobby row at 10 bots.
 
 **Memory**
-- **Free spare memory** (new, on by default on iPhone). When iOS leaves less than 600 MiB, the app asks the allocator to hand its unused pages back, at most every 3 seconds. The log shows each call: `heap relief: footprint 3040 -> 2990 MiB (allocator says N MiB) in 4 ms | calls, total gained`. If it causes a hitch, turn it off in IW4 Pocket options > Free spare memory, or with `IW4L_HEAP_RELIEF=0`.
+- **Weapon camo skins**: new row *Weapon camo skins* in IW4 Pocket options (Auto keeps them, **Skip** leaves them out). Idea and first code by [mk2rs2000](https://github.com/mk2rs2000), who skipped them on iOS; here it is a setting, off by default, so nobody loses camos without choosing to. The log has `camouflage:` and memory lines to compare.
+- From 0.3.5: **Free spare memory** hands unused allocator pages back to iOS when little is left (log line `heap relief:`).
+- For phones with about 3 GB for the app: set **Render scale** to 0.67 or 0.5, and try **Weapon camo skins: Skip**.
 
-**Settings and advice**
-- Phones with about 3 GB for the app: set **Render scale** to 0.67 or 0.5 (IW4 Pocket options). On an iPhone 13 Pro Max, 0.5 leaves 168 MiB at the start of a match against 94 MiB at full size.
-- Lean shaders stays on by default on the Low profile. On the same phone it is the difference between a map that loads and one that does not.
-
-**Logs**
-- `heap relief:` lines (see above). Please send `iw4l-boot.log`; if the app closes, also `iw4l-boot.crash.log`.
-- The problem report asks how you installed the app.
-
-Known: on a 3 GB grant the app may still be closed during a match. If it is, the logs show how long it ran and how much each relief call gave back.
+Please send `iw4l-boot.log` (and `iw4l-boot.crash.log` if the app closes) and say how you installed the app.

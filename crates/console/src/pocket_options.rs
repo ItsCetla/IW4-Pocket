@@ -91,15 +91,26 @@ pub(crate) const OPTIONS: &[Opt] = &[
         map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
     },
     Opt {
-        dvar: "ui_pocket_quick",
-        env: "IW4L_CMDS",
+        dvar: "ui_pocket_bots",
+        env: "IW4L_BOTS",
         map: &[
             ("auto", None),
-            ("rust5", Some("map mp_rust; bot add 5")),
-            ("favela5", Some("map mp_favela; bot add 5")),
-            ("estate5", Some("map mp_estate; bot add 5")),
-            ("terminal5", Some("map mp_terminal; bot add 5")),
+            ("1", Some("1")),
+            ("2", Some("2")),
+            ("3", Some("3")),
+            ("4", Some("4")),
+            ("5", Some("5")),
+            ("6", Some("6")),
+            ("7", Some("7")),
+            ("8", Some("8")),
+            ("9", Some("9")),
+            ("10", Some("10")),
         ],
+    },
+    Opt {
+        dvar: "ui_pocket_camo",
+        env: "IW4L_SKIP_CAMO",
+        map: &[("auto", None), ("skip", Some("1")), ("keep", Some("0"))],
     },
 ];
 
@@ -120,6 +131,22 @@ pub(crate) fn menu_value(opt: &Opt, file_value: Option<&str>) -> &'static str {
 /// `None` means the menu value is not one of this row's choices.
 pub(crate) fn env_value(opt: &Opt, shown: &str) -> Option<Option<&'static str>> {
     opt.map.iter().find(|(s, _)| *s == shown).map(|(_, env)| *env)
+}
+
+/// The menu value that shows `n` bots (0 reads as Auto).
+pub(crate) fn bots_menu_value(n: u32) -> String {
+    if n == 0 { "auto".into() } else { n.to_string() }
+}
+
+/// Keeps the bot count in `iw4l-env.txt` (iOS), so the next launch starts with it.
+pub(crate) fn save_bots(n: u32) {
+    let Some(path) = env_path() else { return };
+    let existing = std::fs::read_to_string(&path).unwrap_or_default();
+    let value = (n > 0).then(|| n.to_string());
+    let updated = diag::ios_env::merge_env_lines(&existing, &[("IW4L_BOTS", value.as_deref())]);
+    if updated != existing && let Err(error) = std::fs::write(&path, updated) {
+        diag::warn!(Console, "pocket options: could not save {}: {error}", path.display());
+    }
 }
 
 fn env_path() -> Option<PathBuf> {
@@ -153,6 +180,7 @@ pub(crate) fn pocket_options_menu(
     mut dvars: ResMut<frame::UiMenuDvars>,
     mut state: Local<PocketState>,
     mut open: MessageWriter<OpenExternalUrl>,
+    mut wanted: Option<ResMut<bots::BotWanted>>,
 ) {
     if !state.started {
         state.started = true;
@@ -199,7 +227,14 @@ pub(crate) fn pocket_options_menu(
                 diag::warn!(Console, "pocket options: could not save {}: {error}", path.display());
             }
         }
-        state.current[at] = menu_value(opt, env);
+        if opt.env == "IW4L_BOTS" {
+            // Bots apply to the next match without a restart; the lobby row follows.
+            if let Some(wanted) = wanted.as_mut() {
+                wanted.0 = env.and_then(|v| v.parse().ok()).unwrap_or(0);
+            }
+        } else {
+            state.current[at] = menu_value(opt, env);
+        }
         // Leaving the send button armed would let a stray press open the browser.
         state.armed = false;
     }

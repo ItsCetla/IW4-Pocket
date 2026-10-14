@@ -68,7 +68,7 @@ Ausprobiert? [Eröffne ein Issue](https://github.com/MarkusSela/IW4-Pocket/issue
 - **Controller nicht erkannt**: erst in Bluetooth koppeln, dann die App neu öffnen
 - **App schließt sich auf einer Karte**: das ist das bekannte Speicherproblem. Sende das Protokoll
 - **Texturen begrenzen**: lege eine Textdatei `iw4l-texture-cap.txt` mit nur einer Zahl an, z. B. `256`, und starte die App komplett neu
-- **Fortgeschritten:** eine Textdatei `iw4l-env.txt` mit Zeilen `IW4L_NAME=Wert` setzt die Schalter der Engine ohne Neubau. Akzeptiert werden nur die Einstellungen des Menüs IW4 Pocket (zum Beispiel `IW4L_RENDER_SCALE=0.67`), dazu `IW4L_CMDS=map mp_rust; bot add 5` (nur `map`, `bot` und Match- oder Bot-Regeln). Alles andere wird ignoriert und das Log nennt die Zeile
+- **Fortgeschritten:** eine Textdatei `iw4l-env.txt` mit Zeilen `IW4L_NAME=Wert` setzt die Schalter der Engine ohne Neubau. Akzeptiert werden nur die Einstellungen des Menüs IW4 Pocket (zum Beispiel `IW4L_RENDER_SCALE=0.67`), dazu `IW4L_BOTS=5` (Bots in jedem Match, auch in der Lobby), `IW4L_SKIP_CAMO=1` (ohne Waffen-Tarnmuster) und `IW4L_CMDS=map mp_rust; bot add 5` (nur `map`, `bot` und Match- oder Bot-Regeln). Alles andere wird ignoriert und das Log nennt die Zeile
 
 ## 🛠️ Selbst bauen
 
@@ -76,7 +76,7 @@ Starte den Workflow **ios-release** im Actions-Tab (macOS-Runner) und gib einen 
 
 ## ⚖️ Credits und Rechtliches
 
-Port von [IW4L](https://github.com/vladtrc/iw4L) von vladtrc und Mitwirkenden (Apache-2.0, siehe `LICENSE`, `NOTICE`; Original-README in `README.upstream.md`). Speicherkorrekturen, Lean Shaders, BC-Texturen, 60-Hz-Pause, Render Scale, Frame-Timing und Engine-Fixes: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)).
+Port von [IW4L](https://github.com/vladtrc/iw4L) von vladtrc und Mitwirkenden (Apache-2.0, siehe `LICENSE`, `NOTICE`; Original-README in `README.upstream.md`). Speicherkorrekturen, Lean Shaders, BC-Texturen, 60-Hz-Pause, Render Scale, Frame-Timing und Engine-Fixes: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)). Bots: [LemonMoo](https://github.com/LemonMoo) und [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Idee der Tarnmuster: [mk2rs2000](https://github.com/mk2rs2000).
 
 > Inoffizielles Fanprojekt, nicht verbunden mit Activision, Infinity Ward, Apple oder den IW4L-Autoren. Call of Duty und Modern Warfare sind Marken ihrer Inhaber. Du benötigst eine legitime Kopie des Spiels.
 

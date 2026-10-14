@@ -32,4 +32,4 @@ pub use local_arm::{
 };
 pub use match_apply::{apply_prepared_match, install_script_model_id};
 pub use plugin::SessionPlugin;
-pub use startup::{PendingBotAdd, PendingConsoleLines, StartupCommands};
+pub use startup::{PendingConsoleLines, StartupCommands};

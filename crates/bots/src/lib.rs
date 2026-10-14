@@ -24,7 +24,7 @@ pub use observation::{
     ObjectiveAction, SelfState, Stance, TeamRole, Visibility, WeaponAction, WeaponClass,
     WeaponFacts, WeaponSlot,
 };
-pub use plugin::BotsPlugin;
+pub use plugin::{BotWanted, BotsPlugin, UI_MAX_BOTS};
 pub use query::{
     Budgeted, HullTrace, ObstacleKind, QueryCounters, QueryDenied, QueryResult, QuerySubsystem,
     SightSample, TraceBudget, WalkSample, WorldQuery,

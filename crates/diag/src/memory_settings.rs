@@ -231,12 +231,21 @@ pub fn valid_file_setting(name: &str, value: &str) -> bool {
         // Give free allocator pages back to iOS when little memory is left (on by default
         // on iOS; 0 turns it off).
         "IW4L_HEAP_RELIEF" => matches!(value, "0" | "1"),
+        // 1 = do not prepare weapon camouflage skins (saves memory; guns lose their camos).
+        "IW4L_SKIP_CAMO" => matches!(value, "0" | "1"),
         // Startup commands for iOS (no console there), e.g. `map mp_rust; bot add 5`.
         "IW4L_CMDS" => valid_startup_cmds(value),
         // Bots added to every hosted match; the console's `bot add` needs a keyboard.
-        "IW4L_BOTS" => value.parse::<u32>().is_ok_and(|n| n <= 20),
+        "IW4L_BOTS" => value.parse::<u32>().is_ok_and(|n| n <= 10),
         _ => false,
     }
+}
+
+/// Whether weapon camouflage skins are left out (`IW4L_SKIP_CAMO=1`). Off unless set: every
+/// platform keeps the camos by default. Read once.
+pub fn skip_camo() -> bool {
+    static SKIP: OnceLock<bool> = OnceLock::new();
+    *SKIP.get_or_init(|| std::env::var("IW4L_SKIP_CAMO").is_ok_and(|v| v.trim() == "1"))
 }
 
 /// `IW4L_CMDS` from the iOS text file: only `map`, `bot`, `set` and `seta`, plain
@@ -384,8 +393,8 @@ mod tests {
         assert!(!valid_file_setting(IOS_BC_ENV, "yes"));
         assert!(!valid_file_setting(SHADER_WORKERS_ENV, "0"));
         assert!(valid_file_setting("IW4L_BOTS", "0"));
-        assert!(valid_file_setting("IW4L_BOTS", "20"));
-        assert!(!valid_file_setting("IW4L_BOTS", "21"));
+        assert!(valid_file_setting("IW4L_BOTS", "10"));
+        assert!(!valid_file_setting("IW4L_BOTS", "11"));
         assert!(!valid_file_setting("IW4L_BOTS", "-1"));
         assert!(!valid_file_setting("IW4L_GAMES", "/tmp"));
         assert!(!valid_file_setting("IW4L_UNKNOWN", "1"));
@@ -403,6 +412,8 @@ mod tests {
         for v in ["on", "off", "true", "2", "", " 1", "1\0"] {
             assert!(!valid_file_setting("IW4L_LEAN_SHADERS", v), "{v:?}");
         }
+        assert!(valid_file_setting("IW4L_SKIP_CAMO", "1"));
+        assert!(!valid_file_setting("IW4L_SKIP_CAMO", "yes"));
         assert!(valid_file_setting("IW4L_HEAP_RELIEF", "0"));
         assert!(valid_file_setting("IW4L_HEAP_RELIEF", "1"));
         assert!(!valid_file_setting("IW4L_HEAP_RELIEF", "on"));

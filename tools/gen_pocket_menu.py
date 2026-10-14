@@ -52,9 +52,12 @@ OPTIONS = [
     ("ui_pocket_relief", "Free spare memory",
      "Gives unused memory back to iOS when it runs low. Auto is on.",
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
-    ("ui_pocket_quick", "Start a match with bots",
-     "Loads the map and adds 5 bots when the app starts. Auto is off.",
-     [("Auto", "auto"), ("Rust", "rust5"), ("Favela", "favela5"), ("Estate", "estate5"), ("Terminal", "terminal5")]),
+    ("ui_pocket_bots", "Bots in every match",
+     "Bots added when a match starts. Also in the lobby. Auto is none.",
+     [("Auto", "auto"), ("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"), ("6", "6"), ("7", "7"), ("8", "8"), ("9", "9"), ("10", "10")]),
+    ("ui_pocket_camo", "Weapon camo skins",
+     "Skip leaves the camos out and saves memory. Auto keeps them.",
+     [("Auto", "auto"), ("Skip", "skip"), ("Keep", "keep")]),
 ]
 
 
@@ -67,7 +70,7 @@ def dyn(name):
 
 
 def option_rows(dvar, label, desc, choices, index):
-    y = 28 + 25 * index
+    y = 28 + 23 * index
     control = copy.deepcopy(multi_t)
     f = control["fields"]
     f["dvar"] = dvar
@@ -105,7 +108,7 @@ copies = []
 for i, option in enumerate(OPTIONS):
     copies += option_rows(*option, i)
 
-y_info = 28 + 25 * len(OPTIONS) + 4
+y_info = 28 + 23 * len(OPTIONS) + 4
 copies.append(dynamic_label("pocket_info", "ui_pocket_info", y_info))
 
 button = copy.deepcopy(multi_t)

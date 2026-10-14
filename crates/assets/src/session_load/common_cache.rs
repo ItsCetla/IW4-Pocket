@@ -754,9 +754,9 @@ async fn prepare_common(key: CommonKey) -> Arc<CommonSet> {
     .collect();
 
     let mut camouflage_images = None;
-    // Temporarily skip T5 camo preparation and image decoding on iOS.
-    #[cfg(not(target_os = "ios"))]
-    if let (Some((_, options)), Some((_, choices))) = (
+    // IW4L_SKIP_CAMO=1 (IW4 Pocket options) skips T5 camo preparation and image decoding.
+    if !diag::memory_settings::skip_camo()
+        && let (Some((_, options)), Some((_, choices))) = (
         cac_tables.iter().find(|(ns, t)| {
             *ns == asset_core::AssetNamespace::T5
                 && t.name.eq_ignore_ascii_case("mp/weaponoptions.csv")

@@ -68,7 +68,7 @@ L'hai provato? [Apri una segnalazione](https://github.com/MarkusSela/IW4-Pocket/
 - **Controller non rilevato**: collegalo prima nel Bluetooth, poi riapri l'app
 - **L'app si chiude su una mappa**: è il problema di memoria noto. Mandami il log
 - **Per limitare le texture**: aggiungi un file di testo `iw4l-texture-cap.txt` con solo un numero, ad esempio `256`, poi riavvia del tutto l'app
-- **Avanzate:** un file di testo `iw4l-env.txt` con righe `IW4L_NOME=valore` imposta gli interruttori del motore senza ricompilare. Sono accettate solo le impostazioni del menu IW4 Pocket (ad esempio `IW4L_RENDER_SCALE=0.67`), più `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot` e regole di partita o dei bot). Il resto viene ignorato e il log indica la riga
+- **Avanzate:** un file di testo `iw4l-env.txt` con righe `IW4L_NOME=valore` imposta gli interruttori del motore senza ricompilare. Sono accettate solo le impostazioni del menu IW4 Pocket (ad esempio `IW4L_RENDER_SCALE=0.67`), più `IW4L_BOTS=5` (bot in ogni partita, anche nella lobby), `IW4L_SKIP_CAMO=1` (senza mimetiche delle armi) e `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot` e regole di partita o dei bot). Il resto viene ignorato e il log indica la riga
 
 ## 🛠️ Compilarlo da solo
 
@@ -76,7 +76,7 @@ Avvia il workflow **ios-release** dalla scheda Actions (runner macOS) e indica u
 
 ## ⚖️ Crediti e note legali
 
-Port di [IW4L](https://github.com/vladtrc/iw4L) di vladtrc e collaboratori (Apache-2.0, vedi `LICENSE`, `NOTICE`; README originale in `README.upstream.md`). Correzioni di memoria, lean shaders, texture BC, pausa a 60 Hz, render scale, gestione dei frame e correzioni al motore: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)).
+Port di [IW4L](https://github.com/vladtrc/iw4L) di vladtrc e collaboratori (Apache-2.0, vedi `LICENSE`, `NOTICE`; README originale in `README.upstream.md`). Correzioni di memoria, lean shaders, texture BC, pausa a 60 Hz, render scale, gestione dei frame e correzioni al motore: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)). Bot: [LemonMoo](https://github.com/LemonMoo) e [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Idea delle mimetiche: [mk2rs2000](https://github.com/mk2rs2000).
 
 > Progetto non ufficiale, non affiliato ad Activision, Infinity Ward, Apple né agli autori di IW4L. Call of Duty e Modern Warfare sono marchi dei rispettivi proprietari. Serve una copia legittima del gioco.
 

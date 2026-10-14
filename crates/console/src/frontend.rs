@@ -26,7 +26,6 @@ pub(crate) struct FrontendState {
     lobby_password: String,
     rules_seeded: bool,
     reopen_lobby: Option<u16>,
-    bot_count: usize,
 }
 
 /// MW2 sends the host of a private match back to its lobby, setup kept, when the
@@ -68,6 +67,7 @@ pub(crate) struct LobbyServices<'w> {
     bridge: Option<Res<'w, net::MasterBridge>>,
     action: Option<ResMut<'w, net::PendingMasterMenuAction>>,
     menus: Option<Res<'w, hud::ScriptMenus>>,
+    bots: Option<ResMut<'w, bots::BotWanted>>,
 }
 
 impl LobbyServices<'_> {
@@ -130,6 +130,14 @@ fn change_page(page: &mut usize, command: &ConsoleCommand, len: usize) {
     *page = page
         .saturating_add_signed(delta)
         .min(len.saturating_sub(1) / PAGE_SIZE);
+}
+
+fn bots_label(n: u32) -> String {
+    if n > 0 {
+        format!("BOTS: {n}")
+    } else {
+        "BOTS: OFF".into()
+    }
 }
 
 pub(crate) fn route(
@@ -319,14 +327,13 @@ pub(crate) fn route(
                         .first()
                         .and_then(|arg| arg.parse::<isize>().ok())
                         .unwrap_or(0);
-                    let new = (state.bot_count as isize + delta).clamp(0, 10) as usize;
-                    if new != state.bot_count {
-                        state.bot_count = new;
-                        let text = if new > 0 {
-                            format!("BOTS: {new}")
-                        } else {
-                            "BOTS: OFF".into()
-                        };
+                    let wanted = services.bots.as_mut().ok_or("Bots are unavailable")?;
+                    let new = (wanted.0 as isize + delta).clamp(0, bots::UI_MAX_BOTS as isize) as u32;
+                    if new != wanted.0 {
+                        wanted.0 = new;
+                        // Same value as IW4 Pocket options > Bots and IW4L_BOTS in iw4l-env.txt.
+                        crate::pocket_options::save_bots(new);
+                        let text = bots_label(new);
                         dvars.set("ui_lobby_bot_count", &text);
                         menus.write(frame::UiMenuRequest::UpdateDvar {
                             name: "ui_lobby_bot_count".into(),
@@ -355,11 +362,6 @@ pub(crate) fn route(
                             "menu: starting {map} {} (swap #{id})",
                             mode.token()
                         ));
-                    }
-                    if state.bot_count > 0 {
-                        commands.insert_resource(session::PendingBotAdd {
-                            count: state.bot_count as u32,
-                        });
                     }
                 }
                 "ui_vote_skip" => services.submit(net::MasterMenuAction::VoteToSkip)?,
@@ -742,15 +744,9 @@ pub(crate) fn route(
             "CHEATS: OFF"
         },
     );
-    dvars.set(
-        "ui_lobby_bot_count",
-        if state.bot_count > 0 {
-            let bot_count = state.bot_count;
-            format!("BOTS: {bot_count}")
-        } else {
-            "BOTS: OFF".into()
-        },
-    );
+    let wanted = services.bots.as_ref().map_or(0, |b| b.0);
+    dvars.set("ui_lobby_bot_count", &bots_label(wanted));
+    dvars.set("ui_pocket_bots", &crate::pocket_options::bots_menu_value(wanted));
     let label = |map: &str| {
         presentation.as_ref().map_or_else(
             || map_label(map),

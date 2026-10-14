@@ -68,7 +68,7 @@ Tried it? Please [open an issue](https://github.com/MarkusSela/IW4-Pocket/issues
 - **Controller not detected**: pair it in Bluetooth first, then reopen the app
 - **App closes on a map**: that is the known memory issue. Send the log
 - **To limit texture size**: add a text file `iw4l-texture-cap.txt` containing only a number such as `256`, then fully restart the app
-- **Advanced:** a text file `iw4l-env.txt` with lines like `IW4L_NAME=value` sets the engine's own switches without a rebuild. Only the settings in IW4 Pocket options are accepted (for example `IW4L_RENDER_SCALE=0.67`), plus `IW4L_CMDS=map mp_rust; bot add 5` (only `map`, `bot` and match or bot rules). Anything else is ignored and the log names the line
+- **Advanced:** a text file `iw4l-env.txt` with lines like `IW4L_NAME=value` sets the engine's own switches without a rebuild. Only the settings in IW4 Pocket options are accepted (for example `IW4L_RENDER_SCALE=0.67`), plus `IW4L_BOTS=5` (bots in every match, also in the lobby), `IW4L_SKIP_CAMO=1` (leave out weapon camo skins) and `IW4L_CMDS=map mp_rust; bot add 5` (only `map`, `bot` and match or bot rules). Anything else is ignored and the log names the line
 
 ## 🛠️ Build it yourself
 
@@ -76,7 +76,7 @@ Run the **ios-release** workflow from the Actions tab (macOS runner) and give it
 
 ## ⚖️ Credits and legal
 
-Port of [IW4L](https://github.com/vladtrc/iw4L) by vladtrc and contributors (Apache-2.0, see `LICENSE`, `NOTICE`; original README in `README.upstream.md`). Memory fixes, lean shaders, BC textures, the 60 Hz hold, render scale, frame timing and engine fixes: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)).
+Port of [IW4L](https://github.com/vladtrc/iw4L) by vladtrc and contributors (Apache-2.0, see `LICENSE`, `NOTICE`; original README in `README.upstream.md`). Memory fixes, lean shaders, BC textures, the 60 Hz hold, render scale, frame timing and engine fixes: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)). Bots: [LemonMoo](https://github.com/LemonMoo) and [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Weapon camo idea: [mk2rs2000](https://github.com/mk2rs2000).
 
 > Unofficial fan project, not affiliated with Activision, Infinity Ward, Apple or the IW4L authors. Call of Duty and Modern Warfare are trademarks of their owners. You must own a legitimate copy of the game.
 

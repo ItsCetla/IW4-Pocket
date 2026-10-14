@@ -7012,12 +7012,10 @@ impl WeaponBuild {
         for row in &mut self.registry.rows {
             row.gun_xmodel_edge =
                 fpv_model_edge(row.gun_xmodel.as_deref(), row.namespace.content(), fpv);
-            #[cfg(target_os = "ios")]
-            {
+            if diag::memory_settings::skip_camo() {
+                // IW4L_SKIP_CAMO=1 (IW4 Pocket options): no camo skins, less memory.
                 row.camo_view_edges.clear();
-            }
-            #[cfg(not(target_os = "ios"))]
-            {
+            } else {
                 row.camo_view_edges = row
                     .camo_models
                     .view
@@ -7351,12 +7349,9 @@ impl WeaponBuild {
         for row in &mut self.registry.rows {
             row.world_model_edge =
                 world_model_edge(row.world_model.as_deref(), row.namespace.content(), catalog);
-            #[cfg(target_os = "ios")]
-            {
+            if diag::memory_settings::skip_camo() {
                 row.camo_world_edges.clear();
-            }
-            #[cfg(not(target_os = "ios"))]
-            {
+            } else {
                 row.camo_world_edges = row
                     .camo_models
                     .world
