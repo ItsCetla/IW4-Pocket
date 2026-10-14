@@ -31,7 +31,7 @@ Un port sur iOS du moteur open source [IW4L](https://github.com/vladtrc/iw4L). I
 - ✅ Atteint le menu principal. Le toucher fonctionne comme un clic et une manette PS4 fonctionne
 - ✅ Sur un iPhone 17 Pro Max (6 Go accordés à l'app), des parties complètes avec bots tournent : [voir la vidéo](https://jumpshare.com/s/rFCD5I9ZtWvcN3gcBO8e), par [treuenten](https://github.com/treuenten)
 - ✅ L'app choisit seule ses réglages mémoire selon la mémoire qu'iOS accorde au téléphone (bas / moyen / haut). Tout se change dans le jeu sous **Options > IW4 Pocket options**, et **Send logs** ouvre un rapport déjà rempli
-- ⚠️ Sur un iPhone 13 Pro Max (environ 3 Go accordés), l'app se fermait pendant `mp_rust` à cause d'une erreur graphique. La 0.3.3 la corrige (testé sur ce téléphone). Maintenant la mémoire s'épuise un peu plus tard, pendant que la carte prépare les graphismes : iOS ferme l'app avec environ 4 Mo libres. Réduire encore la mémoire est le prochain travail.
+- ⚠️ Sur un iPhone 13 Pro Max (environ 3 Go accordés), la 0.3.4 charge `mp_rust` en entier et une partie a duré environ une minute, puis iOS a fermé l'app faute de mémoire. La mémoire augmente lentement pendant la partie ; la prochaine version mesurera où. **Si votre téléphone accorde environ 3 Go à l'app, réglez Render scale sur 0.67 ou 0.5** (Options > IW4 Pocket options) : cela libère de la mémoire et l'image est seulement un peu plus douce.
 
 ## 🙋 Essayez, pas à pas
 
@@ -49,7 +49,7 @@ Aucune programmation nécessaire. Comptez environ 15 minutes plus la copie des f
 
 - ✅ **Testé :** iPhone 13 Pro Max (6 Go de RAM, ~3 Go accordés), iOS 27 : les menus fonctionnent, le chargement de la carte va jusqu'aux shaders. iPhone 17 Pro Max (6 Go accordés) : parties complètes avec bots, selon treuenten
 - ❓ **Tout le reste n'est pas vérifié.** Techniquement, cela devrait fonctionner sur tout iPhone ou iPad avec Metal ; l'app déclare iOS 15 comme minimum, mais je ne l'y ai jamais essayée
-- 🧠 **La mémoire est la limite.** Sur le téléphone testé, iOS accorde à l'app environ 3 Go. Les appareils avec moins de RAM échoueront plus tôt ; les plus intéressants à tester sont les iPhone 8 Go+ et les iPad à puce M
+- 🧠 **La mémoire est la limite.** Sur le téléphone testé, iOS accorde à l'app environ 3 Go. Les appareils avec moins de RAM échoueront plus tôt ; les plus intéressants à tester sont les iPhone 8 Go+ et les iPad à puce M Avec environ 3 Go, essayez Render scale 0.67 ou 0.5.
 - 🎮 **Une manette est nécessaire pour jouer.** Le toucher ne marche que dans les menus
 
 ## 🐞 Aidez-moi à tester
@@ -68,7 +68,7 @@ Vous avez essayé ? [Ouvrez une issue](https://github.com/MarkusSela/IW4-Pocket/
 - **Manette non détectée** : associez-la d'abord en Bluetooth, puis rouvrez l'app
 - **L'app se ferme sur une carte** : c'est le problème de mémoire connu. Envoyez le journal
 - **Pour limiter les textures** : ajoutez un fichier texte `iw4l-texture-cap.txt` contenant uniquement un nombre, par exemple `256`, puis redémarrez complètement l'app
-- **Avancé :** un fichier texte `iw4l-env.txt` avec des lignes `IW4L_NOM=valeur` règle les interrupteurs du moteur sans recompiler. Seuls les réglages du menu IW4 Pocket sont acceptés, plus `IW4L_CMDS=map mp_rust; bot add 5` (seulement `map`, `bot`, `set`, `seta`). Le reste est ignoré et le journal nomme la ligne
+- **Avancé :** un fichier texte `iw4l-env.txt` avec des lignes `IW4L_NOM=valeur` règle les interrupteurs du moteur sans recompiler. Seuls les réglages du menu IW4 Pocket sont acceptés (par exemple `IW4L_RENDER_SCALE=0.67`), plus `IW4L_CMDS=map mp_rust; bot add 5` (seulement `map`, `bot` et règles de partie ou de bots). Le reste est ignoré et le journal nomme la ligne
 
 ## 🛠️ Le compiler soi-même
 
@@ -76,7 +76,7 @@ Lancez le workflow **ios-release** depuis l'onglet Actions (runner macOS) et ind
 
 ## ⚖️ Crédits et mentions légales
 
-Port d'[IW4L](https://github.com/vladtrc/iw4L) par vladtrc et contributeurs (Apache-2.0, voir `LICENSE`, `NOTICE` ; README d'origine dans `README.upstream.md`). Correctifs mémoire, textures BC, gestion des images et correctifs du moteur : [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)).
+Port d'[IW4L](https://github.com/vladtrc/iw4L) par vladtrc et contributeurs (Apache-2.0, voir `LICENSE`, `NOTICE` ; README d'origine dans `README.upstream.md`). Correctifs mémoire, lean shaders, textures BC, pause à 60 Hz, render scale, gestion des images et correctifs du moteur : [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)).
 
 > Projet de fan non officiel, sans lien avec Activision, Infinity Ward, Apple ni les auteurs d'IW4L. Call of Duty et Modern Warfare sont des marques de leurs propriétaires. Vous devez posséder une copie légitime du jeu.
 

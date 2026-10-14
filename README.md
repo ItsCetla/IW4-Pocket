@@ -31,7 +31,7 @@ A port of the open-source [IW4L](https://github.com/vladtrc/iw4L) engine to iOS.
 - ✅ Reaches the main menu. Touch works as a click and a PS4 controller works
 - ✅ On an iPhone 17 Pro Max (6 GB granted to the app) full matches with bots run: [watch the clip](https://jumpshare.com/s/rFCD5I9ZtWvcN3gcBO8e), by [treuenten](https://github.com/treuenten)
 - ✅ The app picks its memory settings by itself from the memory iOS grants the phone (low / mid / high). Everything can be changed in the game under **Options > IW4 Pocket options**, and **Send logs** opens a prefilled problem report
-- ⚠️ On an iPhone 13 Pro Max (about 3 GB granted) the app quit during `mp_rust` with a graphics error. 0.3.3 fixes that error (tested on that phone). The app now runs out of memory a little later, while the map prepares its graphics: iOS closes it with about 4 MB left. Lowering memory further is the next job.
+- ⚠️ On an iPhone 13 Pro Max (about 3 GB granted), 0.3.4 loads `mp_rust` completely and a match was played for about a minute, then iOS closed the app for lack of memory. The memory grows slowly during the match; the next build measures where. **If your phone has about 3 GB for the app, set Render scale to 0.67 or 0.5** (Options > IW4 Pocket options): it frees memory and the picture is only a little softer.
 
 ## 🙋 Try it, step by step
 
@@ -49,7 +49,7 @@ No coding needed. It takes about 15 minutes plus the file copy.
 
 - ✅ **Tested:** iPhone 13 Pro Max (6 GB RAM, ~3 GB granted), iOS 27: menus work, match loading gets as far as the shaders. iPhone 17 Pro Max (6 GB granted): full matches with bots, reported by treuenten
 - ❓ **Everything else is unverified.** Technically it should run on any iPhone or iPad with Metal; the app declares iOS 15 as its minimum, but I never tried it there
-- 🧠 **Memory is the limit.** On the tested phone iOS allows the app about 3 GB. Devices with less RAM will likely fail sooner; 8 GB+ iPhones and M-series iPads are the most interesting to test
+- 🧠 **Memory is the limit.** On the tested phone iOS allows the app about 3 GB. Devices with less RAM will likely fail sooner; 8 GB+ iPhones and M-series iPads are the most interesting to test With about 3 GB, try Render scale 0.67 or 0.5.
 - 🎮 **A controller is needed to play.** Touch only works in the menus
 
 ## 🐞 Help me test
@@ -68,7 +68,7 @@ Tried it? Please [open an issue](https://github.com/MarkusSela/IW4-Pocket/issues
 - **Controller not detected**: pair it in Bluetooth first, then reopen the app
 - **App closes on a map**: that is the known memory issue. Send the log
 - **To limit texture size**: add a text file `iw4l-texture-cap.txt` containing only a number such as `256`, then fully restart the app
-- **Advanced:** a text file `iw4l-env.txt` with lines like `IW4L_NAME=value` sets the engine's own switches without a rebuild. Only the settings listed in IW4 Pocket options are accepted, plus `IW4L_CMDS=map mp_rust; bot add 5` (only `map`, `bot`, `set`, `seta`). Anything else is ignored and the log names the line
+- **Advanced:** a text file `iw4l-env.txt` with lines like `IW4L_NAME=value` sets the engine's own switches without a rebuild. Only the settings in IW4 Pocket options are accepted (for example `IW4L_RENDER_SCALE=0.67`), plus `IW4L_CMDS=map mp_rust; bot add 5` (only `map`, `bot` and match or bot rules). Anything else is ignored and the log names the line
 
 ## 🛠️ Build it yourself
 
@@ -76,7 +76,7 @@ Run the **ios-release** workflow from the Actions tab (macOS runner) and give it
 
 ## ⚖️ Credits and legal
 
-Port of [IW4L](https://github.com/vladtrc/iw4L) by vladtrc and contributors (Apache-2.0, see `LICENSE`, `NOTICE`; original README in `README.upstream.md`). Memory fixes, BC textures, frame timing and engine fixes: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)).
+Port of [IW4L](https://github.com/vladtrc/iw4L) by vladtrc and contributors (Apache-2.0, see `LICENSE`, `NOTICE`; original README in `README.upstream.md`). Memory fixes, lean shaders, BC textures, the 60 Hz hold, render scale, frame timing and engine fixes: [treuenten](https://github.com/treuenten) ([issue #1](https://github.com/MarkusSela/IW4-Pocket/issues/1)).
 
 > Unofficial fan project, not affiliated with Activision, Infinity Ward, Apple or the IW4L authors. Call of Duty and Modern Warfare are trademarks of their owners. You must own a legitimate copy of the game.
 
