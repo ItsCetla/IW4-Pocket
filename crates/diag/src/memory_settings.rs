@@ -228,6 +228,9 @@ pub fn valid_file_setting(name: &str, value: &str) -> bool {
         // pipelines are built, instead of keeping it for the rest of the run (off
         // by default; Apple only).
         "IW4L_LEAN_SHADERS" => matches!(value, "0" | "1"),
+        // Give free allocator pages back to iOS when little memory is left (on by default
+        // on iOS; 0 turns it off).
+        "IW4L_HEAP_RELIEF" => matches!(value, "0" | "1"),
         // Startup commands for iOS (no console there), e.g. `map mp_rust; bot add 5`.
         "IW4L_CMDS" => valid_startup_cmds(value),
         _ => false,
@@ -394,6 +397,9 @@ mod tests {
         for v in ["on", "off", "true", "2", "", " 1", "1\0"] {
             assert!(!valid_file_setting("IW4L_LEAN_SHADERS", v), "{v:?}");
         }
+        assert!(valid_file_setting("IW4L_HEAP_RELIEF", "0"));
+        assert!(valid_file_setting("IW4L_HEAP_RELIEF", "1"));
+        assert!(!valid_file_setting("IW4L_HEAP_RELIEF", "on"));
         assert!(valid_startup_cmds("map mp_rust; bot add 5"));
         assert!(valid_startup_cmds("set g_gametype dm"));
         for v in ["set ui_pick_game_folder 1", "set fs_basepath x", "seta ui_pocket_tier low", "set"] {

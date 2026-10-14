@@ -58,6 +58,12 @@ fn spawn_memory_logger() {
         let mut last_mb = 0u64;
         let mut last_log = std::time::Instant::now();
         let mut last_classes = std::time::Instant::now();
+        // Heap relief: when iOS leaves little memory, hand the allocator's free pages
+        // back. On by default (IW4L_HEAP_RELIEF=0 turns it off). At most every 3 s.
+        let relief_on = std::env::var("IW4L_HEAP_RELIEF").map_or(true, |v| v.trim() != "0");
+        let mut last_relief = std::time::Instant::now() - std::time::Duration::from_secs(10);
+        let mut relief_total_mb = 0u64;
+        let mut relief_calls = 0u64;
         loop {
             if let Some(huge) = diag::take_last_huge() {
                 diag::boot_crumb(&format!("big allocation: {} MB requested", huge / (1024 * 1024)));
@@ -81,6 +87,20 @@ fn spawn_memory_logger() {
             // Close to the limit the steps shrink, so the lines before a silent kill
             // show how fast memory was climbing (a 40 MiB step hid the last seconds).
             let headroom = diag::ios_env::available_bytes().unwrap_or(u64::MAX) / (1024 * 1024);
+            if relief_on && headroom < 600 && last_relief.elapsed() >= std::time::Duration::from_secs(3) {
+                let before = diag::ios_env::footprint_bytes().unwrap_or(0) / (1024 * 1024);
+                let at = std::time::Instant::now();
+                let said = diag::ios_env::relieve_heap_pressure().unwrap_or(0) / (1024 * 1024);
+                let after = diag::ios_env::footprint_bytes().unwrap_or(0) / (1024 * 1024);
+                let gained = before.saturating_sub(after);
+                relief_total_mb += gained;
+                relief_calls += 1;
+                diag::boot_crumb(&format!(
+                    "heap relief: footprint {before} -> {after} MiB (allocator says {said} MiB) in {} ms | calls {relief_calls}, total gained {relief_total_mb} MiB",
+                    at.elapsed().as_millis()
+                ));
+                last_relief = std::time::Instant::now();
+            }
             let step = if headroom < 300 { 8 } else { 40 };
             let changed = footprint.abs_diff(last_mb) >= step;
             if changed || last_log.elapsed() >= std::time::Duration::from_secs(2) {

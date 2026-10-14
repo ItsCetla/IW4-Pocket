@@ -1,26 +1,16 @@
-# IW4 Pocket 0.3.4
+# IW4 Pocket 0.3.5
 
-Test build aimed at phones with a 3 GB memory grant (iPhone 13 Pro Max, iPhone 15, SideStore with a free account), where `mp_rust` was closed by iOS while the map prepared its graphics. **Not yet tested on a phone.** Please send `iw4l-boot.log` and `iw4l-memory-settings.txt`.
+For phones with a 3 GB memory grant. On an iPhone 13 Pro Max, 0.3.4 loaded `mp_rust` and a match ran for about a minute, then iOS closed the app: the allocator was holding about 450 MiB of free pages that the app was not using but iOS still counted. **Not yet tested on a phone.**
 
 **Memory**
-- **Lean shaders**, on by default on the Low profile: each shader frees its compiled data once its pipelines are built, instead of keeping it for the whole run. Measured on a Mac with phone settings: about 790 MB less. By [treuenten](https://github.com/treuenten) (cherry-picked, authorship kept).
-- **Replay clip buffer** is off on iPhone (about 150 MB less in a match). By treuenten.
+- **Free spare memory** (new, on by default on iPhone). When iOS leaves less than 600 MiB, the app asks the allocator to hand its unused pages back, at most every 3 seconds. The log shows each call: `heap relief: footprint 3040 -> 2990 MiB (allocator says N MiB) in 4 ms | calls, total gained`. If it causes a hitch, turn it off in IW4 Pocket options > Free spare memory, or with `IW4L_HEAP_RELIEF=0`.
 
-**Display** (by treuenten)
-- The display stays at 60 Hz for the first minute of a match, then asks for 120 Hz. This removed freezes of 85-200 ms at the start of matches on a 17 Pro Max.
-- Optional **render scale** (0.5 to 0.85 of the screen's resolution).
-
-**Bots and startup commands**
-- `iw4l-env.txt` accepts `IW4L_CMDS=map mp_rust; bot add 5` again (only `map`, `bot`, `set`, `seta`; at most 200 characters and 8 commands). Fixes issue #4.
-- New row in IW4 Pocket options: **Start a match with bots** (Rust, Favela, Estate, Terminal, 5 bots).
-
-**IW4 Pocket options**: new rows for lean shaders, replay clip buffer, 120 Hz delay, render scale and the bot match. Every row starts on Auto and applies after a restart.
+**Settings and advice**
+- Phones with about 3 GB for the app: set **Render scale** to 0.67 or 0.5 (IW4 Pocket options). On an iPhone 13 Pro Max, 0.5 leaves 168 MiB at the start of a match against 94 MiB at full size.
+- Lean shaders stays on by default on the Low profile. On the same phone it is the difference between a map that loads and one that does not.
 
 **Logs**
-- `window:` line with the drawable size, points and scale, to diagnose a picture that fills only a corner of the screen (issue #8).
-- Memory is logged every 8 MiB when less than 300 MiB are left, so the last seconds before iOS closes the app are visible.
-- A run closed by iOS keeps its log as `iw4l-boot.crash.log`.
+- `heap relief:` lines (see above). Please send `iw4l-boot.log`; if the app closes, also `iw4l-boot.crash.log`.
 - The problem report asks how you installed the app.
-- A rejected `iw4l-env.txt` line now says which setting it was.
 
-Known: on a 3 GB grant, `mp_rust` may still run out of memory. If it does, the new log lines show where.
+Known: on a 3 GB grant the app may still be closed during a match. If it is, the logs show how long it ran and how much each relief call gave back.

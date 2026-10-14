@@ -243,7 +243,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 54,
+      "y": 53,
       "w": 344,
       "h": 20
      },
@@ -283,7 +283,7 @@
      "text_key": "Texture size",
      "rect": {
       "x": 232,
-      "y": 54,
+      "y": 53,
       "w": 344,
       "h": 20
      },
@@ -298,7 +298,7 @@
      "text_key": "Smaller uses less memory and looks blurrier.",
      "rect": {
       "x": 232,
-      "y": 69,
+      "y": 68,
       "w": 344,
       "h": 12
      },
@@ -347,7 +347,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 80,
+      "y": 78,
       "w": 344,
       "h": 20
      },
@@ -387,7 +387,7 @@
      "text_key": "Frames in flight",
      "rect": {
       "x": 232,
-      "y": 80,
+      "y": 78,
       "w": 344,
       "h": 20
      },
@@ -402,7 +402,7 @@
      "text_key": "2 is smoother but uses more graphics memory.",
      "rect": {
       "x": 232,
-      "y": 95,
+      "y": 93,
       "w": 344,
       "h": 12
      },
@@ -451,7 +451,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 106,
+      "y": 103,
       "w": 344,
       "h": 20
      },
@@ -491,7 +491,7 @@
      "text_key": "120 Hz in matches",
      "rect": {
       "x": 232,
-      "y": 106,
+      "y": 103,
       "w": 344,
       "h": 20
      },
@@ -506,7 +506,7 @@
      "text_key": "Smoother on 120 Hz phones, uses more battery.",
      "rect": {
       "x": 232,
-      "y": 121,
+      "y": 118,
       "w": 344,
       "h": 12
      },
@@ -559,7 +559,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 132,
+      "y": 128,
       "w": 344,
       "h": 20
      },
@@ -599,7 +599,7 @@
      "text_key": "Frame limit",
      "rect": {
       "x": 232,
-      "y": 132,
+      "y": 128,
       "w": 344,
       "h": 20
      },
@@ -614,7 +614,7 @@
      "text_key": "Caps frames per second. Auto means no cap.",
      "rect": {
       "x": 232,
-      "y": 147,
+      "y": 143,
       "w": 344,
       "h": 12
      },
@@ -659,7 +659,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 158,
+      "y": 153,
       "w": 344,
       "h": 20
      },
@@ -699,7 +699,7 @@
      "text_key": "Compressed textures",
      "rect": {
       "x": 232,
-      "y": 158,
+      "y": 153,
       "w": 344,
       "h": 20
      },
@@ -714,7 +714,7 @@
      "text_key": "Auto uses them when the GPU can. Off uses more memory.",
      "rect": {
       "x": 232,
-      "y": 173,
+      "y": 168,
       "w": 344,
       "h": 12
      },
@@ -763,7 +763,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 184,
+      "y": 178,
       "w": 344,
       "h": 20
      },
@@ -803,7 +803,7 @@
      "text_key": "Dynamic shadows",
      "rect": {
       "x": 232,
-      "y": 184,
+      "y": 178,
       "w": 344,
       "h": 20
      },
@@ -818,7 +818,7 @@
      "text_key": "Auto turns them off on phones that cannot draw them.",
      "rect": {
       "x": 232,
-      "y": 199,
+      "y": 193,
       "w": 344,
       "h": 12
      },
@@ -867,7 +867,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 210,
+      "y": 203,
       "w": 344,
       "h": 20
      },
@@ -907,7 +907,7 @@
      "text_key": "Lean shaders",
      "rect": {
       "x": 232,
-      "y": 210,
+      "y": 203,
       "w": 344,
       "h": 20
      },
@@ -922,7 +922,7 @@
      "text_key": "Frees shader memory while loading. Auto is on for the Low profile.",
      "rect": {
       "x": 232,
-      "y": 225,
+      "y": 218,
       "w": 344,
       "h": 12
      },
@@ -971,7 +971,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 236,
+      "y": 228,
       "w": 344,
       "h": 20
      },
@@ -1011,7 +1011,7 @@
      "text_key": "Replay clip buffer",
      "rect": {
       "x": 232,
-      "y": 236,
+      "y": 228,
       "w": 344,
       "h": 20
      },
@@ -1026,7 +1026,7 @@
      "text_key": "Keeps the last 45 s for the clip command. Uses memory. Auto is off.",
      "rect": {
       "x": 232,
-      "y": 251,
+      "y": 243,
       "w": 344,
       "h": 12
      },
@@ -1083,7 +1083,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 262,
+      "y": 253,
       "w": 344,
       "h": 20
      },
@@ -1123,7 +1123,7 @@
      "text_key": "120 Hz delay (s)",
      "rect": {
       "x": 232,
-      "y": 262,
+      "y": 253,
       "w": 344,
       "h": 20
      },
@@ -1138,7 +1138,7 @@
      "text_key": "Seconds at 60 Hz after a match starts, before 120 Hz. Auto is 60.",
      "rect": {
       "x": 232,
-      "y": 277,
+      "y": 268,
       "w": 344,
       "h": 12
      },
@@ -1195,7 +1195,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 288,
+      "y": 278,
       "w": 344,
       "h": 20
      },
@@ -1235,7 +1235,7 @@
      "text_key": "Render scale",
      "rect": {
       "x": 232,
-      "y": 288,
+      "y": 278,
       "w": 344,
       "h": 20
      },
@@ -1250,12 +1250,116 @@
      "text_key": "Draws below screen resolution. Faster, blurrier. Auto is full size.",
      "rect": {
       "x": 232,
-      "y": 303,
+      "y": 293,
       "w": 344,
       "h": 12
      },
      "text_scale": 0.22,
      "name": "ui_pocket_scale_desc",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode",
+    "fields": {
+     "item_type": 12,
+     "static_flags": 0,
+     "dvar": "ui_pocket_relief",
+     "choices": [
+      [
+       "Auto",
+       "auto"
+      ],
+      [
+       "On",
+       "on"
+      ],
+      [
+       "Off",
+       "off"
+      ]
+     ],
+     "vis_exp": "1",
+     "disabled_exp": "0",
+     "text_key": "",
+     "text_exp": "",
+     "text_align_mode": 10,
+     "text_align_x": -8,
+     "text_align_y": 0,
+     "fore_color": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "rect": {
+      "x": 232,
+      "y": 303,
+      "w": 344,
+      "h": 20
+     },
+     "handlers": {
+      "action": [
+       {
+        "Script": "play mouse_click;"
+       }
+      ],
+      "focus": [
+       {
+        "Script": "play mouse_over; setItemColor self backcolor 0 0 0 1;"
+       }
+      ],
+      "leave_focus": [
+       {
+        "Script": "setItemColor self backcolor 0 0 0 0;"
+       }
+      ]
+     },
+     "text_scale": 0.375,
+     "style": 1,
+     "background": "menu_button_selection_bar",
+     "back_color": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "name": "ui_pocket_relief"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Free spare memory",
+     "rect": {
+      "x": 232,
+      "y": 303,
+      "w": 344,
+      "h": 20
+     },
+     "text_scale": 0.32,
+     "name": "ui_pocket_relief_label"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Gives unused memory back to iOS when it runs low. Auto is on.",
+     "rect": {
+      "x": 232,
+      "y": 318,
+      "w": 344,
+      "h": 12
+     },
+     "text_scale": 0.22,
+     "name": "ui_pocket_relief_desc",
      "fore_color": [
       0.75,
       0.75,
@@ -1307,7 +1411,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 314,
+      "y": 328,
       "w": 344,
       "h": 20
      },
@@ -1347,7 +1451,7 @@
      "text_key": "Start a match with bots",
      "rect": {
       "x": 232,
-      "y": 314,
+      "y": 328,
       "w": 344,
       "h": 20
      },
@@ -1362,7 +1466,7 @@
      "text_key": "Loads the map and adds 5 bots when the app starts. Auto is off.",
      "rect": {
       "x": 232,
-      "y": 329,
+      "y": 343,
       "w": 344,
       "h": 12
      },
@@ -1383,7 +1487,7 @@
      "text_key": "",
      "rect": {
       "x": 232,
-      "y": 344,
+      "y": 357,
       "w": 344,
       "h": 20
      },
@@ -1420,7 +1524,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 366,
+      "y": 379,
       "w": 344,
       "h": 20
      },
@@ -1460,7 +1564,7 @@
      "text_key": "Report a problem on GitHub",
      "rect": {
       "x": 232,
-      "y": 366,
+      "y": 379,
       "w": 344,
       "h": 20
      },
@@ -1475,7 +1579,7 @@
      "text_key": "",
      "rect": {
       "x": 232,
-      "y": 388,
+      "y": 401,
       "w": 344,
       "h": 20
      },

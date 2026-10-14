@@ -46,6 +46,7 @@ mod apple {
 
     unsafe extern "C" {
         pub fn malloc_zone_statistics(zone: *mut libc::c_void, stats: *mut MallocStats);
+        pub fn malloc_zone_pressure_relief(zone: *mut libc::c_void, goal: libc::size_t) -> libc::size_t;
         pub fn os_proc_available_memory() -> usize;
         pub fn sysctlbyname(
             name: *const libc::c_char,
@@ -133,6 +134,21 @@ pub fn heap_bytes() -> Option<(u64, u64)> {
         // SAFETY: a null zone asks for totals over all zones; the struct matches the ABI.
         unsafe { apple::malloc_zone_statistics(std::ptr::null_mut(), &raw mut stats) };
         Some((stats.size_in_use as u64, stats.size_allocated as u64))
+    }
+    #[cfg(not(target_os = "ios"))]
+    {
+        None
+    }
+}
+
+/// Asks the system allocator to give its free pages back to iOS (all zones, no goal).
+/// Returns the bytes it says it released. Safe from any thread; the allocator takes its
+/// own locks, so other threads may wait for a few milliseconds.
+pub fn relieve_heap_pressure() -> Option<u64> {
+    #[cfg(target_os = "ios")]
+    {
+        // SAFETY: a null zone means every zone and a goal of 0 means as much as possible.
+        Some(unsafe { apple::malloc_zone_pressure_relief(std::ptr::null_mut(), 0) } as u64)
     }
     #[cfg(not(target_os = "ios"))]
     {

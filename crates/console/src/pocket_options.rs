@@ -86,6 +86,11 @@ pub(crate) const OPTIONS: &[Opt] = &[
         map: &[("auto", None), ("0.5", Some("0.5")), ("0.67", Some("0.67")), ("0.75", Some("0.75")), ("0.85", Some("0.85"))],
     },
     Opt {
+        dvar: "ui_pocket_relief",
+        env: "IW4L_HEAP_RELIEF",
+        map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
+    },
+    Opt {
         dvar: "ui_pocket_quick",
         env: "IW4L_CMDS",
         map: &[
