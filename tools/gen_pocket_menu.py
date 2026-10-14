@@ -49,6 +49,9 @@ OPTIONS = [
     ("ui_pocket_scale", "Render scale",
      "Draws below screen resolution. Faster, blurrier. Auto is full size.",
      [("Auto", "auto"), ("0.5", "0.5"), ("0.67", "0.67"), ("0.75", "0.75"), ("0.85", "0.85")]),
+    ("ui_pocket_quick", "Start a match with bots",
+     "Loads the map and adds 5 bots when the app starts. Auto is off.",
+     [("Auto", "auto"), ("Rust", "rust5"), ("Favela", "favela5"), ("Estate", "estate5"), ("Terminal", "terminal5")]),
 ]
 
 
@@ -61,7 +64,7 @@ def dyn(name):
 
 
 def option_rows(dvar, label, desc, choices, index):
-    y = 28 + 28 * index
+    y = 28 + 26 * index
     control = copy.deepcopy(multi_t)
     f = control["fields"]
     f["dvar"] = dvar
@@ -99,7 +102,7 @@ copies = []
 for i, option in enumerate(OPTIONS):
     copies += option_rows(*option, i)
 
-y_info = 28 + 28 * len(OPTIONS) + 4
+y_info = 28 + 26 * len(OPTIONS) + 4
 copies.append(dynamic_label("pocket_info", "ui_pocket_info", y_info))
 
 button = copy.deepcopy(multi_t)

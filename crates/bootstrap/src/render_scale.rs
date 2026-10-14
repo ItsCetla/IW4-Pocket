@@ -35,6 +35,9 @@ mod ios {
             .ok()
             .and_then(|value| value.trim().parse::<f64>().ok())
         else {
+            // No render scale: still log the window size, so a screen that shows only
+            // a corner of the picture (issue #8) can be read from the log.
+            app.add_systems(Update, report_size);
             return;
         };
         if !(0.5..1.0).contains(&scale) {
@@ -44,6 +47,7 @@ mod ios {
                     "render scale: {RENDER_SCALE_ENV}={scale} is outside 0.5-1.0, drawing at full size"
                 );
             }
+            app.add_systems(Update, report_size);
             return;
         }
         app.insert_resource(PendingRenderScale(scale)).add_systems(
@@ -107,7 +111,7 @@ mod ios {
         *last = Some(size);
         diag::info!(
             Launch,
-            "render scale: drawing at {}x{} ({}x{} points, scale {:.2})",
+            "window: drawing at {}x{} ({}x{} points, scale {:.2})",
             size.0,
             size.1,
             window.width(),

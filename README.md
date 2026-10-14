@@ -68,7 +68,7 @@ Tried it? Please [open an issue](https://github.com/MarkusSela/IW4-Pocket/issues
 - **Controller not detected**: pair it in Bluetooth first, then reopen the app
 - **App closes on a map**: that is the known memory issue. Send the log
 - **To limit texture size**: add a text file `iw4l-texture-cap.txt` containing only a number such as `256`, then fully restart the app
-- **Advanced:** a text file `iw4l-env.txt` with lines like `IW4L_NAME=value` sets the engine's own switches without a rebuild. Names must start with `IW4L_`
+- **Advanced:** a text file `iw4l-env.txt` with lines like `IW4L_NAME=value` sets the engine's own switches without a rebuild. Only the settings listed in IW4 Pocket options are accepted, plus `IW4L_CMDS=map mp_rust; bot add 5` (only `map`, `bot`, `set`, `seta`). Anything else is ignored and the log names the line
 
 ## 🛠️ Build it yourself
 

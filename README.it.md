@@ -68,7 +68,7 @@ L'hai provato? [Apri una segnalazione](https://github.com/MarkusSela/IW4-Pocket/
 - **Controller non rilevato**: collegalo prima nel Bluetooth, poi riapri l'app
 - **L'app si chiude su una mappa**: è il problema di memoria noto. Mandami il log
 - **Per limitare le texture**: aggiungi un file di testo `iw4l-texture-cap.txt` con solo un numero, ad esempio `256`, poi riavvia del tutto l'app
-- **Avanzate:** un file di testo `iw4l-env.txt` con righe `IW4L_NOME=valore` imposta gli interruttori del motore senza ricompilare. I nomi devono iniziare con `IW4L_`
+- **Avanzate:** un file di testo `iw4l-env.txt` con righe `IW4L_NOME=valore` imposta gli interruttori del motore senza ricompilare. Sono accettate solo le impostazioni del menu IW4 Pocket, più `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot`, `set`, `seta`). Il resto viene ignorato e il log indica la riga
 
 ## 🛠️ Compilarlo da solo
 

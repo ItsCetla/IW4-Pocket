@@ -68,7 +68,7 @@ No hace falta saber programar. Lleva unos 15 minutos más la copia de archivos.
 - **Mando no detectado**: empárejalo primero en Bluetooth y reabre la app
 - **La app se cierra en un mapa**: es el problema de memoria conocido. Envía el registro
 - **Para limitar texturas**: añade un archivo de texto `iw4l-texture-cap.txt` con solo un número, por ejemplo `256`, y reinicia la app por completo
-- **Avanzado:** un archivo de texto `iw4l-env.txt` con líneas `IW4L_NOMBRE=valor` ajusta los interruptores del motor sin recompilar. Los nombres deben empezar por `IW4L_`
+- **Avanzado:** un archivo de texto `iw4l-env.txt` con líneas `IW4L_NOMBRE=valor` ajusta los interruptores del motor sin recompilar. Solo se aceptan los ajustes del menú IW4 Pocket, más `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot`, `set`, `seta`). Lo demás se ignora y el registro indica la línea
 
 ## 🛠️ Compilarlo tú mismo
 

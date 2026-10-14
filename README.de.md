@@ -68,7 +68,7 @@ Ausprobiert? [Eröffne ein Issue](https://github.com/MarkusSela/IW4-Pocket/issue
 - **Controller nicht erkannt**: erst in Bluetooth koppeln, dann die App neu öffnen
 - **App schließt sich auf einer Karte**: das ist das bekannte Speicherproblem. Sende das Protokoll
 - **Texturen begrenzen**: lege eine Textdatei `iw4l-texture-cap.txt` mit nur einer Zahl an, z. B. `256`, und starte die App komplett neu
-- **Fortgeschritten:** eine Textdatei `iw4l-env.txt` mit Zeilen `IW4L_NAME=Wert` setzt die Schalter der Engine ohne Neubau. Namen müssen mit `IW4L_` beginnen
+- **Fortgeschritten:** eine Textdatei `iw4l-env.txt` mit Zeilen `IW4L_NAME=Wert` setzt die Schalter der Engine ohne Neubau. Akzeptiert werden nur die Einstellungen des Menüs IW4 Pocket, dazu `IW4L_CMDS=map mp_rust; bot add 5` (nur `map`, `bot`, `set`, `seta`). Alles andere wird ignoriert und das Log nennt die Zeile
 
 ## 🛠️ Selbst bauen
 

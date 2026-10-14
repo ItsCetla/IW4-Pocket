@@ -85,6 +85,17 @@ pub(crate) const OPTIONS: &[Opt] = &[
         env: "IW4L_RENDER_SCALE",
         map: &[("auto", None), ("0.5", Some("0.5")), ("0.67", Some("0.67")), ("0.75", Some("0.75")), ("0.85", Some("0.85"))],
     },
+    Opt {
+        dvar: "ui_pocket_quick",
+        env: "IW4L_CMDS",
+        map: &[
+            ("auto", None),
+            ("rust5", Some("map mp_rust; bot add 5")),
+            ("favela5", Some("map mp_favela; bot add 5")),
+            ("estate5", Some("map mp_estate; bot add 5")),
+            ("terminal5", Some("map mp_terminal; bot add 5")),
+        ],
+    },
 ];
 
 /// The menu value for what `iw4l-env.txt` currently holds. A value the menu cannot show
@@ -246,6 +257,7 @@ pub(crate) fn build_report_url(log: &str) -> String {
         "previous run:",
         "session summary:",
         "texture cap:",
+        "window:",
     ] {
         let line = field(prefix);
         if !line.is_empty() {
@@ -262,11 +274,11 @@ pub(crate) fn build_report_url(log: &str) -> String {
         summary.push(format!("- last sample: {}", short.join(" | ")));
     }
     let mut body = String::from(
-        "What happened (map, what you were doing):\n\n\n---\nAutomatic summary (no personal data):\n",
+        "What happened (map, what you were doing):\n\n\nHow did you install it (Xcode, SideStore, TrollStore, other)?\n\n\n---\nAutomatic summary (no personal data):\n",
     );
     body.push_str(&summary.join("\n"));
     body.push_str(
-        "\n\nPlease attach `iw4l-boot.log` and `iw4l-memory-settings.txt` (Files app > On My iPhone > IW4 Pocket).\n",
+        "\n\nPlease attach `iw4l-boot.log` and `iw4l-memory-settings.txt` (Files app > On My iPhone > IW4 Pocket). If the app was closed by iOS, also attach `iw4l-boot.crash.log`.\n",
     );
     // The limit that matters is the encoded size: every non-ASCII or punctuation byte
     // becomes three characters. Trim the summary (never the title) until it fits.

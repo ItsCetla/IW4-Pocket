@@ -78,7 +78,11 @@ fn spawn_memory_logger() {
                 footprint,
                 diag::ios_env::available_bytes().unwrap_or(0) / (1024 * 1024),
             );
-            let changed = footprint.abs_diff(last_mb) >= 40;
+            // Close to the limit the steps shrink, so the lines before a silent kill
+            // show how fast memory was climbing (a 40 MiB step hid the last seconds).
+            let headroom = diag::ios_env::available_bytes().unwrap_or(u64::MAX) / (1024 * 1024);
+            let step = if headroom < 300 { 8 } else { 40 };
+            let changed = footprint.abs_diff(last_mb) >= step;
             if changed || last_log.elapsed() >= std::time::Duration::from_secs(2) {
                 let available_mb = diag::ios_env::available_bytes().unwrap_or(0) / (1024 * 1024);
                 let (heap_used, heap_reserved) = diag::ios_env::heap_bytes().unwrap_or((0, 0));
@@ -132,6 +136,11 @@ fn main() {
         // Read how the last run ended before its log is moved aside: a run closed by
         // iOS leaves no exit line, and this is the only way to tell.
         let previous = std::fs::read_to_string(docs.join("iw4l-boot.log")).unwrap_or_default();
+        // A run that iOS closed leaves no exit line. Keep its log under a name the next
+        // launch does not overwrite (the .prev log is replaced every start).
+        if !previous.is_empty() && !previous.contains("process_exit") {
+            let _ = std::fs::write(docs.join("iw4l-boot.crash.log"), &previous);
+        }
         diag::ios_env::rotate_log(&docs.join("iw4l-boot.log"));
         diag::boot_crumb("1 main entered, sandbox ready");
         diag::boot_crumb(&diag::session::previous_run_note(&previous));

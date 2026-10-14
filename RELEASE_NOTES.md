@@ -1,24 +1,26 @@
-# IW4 Pocket 0.3.3
+# IW4 Pocket 0.3.4
 
-Built to get `mp_rust` running on the iPhone 13 Pro Max (A15) and to make problem reports easy. **Tested on an iPhone 13 Pro Max:** the graphics error is gone and the IW4 Pocket options work, but the app still runs out of memory while the map prepares its graphics (see Known).
+Test build aimed at phones with a 3 GB memory grant (iPhone 13 Pro Max, iPhone 15, SideStore with a free account), where `mp_rust` was closed by iOS while the map prepared its graphics. **Not yet tested on a phone.** Please send `iw4l-boot.log` and `iw4l-memory-settings.txt`.
 
-**The graphics error that closed the app** (found in the 0.3.2 logs of an iPhone 13 Pro Max)
-- Phones whose GPU cannot filter 32-bit float textures (A15 and older) made the renderer reject the texture table: `Texture binding 0 expects sample type Float { filterable: true }, but was given a view with format R32Float`. The app then quit with `code=1` while 66 of 1484 pipelines were ready.
-- On those phones the sun shadow map, the spot shadow maps and the float depth now use a 1x1 placeholder in the table. Phones that can filter them (for example the iPhone 17 Pro Max) are unchanged.
-- Dynamic shadows are held off on those phones, since their maps could not be read anyway.
-- If another image causes a similar error, the log names it.
+**Memory**
+- **Lean shaders**, on by default on the Low profile: each shader frees its compiled data once its pipelines are built, instead of keeping it for the whole run. Measured on a Mac with phone settings: about 790 MB less. By [treuenten](https://github.com/treuenten) (cherry-picked, authorship kept).
+- **Replay clip buffer** is off on iPhone (about 150 MB less in a match). By treuenten.
 
-**IW4 Pocket options** (in the game: Options > IW4 Pocket options)
-- Device profile, texture size, frames in flight, 120 Hz in matches, frame limit, compressed textures, dynamic shadows. Every row starts with **Auto**, has a one-line description, and applies after you restart the app.
-- Choices are kept in `Documents/iw4l-env.txt`; lines you wrote there yourself are left alone.
-- **Send logs**: asks for a second press, then opens a GitHub problem report with a short summary filled in (no personal data). You attach the two log files by hand.
-- Shows how much memory iOS gives the app.
+**Display** (by treuenten)
+- The display stays at 60 Hz for the first minute of a match, then asks for 120 Hz. This removed freezes of 85-200 ms at the start of matches on a 17 Pro Max.
+- Optional **render scale** (0.5 to 0.85 of the screen's resolution).
 
-**Better logs**
-- `gpu:` line (compressed textures, 32-bit float filtering), `shadow memory:` lines, `session summary:` (peak memory, least memory left, why the run ended), `previous run:` (tells a run closed by iOS from one that ended itself).
-- Heap per asset kind now shows `total` and `own` (a weapon's own cost without its models and animations).
-- The app folder path is written as `<app>`; the install id is no longer in the log. Repetitive lines (destructible deaths, static model meshes) are left out.
+**Bots and startup commands**
+- `iw4l-env.txt` accepts `IW4L_CMDS=map mp_rust; bot add 5` again (only `map`, `bot`, `set`, `seta`; at most 200 characters and 8 commands). Fixes issue #4.
+- New row in IW4 Pocket options: **Start a match with bots** (Rust, Favela, Estate, Terminal, 5 bots).
 
-Known: on a 3 GB grant (iPhone 13 Pro Max) the app is closed by iOS during `mp_rust` while it prepares graphics pipelines (about 3.07 GB used of 3.07 GB, around 750 of 1484 pipelines done). This build does not lower memory; that is the next job. Phones with more memory are not affected.
+**IW4 Pocket options**: new rows for lean shaders, replay clip buffer, 120 Hz delay, render scale and the bot match. Every row starts on Auto and applies after a restart.
 
-Please send `iw4l-boot.log`, `iw4l-boot.prev.log` and `iw4l-memory-settings.txt` after trying `mp_rust`.
+**Logs**
+- `window:` line with the drawable size, points and scale, to diagnose a picture that fills only a corner of the screen (issue #8).
+- Memory is logged every 8 MiB when less than 300 MiB are left, so the last seconds before iOS closes the app are visible.
+- A run closed by iOS keeps its log as `iw4l-boot.crash.log`.
+- The problem report asks how you installed the app.
+- A rejected `iw4l-env.txt` line now says which setting it was.
+
+Known: on a 3 GB grant, `mp_rust` may still run out of memory. If it does, the new log lines show where.
