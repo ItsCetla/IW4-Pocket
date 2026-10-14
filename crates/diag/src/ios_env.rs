@@ -196,7 +196,7 @@ pub fn apply_env_file(path: &std::path::Path) -> Vec<String> {
         };
         let (name, value) = (name.trim(), value.trim());
         if !crate::memory_settings::valid_file_setting(name, value) {
-            applied.push("ignored unknown or invalid tuning setting".into());
+            applied.push(format!("ignored unknown or invalid tuning setting: {name}"));
             continue;
         }
         // SAFETY: documented precondition: called at startup before other threads exist.

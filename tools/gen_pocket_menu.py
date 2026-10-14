@@ -37,6 +37,18 @@ OPTIONS = [
     ("ui_pocket_shadows", "Dynamic shadows",
      "Auto turns them off on phones that cannot draw them.",
      [("Auto", "auto"), ("Off", "off"), ("On", "on")]),
+    ("ui_pocket_lean", "Lean shaders",
+     "Frees shader memory while loading. Auto is on for the Low profile.",
+     [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
+    ("ui_pocket_clip", "Replay clip buffer",
+     "Keeps the last 45 s for the clip command. Uses memory. Auto is off.",
+     [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
+    ("ui_pocket_promodelay", "120 Hz delay (s)",
+     "Seconds at 60 Hz after a match starts, before 120 Hz. Auto is 60.",
+     [("Auto", "auto"), ("0", "0"), ("30", "30"), ("60", "60"), ("120", "120")]),
+    ("ui_pocket_scale", "Render scale",
+     "Draws below screen resolution. Faster, blurrier. Auto is full size.",
+     [("Auto", "auto"), ("0.5", "0.5"), ("0.67", "0.67"), ("0.75", "0.75"), ("0.85", "0.85")]),
 ]
 
 
@@ -49,7 +61,7 @@ def dyn(name):
 
 
 def option_rows(dvar, label, desc, choices, index):
-    y = 28 + 32 * index
+    y = 28 + 28 * index
     control = copy.deepcopy(multi_t)
     f = control["fields"]
     f["dvar"] = dvar
@@ -87,7 +99,7 @@ copies = []
 for i, option in enumerate(OPTIONS):
     copies += option_rows(*option, i)
 
-y_info = 28 + 32 * len(OPTIONS) + 4
+y_info = 28 + 28 * len(OPTIONS) + 4
 copies.append(dynamic_label("pocket_info", "ui_pocket_info", y_info))
 
 button = copy.deepcopy(multi_t)

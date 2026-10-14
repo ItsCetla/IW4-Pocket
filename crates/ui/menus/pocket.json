@@ -243,7 +243,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 60,
+      "y": 56,
       "w": 344,
       "h": 20
      },
@@ -283,7 +283,7 @@
      "text_key": "Texture size",
      "rect": {
       "x": 232,
-      "y": 60,
+      "y": 56,
       "w": 344,
       "h": 20
      },
@@ -298,7 +298,7 @@
      "text_key": "Smaller uses less memory and looks blurrier.",
      "rect": {
       "x": 232,
-      "y": 75,
+      "y": 71,
       "w": 344,
       "h": 12
      },
@@ -347,7 +347,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 92,
+      "y": 84,
       "w": 344,
       "h": 20
      },
@@ -387,7 +387,7 @@
      "text_key": "Frames in flight",
      "rect": {
       "x": 232,
-      "y": 92,
+      "y": 84,
       "w": 344,
       "h": 20
      },
@@ -402,7 +402,7 @@
      "text_key": "2 is smoother but uses more graphics memory.",
      "rect": {
       "x": 232,
-      "y": 107,
+      "y": 99,
       "w": 344,
       "h": 12
      },
@@ -451,7 +451,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 124,
+      "y": 112,
       "w": 344,
       "h": 20
      },
@@ -491,7 +491,7 @@
      "text_key": "120 Hz in matches",
      "rect": {
       "x": 232,
-      "y": 124,
+      "y": 112,
       "w": 344,
       "h": 20
      },
@@ -506,7 +506,7 @@
      "text_key": "Smoother on 120 Hz phones, uses more battery.",
      "rect": {
       "x": 232,
-      "y": 139,
+      "y": 127,
       "w": 344,
       "h": 12
      },
@@ -559,7 +559,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 156,
+      "y": 140,
       "w": 344,
       "h": 20
      },
@@ -599,7 +599,7 @@
      "text_key": "Frame limit",
      "rect": {
       "x": 232,
-      "y": 156,
+      "y": 140,
       "w": 344,
       "h": 20
      },
@@ -614,7 +614,7 @@
      "text_key": "Caps frames per second. Auto means no cap.",
      "rect": {
       "x": 232,
-      "y": 171,
+      "y": 155,
       "w": 344,
       "h": 12
      },
@@ -659,7 +659,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 188,
+      "y": 168,
       "w": 344,
       "h": 20
      },
@@ -699,7 +699,7 @@
      "text_key": "Compressed textures",
      "rect": {
       "x": 232,
-      "y": 188,
+      "y": 168,
       "w": 344,
       "h": 20
      },
@@ -714,7 +714,7 @@
      "text_key": "Auto uses them when the GPU can. Off uses more memory.",
      "rect": {
       "x": 232,
-      "y": 203,
+      "y": 183,
       "w": 344,
       "h": 12
      },
@@ -763,7 +763,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 220,
+      "y": 196,
       "w": 344,
       "h": 20
      },
@@ -803,7 +803,7 @@
      "text_key": "Dynamic shadows",
      "rect": {
       "x": 232,
-      "y": 220,
+      "y": 196,
       "w": 344,
       "h": 20
      },
@@ -818,12 +818,444 @@
      "text_key": "Auto turns them off on phones that cannot draw them.",
      "rect": {
       "x": 232,
-      "y": 235,
+      "y": 211,
       "w": 344,
       "h": 12
      },
      "text_scale": 0.22,
      "name": "ui_pocket_shadows_desc",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode",
+    "fields": {
+     "item_type": 12,
+     "static_flags": 0,
+     "dvar": "ui_pocket_lean",
+     "choices": [
+      [
+       "Auto",
+       "auto"
+      ],
+      [
+       "On",
+       "on"
+      ],
+      [
+       "Off",
+       "off"
+      ]
+     ],
+     "vis_exp": "1",
+     "disabled_exp": "0",
+     "text_key": "",
+     "text_exp": "",
+     "text_align_mode": 10,
+     "text_align_x": -8,
+     "text_align_y": 0,
+     "fore_color": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "rect": {
+      "x": 232,
+      "y": 224,
+      "w": 344,
+      "h": 20
+     },
+     "handlers": {
+      "action": [
+       {
+        "Script": "play mouse_click;"
+       }
+      ],
+      "focus": [
+       {
+        "Script": "play mouse_over; setItemColor self backcolor 0 0 0 1;"
+       }
+      ],
+      "leave_focus": [
+       {
+        "Script": "setItemColor self backcolor 0 0 0 0;"
+       }
+      ]
+     },
+     "text_scale": 0.375,
+     "style": 1,
+     "background": "menu_button_selection_bar",
+     "back_color": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "name": "ui_pocket_lean"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Lean shaders",
+     "rect": {
+      "x": 232,
+      "y": 224,
+      "w": 344,
+      "h": 20
+     },
+     "text_scale": 0.32,
+     "name": "ui_pocket_lean_label"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Frees shader memory while loading. Auto is on for the Low profile.",
+     "rect": {
+      "x": 232,
+      "y": 239,
+      "w": 344,
+      "h": 12
+     },
+     "text_scale": 0.22,
+     "name": "ui_pocket_lean_desc",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode",
+    "fields": {
+     "item_type": 12,
+     "static_flags": 0,
+     "dvar": "ui_pocket_clip",
+     "choices": [
+      [
+       "Auto",
+       "auto"
+      ],
+      [
+       "On",
+       "on"
+      ],
+      [
+       "Off",
+       "off"
+      ]
+     ],
+     "vis_exp": "1",
+     "disabled_exp": "0",
+     "text_key": "",
+     "text_exp": "",
+     "text_align_mode": 10,
+     "text_align_x": -8,
+     "text_align_y": 0,
+     "fore_color": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "rect": {
+      "x": 232,
+      "y": 252,
+      "w": 344,
+      "h": 20
+     },
+     "handlers": {
+      "action": [
+       {
+        "Script": "play mouse_click;"
+       }
+      ],
+      "focus": [
+       {
+        "Script": "play mouse_over; setItemColor self backcolor 0 0 0 1;"
+       }
+      ],
+      "leave_focus": [
+       {
+        "Script": "setItemColor self backcolor 0 0 0 0;"
+       }
+      ]
+     },
+     "text_scale": 0.375,
+     "style": 1,
+     "background": "menu_button_selection_bar",
+     "back_color": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "name": "ui_pocket_clip"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Replay clip buffer",
+     "rect": {
+      "x": 232,
+      "y": 252,
+      "w": 344,
+      "h": 20
+     },
+     "text_scale": 0.32,
+     "name": "ui_pocket_clip_label"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Keeps the last 45 s for the clip command. Uses memory. Auto is off.",
+     "rect": {
+      "x": 232,
+      "y": 267,
+      "w": 344,
+      "h": 12
+     },
+     "text_scale": 0.22,
+     "name": "ui_pocket_clip_desc",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode",
+    "fields": {
+     "item_type": 12,
+     "static_flags": 0,
+     "dvar": "ui_pocket_promodelay",
+     "choices": [
+      [
+       "Auto",
+       "auto"
+      ],
+      [
+       "0",
+       "0"
+      ],
+      [
+       "30",
+       "30"
+      ],
+      [
+       "60",
+       "60"
+      ],
+      [
+       "120",
+       "120"
+      ]
+     ],
+     "vis_exp": "1",
+     "disabled_exp": "0",
+     "text_key": "",
+     "text_exp": "",
+     "text_align_mode": 10,
+     "text_align_x": -8,
+     "text_align_y": 0,
+     "fore_color": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "rect": {
+      "x": 232,
+      "y": 280,
+      "w": 344,
+      "h": 20
+     },
+     "handlers": {
+      "action": [
+       {
+        "Script": "play mouse_click;"
+       }
+      ],
+      "focus": [
+       {
+        "Script": "play mouse_over; setItemColor self backcolor 0 0 0 1;"
+       }
+      ],
+      "leave_focus": [
+       {
+        "Script": "setItemColor self backcolor 0 0 0 0;"
+       }
+      ]
+     },
+     "text_scale": 0.375,
+     "style": 1,
+     "background": "menu_button_selection_bar",
+     "back_color": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "name": "ui_pocket_promodelay"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "120 Hz delay (s)",
+     "rect": {
+      "x": 232,
+      "y": 280,
+      "w": 344,
+      "h": 20
+     },
+     "text_scale": 0.32,
+     "name": "ui_pocket_promodelay_label"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Seconds at 60 Hz after a match starts, before 120 Hz. Auto is 60.",
+     "rect": {
+      "x": 232,
+      "y": 295,
+      "w": 344,
+      "h": 12
+     },
+     "text_scale": 0.22,
+     "name": "ui_pocket_promodelay_desc",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode",
+    "fields": {
+     "item_type": 12,
+     "static_flags": 0,
+     "dvar": "ui_pocket_scale",
+     "choices": [
+      [
+       "Auto",
+       "auto"
+      ],
+      [
+       "0.5",
+       "0.5"
+      ],
+      [
+       "0.67",
+       "0.67"
+      ],
+      [
+       "0.75",
+       "0.75"
+      ],
+      [
+       "0.85",
+       "0.85"
+      ]
+     ],
+     "vis_exp": "1",
+     "disabled_exp": "0",
+     "text_key": "",
+     "text_exp": "",
+     "text_align_mode": 10,
+     "text_align_x": -8,
+     "text_align_y": 0,
+     "fore_color": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "rect": {
+      "x": 232,
+      "y": 308,
+      "w": 344,
+      "h": 20
+     },
+     "handlers": {
+      "action": [
+       {
+        "Script": "play mouse_click;"
+       }
+      ],
+      "focus": [
+       {
+        "Script": "play mouse_over; setItemColor self backcolor 0 0 0 1;"
+       }
+      ],
+      "leave_focus": [
+       {
+        "Script": "setItemColor self backcolor 0 0 0 0;"
+       }
+      ]
+     },
+     "text_scale": 0.375,
+     "style": 1,
+     "background": "menu_button_selection_bar",
+     "back_color": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "name": "ui_pocket_scale"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Render scale",
+     "rect": {
+      "x": 232,
+      "y": 308,
+      "w": 344,
+      "h": 20
+     },
+     "text_scale": 0.32,
+     "name": "ui_pocket_scale_label"
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Draws below screen resolution. Faster, blurrier. Auto is full size.",
+     "rect": {
+      "x": 232,
+      "y": 323,
+      "w": 344,
+      "h": 12
+     },
+     "text_scale": 0.22,
+     "name": "ui_pocket_scale_desc",
      "fore_color": [
       0.75,
       0.75,
@@ -839,7 +1271,7 @@
      "text_key": "",
      "rect": {
       "x": 232,
-      "y": 256,
+      "y": 340,
       "w": 344,
       "h": 20
      },
@@ -876,7 +1308,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 278,
+      "y": 362,
       "w": 344,
       "h": 20
      },
@@ -916,7 +1348,7 @@
      "text_key": "Report a problem on GitHub",
      "rect": {
       "x": 232,
-      "y": 278,
+      "y": 362,
       "w": 344,
       "h": 20
      },
@@ -931,7 +1363,7 @@
      "text_key": "",
      "rect": {
       "x": 232,
-      "y": 300,
+      "y": 384,
       "w": 344,
       "h": 20
      },

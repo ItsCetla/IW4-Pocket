@@ -76,7 +76,7 @@ class Contract(unittest.TestCase):
         # Every shown value must be a key in the row's map in pocket_options.rs.
         maps = {}
         for dvar, body in re.findall(r'dvar: "(ui_pocket_[a-z]+)",.*?map: &\[(.*?)\],\n    \}', rust, re.S):
-            maps[dvar] = re.findall(r'\("([a-z0-9]+)", ', body)
+            maps[dvar] = re.findall(r'\("([a-z0-9.]+)", ', body)
         for c in menu["item_copies"]:
             f = c["fields"]
             if f.get("dvar", "").startswith("ui_pocket_"):

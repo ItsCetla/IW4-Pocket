@@ -65,6 +65,26 @@ pub(crate) const OPTIONS: &[Opt] = &[
         env: diag::memory_settings::SHADOWS_ENV,
         map: &[("auto", None), ("off", Some("0")), ("on", Some("1"))],
     },
+    Opt {
+        dvar: "ui_pocket_lean",
+        env: "IW4L_LEAN_SHADERS",
+        map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
+    },
+    Opt {
+        dvar: "ui_pocket_clip",
+        env: "IW4L_CLIP_RING",
+        map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
+    },
+    Opt {
+        dvar: "ui_pocket_promodelay",
+        env: "IW4L_PROMOTION_DELAY",
+        map: &[("auto", None), ("0", Some("0")), ("30", Some("30")), ("60", Some("60")), ("120", Some("120"))],
+    },
+    Opt {
+        dvar: "ui_pocket_scale",
+        env: "IW4L_RENDER_SCALE",
+        map: &[("auto", None), ("0.5", Some("0.5")), ("0.67", Some("0.67")), ("0.75", Some("0.75")), ("0.85", Some("0.85"))],
+    },
 ];
 
 /// The menu value for what `iw4l-env.txt` currently holds. A value the menu cannot show

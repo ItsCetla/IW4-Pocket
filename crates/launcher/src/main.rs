@@ -144,6 +144,9 @@ fn main() {
         }
         let settings = diag::memory_settings::get().report();
         diag::boot_crumb(&settings);
+        for note in diag::memory_settings::apply_tier_defaults() {
+            diag::boot_crumb(&format!("profile default: {note}"));
+        }
         // Persist effective controls even if jetsam kills us before summary.json.
         if let Err(error) = std::fs::write(docs.join("iw4l-memory-settings.txt"), &settings) {
             diag::boot_crumb(&format!("memory settings report write failed: {error}"));

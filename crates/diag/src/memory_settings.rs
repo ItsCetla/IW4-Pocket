@@ -228,8 +228,53 @@ pub fn valid_file_setting(name: &str, value: &str) -> bool {
         // pipelines are built, instead of keeping it for the rest of the run (off
         // by default; Apple only).
         "IW4L_LEAN_SHADERS" => matches!(value, "0" | "1"),
+        // Startup commands for iOS (no console there), e.g. `map mp_rust; bot add 5`.
+        "IW4L_CMDS" => valid_startup_cmds(value),
         _ => false,
     }
+}
+
+/// `IW4L_CMDS` from the iOS text file: only `map`, `bot`, `set` and `seta`, plain
+/// characters, at most 200 bytes and 8 commands. Nothing that reaches files, the
+/// network or other engine controls is accepted.
+pub fn valid_startup_cmds(value: &str) -> bool {
+    if value.is_empty() || value.len() > 200 {
+        return false;
+    }
+    let mut count = 0;
+    for command in value.split(';') {
+        let command = command.trim();
+        if command.is_empty() {
+            continue;
+        }
+        count += 1;
+        let first = command.split_whitespace().next().unwrap_or("");
+        if !matches!(first, "map" | "bot" | "set" | "seta") {
+            return false;
+        }
+        if !command
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, ' ' | '_' | '.' | '-'))
+        {
+            return false;
+        }
+    }
+    (1..=8).contains(&count)
+}
+
+/// Switches that are on by default for one device profile only, set from the profile
+/// when the text file did not set them. The vendored wgpu-core reads the environment
+/// itself, so the default has to be put there. Call once at startup, before other
+/// threads exist, after `get()`.
+pub fn apply_tier_defaults() -> Vec<String> {
+    let mut notes = Vec::new();
+    let low = get().tier == Tier::Low;
+    if cfg!(target_os = "ios") && low && std::env::var_os("IW4L_LEAN_SHADERS").is_none() {
+        // SAFETY: documented precondition: called at startup before other threads exist.
+        unsafe { std::env::set_var("IW4L_LEAN_SHADERS", "1") };
+        notes.push("IW4L_LEAN_SHADERS=1 (default for the Low profile)".to_owned());
+    }
+    notes
 }
 
 #[cfg(test)]
@@ -339,6 +384,12 @@ mod tests {
         for v in ["on", "off", "true", "2", "", " 1", "1\0"] {
             assert!(!valid_file_setting("IW4L_LEAN_SHADERS", v), "{v:?}");
         }
+        assert!(valid_startup_cmds("map mp_rust; bot add 5"));
+        assert!(valid_startup_cmds("set g_gametype dm"));
+        for v in ["", "quit", "exec x", "map a; quit", "map a/b", "map $(x)", "bot add 5;;;;;;;;;;map a;map b;map c;map d;map e;map f;map g;map h"] {
+            assert!(!valid_startup_cmds(v), "{v:?}");
+        }
+        assert!(!valid_startup_cmds(&"map a;".repeat(40)));
         for name in ["IW4L_DT_SNAP", "IW4L_FRAME_STATS"] {
             assert!(valid_file_setting(name, "0"));
             assert!(valid_file_setting(name, "1"));
