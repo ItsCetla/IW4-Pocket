@@ -21,6 +21,8 @@
 
 <p align="center">🌍 <a href="README.md">English</a> · <a href="README.it.md">Italiano</a> · <b>Español</b> · <a href="README.fr.md">Français</a> · <a href="README.de.md">Deutsch</a></p>
 
+<p align="center"><a href="https://markussela.github.io/IW4-Pocket/sidestore/"><img src="media/add-to-sidestore.jpg" width="230" alt="Add to AltStore or SideStore"></a></p>
+
 ## 🎯 ¿Qué es?
 
 Un port a iOS del motor de código abierto [IW4L](https://github.com/vladtrc/iw4L). **No contiene el juego**: lee los archivos del juego **que ya tienes** en PC. Es un nuevo lector para archivos que ya posees.
@@ -40,11 +42,10 @@ No hace falta saber programar. Lleva unos 15 minutos más la copia de archivos.
 1. **Consigue los archivos del juego.** Necesitas tu propia copia de *Modern Warfare 2 (2009)* para **PC** (versión de Steam). La carpeta debe contener una subcarpeta llamada `zone`. Este proyecto no proporciona ni enlaza archivos del juego
 2. **Instala SideStore** en tu iPhone con la [guía oficial](https://sidestore.io). Es la herramienta que instala apps como esta
 3. **Descarga la app:** [IW4.Pocket.ipa](https://github.com/MarkusSela/IW4-Pocket/releases/latest/download/IW4.Pocket.ipa) (o abre la [página de la release](https://github.com/MarkusSela/IW4-Pocket/releases/latest))
-4. **O añade la source en SideStore:** [![Add to SideStore](https://img.shields.io/badge/Add%20to-SideStore-5b3df5?style=for-the-badge)](sidestore://source?url=https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json) (tócalo desde tu iPhone y elige *IW4 Pocket*; las versiones de prueba dicen TEST). Enlace de la source: `https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json`
-5. **Instálala con SideStore** (toca **+**, elige el archivo). Si ya tienes una versión anterior, instala **encima**: desinstalar borra tus archivos del juego
-6. **Abre la app una vez** y ciérrala. Así crea su carpeta
-7. **Copia tu carpeta de MW2** en la app Archivos: *En mi iPhone > IW4 Pocket > Games*. Vale cualquier nombre, si contiene `zone`
-8. **Empareja un mando** en los ajustes de Bluetooth (PS4/DualShock 4 verificado) y abre la app. La primera carga es lenta y la pantalla puede quedarse rosa un rato
+4. **Instálala con SideStore** (toca **+**, elige el archivo). Si ya tienes una versión anterior, instala **encima**: desinstalar borra tus archivos del juego
+5. **Abre la app una vez** y ciérrala. Así crea su carpeta
+6. **Copia tu carpeta de MW2** en la app Archivos: *En mi iPhone > IW4 Pocket > Games*. Vale cualquier nombre, si contiene `zone`
+7. **Empareja un mando** en los ajustes de Bluetooth (PS4/DualShock 4 verificado) y abre la app. La primera carga es lenta y la pantalla puede quedarse rosa un rato
 
 ## 📱 ¿Funcionará en mi dispositivo?
 
