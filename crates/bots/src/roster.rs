@@ -68,6 +68,11 @@ const BOT_NAMES: [&str; 60] = [
     "AFK_Andy",
 ];
 
+/// The name the `index`th bot of a match gets (the lobby list shows these before it starts).
+pub fn lobby_bot_name(index: u32) -> &'static str {
+    BOT_NAMES[index as usize % BOT_NAMES.len()]
+}
+
 #[derive(Resource, Debug, Default)]
 pub struct BotAddQueue(pub Vec<BotAddRequest>);
 
@@ -212,8 +217,8 @@ impl BotRoster {
                 .copied()
                 .filter(|name| !self.bots.iter().any(|bot| bot.name == *name))
                 .collect();
-            let random = u64::from_le_bytes(account[..8].try_into().unwrap());
-            let name = available[(random % available.len() as u64) as usize];
+            // In order, so the names the lobby list showed are the ones that join.
+            let name = available[0];
             self.bots.push(BotSlot {
                 id,
                 name,

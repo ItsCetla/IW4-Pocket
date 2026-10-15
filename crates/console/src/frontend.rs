@@ -324,9 +324,13 @@ pub(crate) fn route(
                     }
                     let first = command.args.first().map(String::as_str);
                     let wanted = services.bots.as_mut().ok_or("Bots are unavailable")?;
-                    let new = if first == Some("toggle") {
-                        // The BOTS row: off when there are bots, five when there are none.
-                        if wanted.0 > 0 { 0 } else { 5 }
+                    let new = if first == Some("cycle") {
+                        // The BOTS row in the Private Match menu: one more each tap, 0 after 10.
+                        if wanted.0 >= bots::UI_MAX_BOTS {
+                            0
+                        } else {
+                            wanted.0 + 1
+                        }
                     } else {
                         let delta = first.and_then(|arg| arg.parse::<isize>().ok()).unwrap_or(0);
                         (wanted.0 as isize + delta).clamp(0, bots::UI_MAX_BOTS as isize) as u32
@@ -703,6 +707,17 @@ pub(crate) fn route(
     } else {
         dvars.set("ui_lobby_players", "PLAYERS: 1 / 18");
     }
+    // Bots wanted for the next match sit in the list, so the lobby shows who will play.
+    let bots_row = !state.public && party.in_lobby && party.is_host;
+    if bots_row {
+        let wanted = services.bots.as_ref().map_or(0, |b| b.0);
+        lobby_names.extend((0..wanted).map(|i| bots::lobby_bot_name(i).to_owned()));
+        dvars.set(
+            "ui_lobby_players",
+            format!("PLAYERS: {} / 18", lobby_names.len()),
+        );
+    }
+    dvars.set("ui_lobby_bots_row", if bots_row { "1" } else { "0" });
     for row in 0..18 {
         let name = lobby_names.get(row);
         dvars.set(

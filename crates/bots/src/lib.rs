@@ -29,6 +29,7 @@ pub use query::{
     Budgeted, HullTrace, ObstacleKind, QueryCounters, QueryDenied, QueryResult, QuerySubsystem,
     SightSample, TraceBudget, WalkSample, WorldQuery,
 };
+pub use roster::lobby_bot_name;
 pub use roster::{
     BotAddQueue, BotAddRequest, BotFireQueue, BotHold, BotRoster, BotTpQueue, BotTpRequest,
     BotTpTarget, BotTpWhere, MAX_HOST_BOTS,
