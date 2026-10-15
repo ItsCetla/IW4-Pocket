@@ -801,7 +801,7 @@
           "handlers": {
             "action": [
               {
-                "Script": "if (getDvar \"ui_lobby_bot_count\" == \"BOTS: OFF\") exec \"ui_lobby_bot_count 1\"; else exec \"ui_lobby_bot_count -1\";"
+                "Script": "play mouse_click; exec \"ui_lobby_bot_count toggle\";"
               }
             ]
           }

@@ -322,13 +322,15 @@ pub(crate) fn route(
                     if !party.in_lobby || !party.is_host {
                         return Err("Only the host can change bot count".into());
                     }
-                    let delta = command
-                        .args
-                        .first()
-                        .and_then(|arg| arg.parse::<isize>().ok())
-                        .unwrap_or(0);
+                    let first = command.args.first().map(String::as_str);
                     let wanted = services.bots.as_mut().ok_or("Bots are unavailable")?;
-                    let new = (wanted.0 as isize + delta).clamp(0, bots::UI_MAX_BOTS as isize) as u32;
+                    let new = if first == Some("toggle") {
+                        // The BOTS row: off when there are bots, five when there are none.
+                        if wanted.0 > 0 { 0 } else { 5 }
+                    } else {
+                        let delta = first.and_then(|arg| arg.parse::<isize>().ok()).unwrap_or(0);
+                        (wanted.0 as isize + delta).clamp(0, bots::UI_MAX_BOTS as isize) as u32
+                    };
                     if new != wanted.0 {
                         wanted.0 = new;
                         // Same value as IW4 Pocket options > Bots and IW4L_BOTS in iw4l-env.txt.

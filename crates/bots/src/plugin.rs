@@ -212,11 +212,16 @@ fn drain_bot_add_queue(
     mut queue: ResMut<BotAddQueue>,
     mut roster: ResMut<BotRoster>,
     local: Res<LocalPresentClient>,
+    role: Res<RuntimeRole>,
     world: Option<Res<AuthorityWorld>>,
     hub: Option<Res<net::UdpAuthorityHub>>,
 ) {
     let requests = queue.drain();
     if requests.is_empty() {
+        return;
+    }
+    if !matches!(*role, RuntimeRole::Listen | RuntimeRole::Dedicated) {
+        diag::info!(Sim, "bots: only the host adds bots, request dropped");
         return;
     }
     let mut taken = vec![local.0];

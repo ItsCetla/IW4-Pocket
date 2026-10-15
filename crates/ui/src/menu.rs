@@ -218,20 +218,23 @@ pub fn install_frontend_menus(catalog: &mut asset_game::MenuCatalog) -> Result<(
     Ok(())
 }
 
-
 /// The in-game "Options" menu (Choose Class, Change Team, Options, Mute Players, End Game)
 /// comes from the game's own files. It gets two extra rows, "Add 1 bot" and "Add 5 bots",
 /// but only when the menu has the Mute and End Game rows, so no other menu is touched.
-/// The rows run `bot add` only on the host (`sv_running`); everyone else sees them do nothing.
+/// The rows run `bot add`; the bots crate drops the request unless this device hosts the match.
 /// Every menu that looks like a candidate is named in the log, so a wrong guess shows up
 /// there instead of as a broken menu.
 fn add_bot_rows(name: &str, menu: &mut asset_game::MenuDef) {
     let key = |item: &asset_game::MenuItem| item.text_key.to_ascii_uppercase();
-    let rows: Vec<&asset_game::MenuItem> = menu.items.iter().filter(|item| item.item_type == 1).collect();
+    let rows: Vec<&asset_game::MenuItem> = menu
+        .items
+        .iter()
+        .filter(|item| item.item_type == 1)
+        .collect();
     let mute = rows.iter().find(|item| key(item).contains("MUTE"));
     let end = rows
         .iter()
-        .any(|item| key(item).contains("END_GAME") || key(item).contains("ENDGAME") || key(item).contains("LEAVE"));
+        .any(|item| key(item).contains("END_GAME") || key(item).contains("ENDGAME"));
     if mute.is_none() && !end {
         return;
     }
@@ -240,7 +243,11 @@ fn add_bot_rows(name: &str, menu: &mut asset_game::MenuDef) {
     let (Some(template), true) = (mute.map(|item| (*item).clone()), end) else {
         return;
     };
-    if menu.items.iter().any(|item| item.name == "pocket_bot_add_1") {
+    if menu
+        .items
+        .iter()
+        .any(|item| item.name == "pocket_bot_add_1")
+    {
         return;
     }
     let mut ys: Vec<f32> = rows.iter().map(|item| item.rect.y).collect();
@@ -252,7 +259,10 @@ fn add_bot_rows(name: &str, menu: &mut asset_game::MenuDef) {
         .filter(|g| *g > 1.0)
         .fold(f32::MAX, f32::min);
     let gap = if gap == f32::MAX { 20.0 } else { gap };
-    for (at, (label, count)) in [("Add 1 bot", 1), ("Add 5 bots", 5)].into_iter().enumerate() {
+    for (at, (label, count)) in [("Add 1 bot", 1), ("Add 5 bots", 5)]
+        .into_iter()
+        .enumerate()
+    {
         let mut row = template.clone();
         row.name = format!("pocket_bot_add_{count}");
         row.text_key = label.into();
@@ -260,7 +270,7 @@ fn add_bot_rows(name: &str, menu: &mut asset_game::MenuDef) {
         row.vis_exp = "1".into();
         row.disabled_exp = "0".into();
         row.handlers.action = vec![asset_game::MenuEvent::Script(format!(
-            "play mouse_click; if (getDvar \"sv_running\" == \"1\") exec \"bot add {count}\";"
+            "play mouse_click; exec \"bot add {count}\";"
         ))];
         menu.items.push(row);
     }
