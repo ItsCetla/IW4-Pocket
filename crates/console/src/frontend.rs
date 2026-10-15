@@ -746,7 +746,6 @@ pub(crate) fn route(
     );
     let wanted = services.bots.as_ref().map_or(0, |b| b.0);
     dvars.set("ui_lobby_bot_count", &bots_label(wanted));
-    dvars.set("ui_pocket_bots", &crate::pocket_options::bots_menu_value(wanted));
     let label = |map: &str| {
         presentation.as_ref().map_or_else(
             || map_label(map),

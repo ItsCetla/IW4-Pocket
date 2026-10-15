@@ -40,10 +40,11 @@ No coding needed. It takes about 15 minutes plus the file copy.
 1. **Get the game files.** You need your own copy of *Modern Warfare 2 (2009)* for **PC** (the Steam version). The folder must contain a subfolder named `zone`. This project does not provide or link to game files
 2. **Install SideStore** on your iPhone by following the [official guide](https://sidestore.io). It is the tool that installs apps like this one
 3. **Download the app:** [IW4.Pocket.ipa](https://github.com/MarkusSela/IW4-Pocket/releases/latest/download/IW4.Pocket.ipa) (or open the [release page](https://github.com/MarkusSela/IW4-Pocket/releases/latest))
-4. **Install it with SideStore** (tap **+**, pick the file). If you already have an older version, install **over** it: uninstalling deletes your game files
-5. **Open the app once**, then close it. This creates its folder
-6. **Copy your MW2 folder** into the Files app: *On My iPhone > IW4 Pocket > Games*. Any folder name works, as long as it contains `zone`
-7. **Pair a controller** in Bluetooth settings (PS4/DualShock 4 is verified), then open the app. The first load is slow and the screen can stay pink for a while
+4. **Or add the source in SideStore:** [![Add to SideStore](https://img.shields.io/badge/Add%20to-SideStore-5b3df5?style=for-the-badge)](sidestore://source?url=https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json) (tap it on your iPhone, then pick *IW4 Pocket*; test versions say TEST). Source link: `https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json`
+5. **Install it with SideStore** (tap **+**, pick the file). If you already have an older version, install **over** it: uninstalling deletes your game files
+6. **Open the app once**, then close it. This creates its folder
+7. **Copy your MW2 folder** into the Files app: *On My iPhone > IW4 Pocket > Games*. Any folder name works, as long as it contains `zone`
+8. **Pair a controller** in Bluetooth settings (PS4/DualShock 4 is verified), then open the app. The first load is slow and the screen can stay pink for a while
 
 ## 📱 Will it work on my device?
 
@@ -68,7 +69,7 @@ Tried it? Please [open an issue](https://github.com/MarkusSela/IW4-Pocket/issues
 - **Controller not detected**: pair it in Bluetooth first, then reopen the app
 - **App closes on a map**: that is the known memory issue. Send the log
 - **To limit texture size**: add a text file `iw4l-texture-cap.txt` containing only a number such as `256`, then fully restart the app
-- **Advanced:** a text file `iw4l-env.txt` with lines like `IW4L_NAME=value` sets the engine's own switches without a rebuild. Only the settings in IW4 Pocket options are accepted (for example `IW4L_RENDER_SCALE=0.67`), plus `IW4L_BOTS=5` (bots in every match, also in the lobby), `IW4L_SKIP_CAMO=1` (leave out weapon camo skins) and `IW4L_CMDS=map mp_rust; bot add 5` (only `map`, `bot` and match or bot rules). Anything else is ignored and the log names the line
+- **Advanced:** a text file `iw4l-env.txt` with lines like `IW4L_NAME=value` sets the engine's own switches without a rebuild. Only the settings in IW4 Pocket options are accepted (for example `IW4L_RENDER_SCALE=0.67`), plus `IW4L_BOTS=5` (bots at the start of a match), `IW4L_SKIP_CAMO=1` (leave out weapon camo skins) and `IW4L_CMDS=map mp_rust; bot add 5` (only `map`, `bot` and match or bot rules). Anything else is ignored and the log names the line
 
 ## 🛠️ Build it yourself
 

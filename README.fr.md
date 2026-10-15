@@ -40,10 +40,11 @@ Aucune programmation nécessaire. Comptez environ 15 minutes plus la copie des f
 1. **Procurez-vous les fichiers du jeu.** Il faut votre propre copie de *Modern Warfare 2 (2009)* pour **PC** (version Steam). Le dossier doit contenir un sous-dossier nommé `zone`. Ce projet ne fournit ni ne lie aucun fichier du jeu
 2. **Installez SideStore** sur votre iPhone avec le [guide officiel](https://sidestore.io). C'est l'outil qui installe des apps comme celle-ci
 3. **Téléchargez l'app :** [IW4.Pocket.ipa](https://github.com/MarkusSela/IW4-Pocket/releases/latest/download/IW4.Pocket.ipa) (ou ouvrez la [page de la release](https://github.com/MarkusSela/IW4-Pocket/releases/latest))
-4. **Installez-la avec SideStore** (touchez **+**, choisissez le fichier). Si vous avez déjà une ancienne version, installez **par-dessus** : désinstaller supprime vos fichiers de jeu
-5. **Ouvrez l'app une fois**, puis fermez-la. Cela crée son dossier
-6. **Copiez votre dossier MW2** dans l'app Fichiers : *Sur mon iPhone > IW4 Pocket > Games*. Tout nom convient s'il contient `zone`
-7. **Associez une manette** dans les réglages Bluetooth (PS4/DualShock 4 vérifiée), puis ouvrez l'app. Le premier chargement est lent et l'écran peut rester rose un moment
+4. **Ou ajoutez la source dans SideStore :** [![Add to SideStore](https://img.shields.io/badge/Add%20to-SideStore-5b3df5?style=for-the-badge)](sidestore://source?url=https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json) (touchez-le depuis votre iPhone, puis choisissez *IW4 Pocket* ; les versions d'essai indiquent TEST). Lien de la source : `https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json`
+5. **Installez-la avec SideStore** (touchez **+**, choisissez le fichier). Si vous avez déjà une ancienne version, installez **par-dessus** : désinstaller supprime vos fichiers de jeu
+6. **Ouvrez l'app une fois**, puis fermez-la. Cela crée son dossier
+7. **Copiez votre dossier MW2** dans l'app Fichiers : *Sur mon iPhone > IW4 Pocket > Games*. Tout nom convient s'il contient `zone`
+8. **Associez une manette** dans les réglages Bluetooth (PS4/DualShock 4 vérifiée), puis ouvrez l'app. Le premier chargement est lent et l'écran peut rester rose un moment
 
 ## 📱 Est-ce que ça marchera sur mon appareil ?
 
@@ -68,7 +69,7 @@ Vous avez essayé ? [Ouvrez une issue](https://github.com/MarkusSela/IW4-Pocket/
 - **Manette non détectée** : associez-la d'abord en Bluetooth, puis rouvrez l'app
 - **L'app se ferme sur une carte** : c'est le problème de mémoire connu. Envoyez le journal
 - **Pour limiter les textures** : ajoutez un fichier texte `iw4l-texture-cap.txt` contenant uniquement un nombre, par exemple `256`, puis redémarrez complètement l'app
-- **Avancé :** un fichier texte `iw4l-env.txt` avec des lignes `IW4L_NOM=valeur` règle les interrupteurs du moteur sans recompiler. Seuls les réglages du menu IW4 Pocket sont acceptés (par exemple `IW4L_RENDER_SCALE=0.67`), plus `IW4L_BOTS=5` (bots dans chaque partie, aussi dans le lobby), `IW4L_SKIP_CAMO=1` (sans camouflages d'armes) et `IW4L_CMDS=map mp_rust; bot add 5` (seulement `map`, `bot` et règles de partie ou de bots). Le reste est ignoré et le journal nomme la ligne
+- **Avancé :** un fichier texte `iw4l-env.txt` avec des lignes `IW4L_NOM=valeur` règle les interrupteurs du moteur sans recompiler. Seuls les réglages du menu IW4 Pocket sont acceptés (par exemple `IW4L_RENDER_SCALE=0.67`), plus `IW4L_BOTS=5` (bots au début de la partie), `IW4L_SKIP_CAMO=1` (sans camouflages d'armes) et `IW4L_CMDS=map mp_rust; bot add 5` (seulement `map`, `bot` et règles de partie ou de bots). Le reste est ignoré et le journal nomme la ligne
 
 ## 🛠️ Le compiler soi-même
 

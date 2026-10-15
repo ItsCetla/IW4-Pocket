@@ -230,6 +230,7 @@ pub fn valid_file_setting(name: &str, value: &str) -> bool {
         "IW4L_LEAN_SHADERS" => matches!(value, "0" | "1"),
         // Give free allocator pages back to iOS when little memory is left (on by default
         // on iOS; 0 turns it off).
+        // Kept so an old line in iw4l-env.txt is not reported as invalid; it does nothing now.
         "IW4L_HEAP_RELIEF" => matches!(value, "0" | "1"),
         // 1 = do not prepare weapon camouflage skins (saves memory; guns lose their camos).
         "IW4L_SKIP_CAMO" => matches!(value, "0" | "1"),

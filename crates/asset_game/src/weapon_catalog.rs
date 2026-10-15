@@ -7008,6 +7008,28 @@ impl WeaponBuild {
         (linked, inline)
     }
 
+    /// One log line for the weapon camo setting: how many camo models the weapons carry and
+    /// whether they are kept or left out (IW4L_SKIP_CAMO). Comparing two logs, one with each
+    /// setting, shows the memory the camos cost.
+    pub fn camo_report(&self) -> String {
+        let (mut view, mut world, mut with_camo) = (0usize, 0usize, 0usize);
+        for row in &self.registry.rows {
+            let (v, w) = (row.camo_models.view.len(), row.camo_models.world.len());
+            view += v;
+            world += w;
+            with_camo += usize::from(v + w > 0);
+        }
+        let state = if diag::memory_settings::skip_camo() {
+            "left out (IW4L_SKIP_CAMO=1)"
+        } else {
+            "kept (IW4L_SKIP_CAMO off)"
+        };
+        format!(
+            "camouflage: {state} - {view} view + {world} world camo models on {with_camo} of {} weapons",
+            self.registry.rows.len()
+        )
+    }
+
     pub fn resolve_fpv_mesh_edges(&mut self, fpv: &crate::FpvMeshCatalog) {
         for row in &mut self.registry.rows {
             row.gun_xmodel_edge =

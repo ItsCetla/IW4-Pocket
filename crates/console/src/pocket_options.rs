@@ -30,6 +30,16 @@ pub(crate) const OPTIONS: &[Opt] = &[
         map: &[("auto", None), ("low", Some("low")), ("mid", Some("mid")), ("high", Some("high"))],
     },
     Opt {
+        dvar: "ui_pocket_scale",
+        env: "IW4L_RENDER_SCALE",
+        map: &[("auto", None), ("0.5", Some("0.5")), ("0.67", Some("0.67")), ("0.75", Some("0.75")), ("0.85", Some("0.85"))],
+    },
+    Opt {
+        dvar: "ui_pocket_pace",
+        env: "IW4L_FRAME_PACE",
+        map: &[("auto", None), ("30", Some("30")), ("40", Some("40")), ("60", Some("60"))],
+    },
+    Opt {
         dvar: "ui_pocket_texture",
         env: diag::memory_settings::TEXTURE_CAP_ENV,
         map: &[
@@ -39,6 +49,16 @@ pub(crate) const OPTIONS: &[Opt] = &[
             ("512", Some("512")),
             ("1024", Some("1024")),
         ],
+    },
+    Opt {
+        dvar: "ui_pocket_lean",
+        env: "IW4L_LEAN_SHADERS",
+        map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
+    },
+    Opt {
+        dvar: "ui_pocket_camo",
+        env: "IW4L_SKIP_CAMO",
+        map: &[("auto", None), ("skip", Some("1")), ("keep", Some("0"))],
     },
     Opt {
         dvar: "ui_pocket_latency",
@@ -51,9 +71,9 @@ pub(crate) const OPTIONS: &[Opt] = &[
         map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
     },
     Opt {
-        dvar: "ui_pocket_pace",
-        env: "IW4L_FRAME_PACE",
-        map: &[("auto", None), ("30", Some("30")), ("40", Some("40")), ("60", Some("60"))],
+        dvar: "ui_pocket_promodelay",
+        env: "IW4L_PROMOTION_DELAY",
+        map: &[("auto", None), ("0", Some("0")), ("30", Some("30")), ("60", Some("60")), ("120", Some("120"))],
     },
     Opt {
         dvar: "ui_pocket_bc",
@@ -66,51 +86,9 @@ pub(crate) const OPTIONS: &[Opt] = &[
         map: &[("auto", None), ("off", Some("0")), ("on", Some("1"))],
     },
     Opt {
-        dvar: "ui_pocket_lean",
-        env: "IW4L_LEAN_SHADERS",
-        map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
-    },
-    Opt {
         dvar: "ui_pocket_clip",
         env: "IW4L_CLIP_RING",
         map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
-    },
-    Opt {
-        dvar: "ui_pocket_promodelay",
-        env: "IW4L_PROMOTION_DELAY",
-        map: &[("auto", None), ("0", Some("0")), ("30", Some("30")), ("60", Some("60")), ("120", Some("120"))],
-    },
-    Opt {
-        dvar: "ui_pocket_scale",
-        env: "IW4L_RENDER_SCALE",
-        map: &[("auto", None), ("0.5", Some("0.5")), ("0.67", Some("0.67")), ("0.75", Some("0.75")), ("0.85", Some("0.85"))],
-    },
-    Opt {
-        dvar: "ui_pocket_relief",
-        env: "IW4L_HEAP_RELIEF",
-        map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
-    },
-    Opt {
-        dvar: "ui_pocket_bots",
-        env: "IW4L_BOTS",
-        map: &[
-            ("auto", None),
-            ("1", Some("1")),
-            ("2", Some("2")),
-            ("3", Some("3")),
-            ("4", Some("4")),
-            ("5", Some("5")),
-            ("6", Some("6")),
-            ("7", Some("7")),
-            ("8", Some("8")),
-            ("9", Some("9")),
-            ("10", Some("10")),
-        ],
-    },
-    Opt {
-        dvar: "ui_pocket_camo",
-        env: "IW4L_SKIP_CAMO",
-        map: &[("auto", None), ("skip", Some("1")), ("keep", Some("0"))],
     },
 ];
 
@@ -131,11 +109,6 @@ pub(crate) fn menu_value(opt: &Opt, file_value: Option<&str>) -> &'static str {
 /// `None` means the menu value is not one of this row's choices.
 pub(crate) fn env_value(opt: &Opt, shown: &str) -> Option<Option<&'static str>> {
     opt.map.iter().find(|(s, _)| *s == shown).map(|(_, env)| *env)
-}
-
-/// The menu value that shows `n` bots (0 reads as Auto).
-pub(crate) fn bots_menu_value(n: u32) -> String {
-    if n == 0 { "auto".into() } else { n.to_string() }
 }
 
 /// Keeps the bot count in `iw4l-env.txt` (iOS), so the next launch starts with it.
@@ -180,7 +153,6 @@ pub(crate) fn pocket_options_menu(
     mut dvars: ResMut<frame::UiMenuDvars>,
     mut state: Local<PocketState>,
     mut open: MessageWriter<OpenExternalUrl>,
-    mut wanted: Option<ResMut<bots::BotWanted>>,
 ) {
     if !state.started {
         state.started = true;
@@ -227,14 +199,7 @@ pub(crate) fn pocket_options_menu(
                 diag::warn!(Console, "pocket options: could not save {}: {error}", path.display());
             }
         }
-        if opt.env == "IW4L_BOTS" {
-            // Bots apply to the next match without a restart; the lobby row follows.
-            if let Some(wanted) = wanted.as_mut() {
-                wanted.0 = env.and_then(|v| v.parse().ok()).unwrap_or(0);
-            }
-        } else {
-            state.current[at] = menu_value(opt, env);
-        }
+        state.current[at] = menu_value(opt, env);
         // Leaving the send button armed would let a stray press open the browser.
         state.armed = false;
     }

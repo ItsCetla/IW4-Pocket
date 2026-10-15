@@ -40,10 +40,11 @@ Non serve saper programmare. Ci vogliono circa 15 minuti più la copia dei file.
 1. **Procurati i file del gioco.** Serve la tua copia di *Modern Warfare 2 (2009)* per **PC** (versione Steam). La cartella deve contenere una sottocartella chiamata `zone`. Questo progetto non fornisce né linka file del gioco
 2. **Installa SideStore** sul tuo iPhone seguendo la [guida ufficiale](https://sidestore.io). È lo strumento che installa app come questa
 3. **Scarica l'app:** [IW4.Pocket.ipa](https://github.com/MarkusSela/IW4-Pocket/releases/latest/download/IW4.Pocket.ipa) (o apri la [pagina della release](https://github.com/MarkusSela/IW4-Pocket/releases/latest))
-4. **Installala con SideStore** (tocca **+**, scegli il file). Se hai già una versione precedente, installa **sopra**: disinstallare cancella i file di gioco
-5. **Apri l'app una volta**, poi chiudila. Così crea la sua cartella
-6. **Copia la cartella di MW2** nell'app File: *Su iPhone > IW4 Pocket > Games*. Va bene qualsiasi nome, purché contenga `zone`
-7. **Collega un controller** nelle impostazioni Bluetooth (PS4/DualShock 4 verificato), poi apri l'app. Il primo caricamento è lento e lo schermo può restare rosa per un po'
+4. **Oppure aggiungi la source in SideStore:** [![Add to SideStore](https://img.shields.io/badge/Add%20to-SideStore-5b3df5?style=for-the-badge)](sidestore://source?url=https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json) (toccalo dal tuo iPhone, poi scegli *IW4 Pocket*; le versioni di prova dicono TEST). Link della source: `https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json`
+5. **Installala con SideStore** (tocca **+**, scegli il file). Se hai già una versione precedente, installa **sopra**: disinstallare cancella i file di gioco
+6. **Apri l'app una volta**, poi chiudila. Così crea la sua cartella
+7. **Copia la cartella di MW2** nell'app File: *Su iPhone > IW4 Pocket > Games*. Va bene qualsiasi nome, purché contenga `zone`
+8. **Collega un controller** nelle impostazioni Bluetooth (PS4/DualShock 4 verificato), poi apri l'app. Il primo caricamento è lento e lo schermo può restare rosa per un po'
 
 ## 📱 Funzionerà sul mio dispositivo?
 
@@ -68,7 +69,7 @@ L'hai provato? [Apri una segnalazione](https://github.com/MarkusSela/IW4-Pocket/
 - **Controller non rilevato**: collegalo prima nel Bluetooth, poi riapri l'app
 - **L'app si chiude su una mappa**: è il problema di memoria noto. Mandami il log
 - **Per limitare le texture**: aggiungi un file di testo `iw4l-texture-cap.txt` con solo un numero, ad esempio `256`, poi riavvia del tutto l'app
-- **Avanzate:** un file di testo `iw4l-env.txt` con righe `IW4L_NOME=valore` imposta gli interruttori del motore senza ricompilare. Sono accettate solo le impostazioni del menu IW4 Pocket (ad esempio `IW4L_RENDER_SCALE=0.67`), più `IW4L_BOTS=5` (bot in ogni partita, anche nella lobby), `IW4L_SKIP_CAMO=1` (senza mimetiche delle armi) e `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot` e regole di partita o dei bot). Il resto viene ignorato e il log indica la riga
+- **Avanzate:** un file di testo `iw4l-env.txt` con righe `IW4L_NOME=valore` imposta gli interruttori del motore senza ricompilare. Sono accettate solo le impostazioni del menu IW4 Pocket (ad esempio `IW4L_RENDER_SCALE=0.67`), più `IW4L_BOTS=5` (bot all'inizio della partita), `IW4L_SKIP_CAMO=1` (senza mimetiche delle armi) e `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot` e regole di partita o dei bot). Il resto viene ignorato e il log indica la riga
 
 ## 🛠️ Compilarlo da solo
 

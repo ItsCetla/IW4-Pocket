@@ -61,8 +61,9 @@ class Contract(unittest.TestCase):
     def test_pocket_menu_matches_the_code(self):
         """The generated menu and pocket_options.rs must list the same rows."""
         import json
-        menu = json.loads(text("crates/ui/menus/pocket.json"))[0]
-        self.assertEqual(menu["name"], "options_pocket")
+        pages = json.loads(text("crates/ui/menus/pocket.json"))
+        self.assertEqual([m["name"] for m in pages], ["options_pocket", "options_pocket2"])
+        menu = {"item_copies": [c for m in pages for c in m["item_copies"]]}
         rust = text("crates/console/src/pocket_options.rs")
         rust_rows = re.findall(r'dvar: "(ui_pocket_[a-z]+)"', rust)
         menu_rows = [c["fields"]["dvar"] for c in menu["item_copies"]

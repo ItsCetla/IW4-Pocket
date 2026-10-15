@@ -1,15 +1,21 @@
 # IW4 Pocket 0.3.6
 
-**Not yet tested on a phone.** Adds bots without the console, an option to leave out weapon camo skins, and builds on 0.3.5 (free spare memory).
+**Not yet tested on a phone.** Bots you can add in the lobby and during a match, an option to leave out weapon camo skins, a shorter options menu, and new bot names.
 
 **Bots** (issues #4 and #6)
-- One setting, three places, always in step: **Options > IW4 Pocket options > Bots in every match**, the new **BOTS** row in the lobby before a match (game setup), and `IW4L_BOTS=5` in `iw4l-env.txt`. 0 to 10 bots, added when a match starts.
-- `IW4L_CMDS=map mp_rust; bot add 5` also works again (only `map`, `bot`, and `set`/`seta` on match and bot rules).
-- Credits: `IW4L_BOTS` by [LemonMoo](https://github.com/LemonMoo) (Cade Palmer), the lobby bot row by [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Both cherry-picked with their authorship. I changed them to share one value and capped the lobby row at 10 bots.
+- **Lobby:** a **BOTS** row in game setup, before the match (0 to 10).
+- **During a match:** open the **Options** menu (Start) and tap **Add 1 bot** or **Add 5 bots**. Only the host adds bots; for everyone else the rows do nothing. If the rows do not show up, send `iw4l-boot.log`: it lists the menus it looked at.
+- `IW4L_BOTS=5` in `iw4l-env.txt` still sets how many bots a match starts with, and `IW4L_CMDS=map mp_rust; bot add 5` works as before (only `map`, `bot`, and `set`/`seta` on match and bot rules). Neither has a row in the options menu.
+- New bot names (2009-2010 style and a few memes), up to 15 characters.
+- Credits: `IW4L_BOTS` by [LemonMoo](https://github.com/LemonMoo) (Cade Palmer), the lobby bot row by [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Both cherry-picked with their authorship, changed to share one value.
 
-**Memory**
-- **Weapon camo skins**: new row *Weapon camo skins* in IW4 Pocket options (Auto keeps them, **Skip** leaves them out). Idea and first code by [mk2rs2000](https://github.com/mk2rs2000), who skipped them on iOS; here it is a setting, off by default, so nobody loses camos without choosing to. The log has `camouflage:` and memory lines to compare.
-- From 0.3.5: **Free spare memory** hands unused allocator pages back to iOS when little is left (log line `heap relief:`).
-- For phones with about 3 GB for the app: set **Render scale** to 0.67 or 0.5, and try **Weapon camo skins: Skip**.
+**Options menu**
+- **IW4 Pocket options** now has two pages: the first with the settings that matter most (profile, render scale, frame limit, texture size, lean shaders, weapon camo skins) and a second with the rest. "Free spare memory" is gone: in tests it gave back 0 MiB. Old `IW4L_HEAP_RELIEF` lines in `iw4l-env.txt` are ignored.
+- **Weapon camo skins** (Auto keeps them, **Skip** leaves them out). The log has a `camouflage:` line saying what was kept or left out. Compare two logs, one with each setting, to see the memory they cost. Idea and first code by [mk2rs2000](https://github.com/mk2rs2000).
+
+**SideStore source**
+- Add `https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json` in SideStore (Sources, +). Test versions say TEST.
+
+For phones with about 3 GB for the app: set **Render scale** to 0.67 or 0.5, and try **Weapon camo skins: Skip**.
 
 Please send `iw4l-boot.log` (and `iw4l-boot.crash.log` if the app closes) and say how you installed the app.

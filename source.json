@@ -1,0 +1,96 @@
+{
+  "name": "IW4 Pocket",
+  "identifier": "com.markussela.iw4l.source",
+  "subtitle": "Modern Warfare 2 on iPhone",
+  "description": "Releases of IW4 Pocket. Versions marked TEST are for trying new things.",
+  "iconURL": "https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/ios/icons/AppIcon-1024.png",
+  "website": "https://github.com/MarkusSela/IW4-Pocket",
+  "tintColor": "#2f3a2f",
+  "apps": [
+    {
+      "name": "IW4 Pocket",
+      "bundleIdentifier": "com.markussela.iw4l",
+      "developerName": "MarkusSela",
+      "subtitle": "Modern Warfare 2 on iPhone",
+      "localizedDescription": "A port of MW2 (2009) to iPhone. You need your own copy of the PC game files.",
+      "iconURL": "https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/ios/icons/AppIcon-1024.png",
+      "tintColor": "#2f3a2f",
+      "category": "games",
+      "versions": [
+        {
+          "version": "0.3.4",
+          "date": "2026-10-14T19:08:15Z",
+          "size": 38892350,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.4/IW4.Pocket.ipa",
+          "localizedDescription": "Test build aimed at phones with a 3 GB memory grant (iPhone 13 Pro Max, iPhone 15, SideStore with a free account), where `mp_rust` was closed by iOS while the map prepared its graphics. **Not yet tested on a phone.** Please send `iw4l-boot.log` and `iw4l-memory-settings.txt`.",
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.3.3",
+          "date": "2026-10-11T10:47:30Z",
+          "size": 38866749,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.3/IW4.Pocket.ipa",
+          "localizedDescription": "Built to get `mp_rust` running on the iPhone 13 Pro Max (A15) and to make problem reports easy. **Tested on an iPhone 13 Pro Max:** the graphics error is gone and the IW4 Pocket options work, but the app still runs out of memory while the map prepares its graphics (see Known).",
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.3.2",
+          "date": "2026-10-10T09:37:22Z",
+          "size": 38827269,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.2/IW4.Pocket.ipa",
+          "localizedDescription": "Built to find out where the memory goes and why the app quits after loading `mp_rust`. It is **not a fix**, and it has **not been run on a phone yet** (the package was checked, the game was not).",
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.3.0",
+          "date": "2026-10-07T13:59:57Z",
+          "size": 38761494,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.0/IW4.Pocket.ipa",
+          "localizedDescription": "The app now looks at the phone and picks its own memory settings. This is the biggest change since 0.2.0.",
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.2.1",
+          "date": "2026-10-07T06:39:47Z",
+          "size": 38763755,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.2.1/IW4.Pocket.ipa",
+          "localizedDescription": "This candidate changes memory ownership and shader scheduling, not just diagnostics.",
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.1.9",
+          "date": "2026-10-06T13:58:12Z",
+          "size": 32765223,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.1.9/IW4.Pocket.ipa",
+          "localizedDescription": "Unofficial iOS port of [IW4L](https://github.com/vladtrc/iw4L), the open-source Rust runtime for Modern Warfare 2 (2009).",
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.1.8",
+          "date": "2026-10-06T06:24:06Z",
+          "size": 32763996,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.1.8/IW4.Pocket.ipa",
+          "localizedDescription": "Unofficial iOS port of [IW4L](https://github.com/vladtrc/iw4L), the open-source Rust runtime for Modern Warfare 2 (2009).",
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.3.5",
+          "date": "2026-10-15T00:14:06Z",
+          "size": 38891401,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.5/IW4.Pocket.ipa",
+          "localizedDescription": "TEST VERSION - not checked on enough phones. For phones with a 3 GB memory grant. On an iPhone 13 Pro Max, 0.3.4 loaded `mp_rust` and a match ran for about a minute, then iOS closed the app: the allocator was holding about 450 MiB of free pages that the app was not using but iOS still counted. **Not yet tested on a phone.**",
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "0.2.0",
+          "date": "2026-10-06T23:58:25Z",
+          "size": 38751388,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.2.0/IW4.Pocket.ipa",
+          "localizedDescription": "TEST VERSION - not checked on enough phones. Unofficial iOS port of [IW4L](https://github.com/vladtrc/iw4L), the open-source Rust runtime for Modern Warfare 2 (2009).",
+          "minOSVersion": "15.0"
+        }
+      ]
+    }
+  ],
+  "news": []
+}

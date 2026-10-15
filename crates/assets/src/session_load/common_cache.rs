@@ -810,6 +810,7 @@ async fn prepare_common(key: CommonKey) -> Arc<CommonSet> {
         t6_prepared.prepared, t6_prepared.refused
     ));
     weapons.resolve_fpv_mesh_edges(&fpv_meshes);
+    common_report.push(weapons.camo_report());
     weapons.resolve_fpv_hands(&fpv_meshes, &asset_model::BodyMeshCatalog::default());
     weapons.resolve_world_model_edges(&world_weapons);
 

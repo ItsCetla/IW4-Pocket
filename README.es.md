@@ -40,10 +40,11 @@ No hace falta saber programar. Lleva unos 15 minutos más la copia de archivos.
 1. **Consigue los archivos del juego.** Necesitas tu propia copia de *Modern Warfare 2 (2009)* para **PC** (versión de Steam). La carpeta debe contener una subcarpeta llamada `zone`. Este proyecto no proporciona ni enlaza archivos del juego
 2. **Instala SideStore** en tu iPhone con la [guía oficial](https://sidestore.io). Es la herramienta que instala apps como esta
 3. **Descarga la app:** [IW4.Pocket.ipa](https://github.com/MarkusSela/IW4-Pocket/releases/latest/download/IW4.Pocket.ipa) (o abre la [página de la release](https://github.com/MarkusSela/IW4-Pocket/releases/latest))
-4. **Instálala con SideStore** (toca **+**, elige el archivo). Si ya tienes una versión anterior, instala **encima**: desinstalar borra tus archivos del juego
-5. **Abre la app una vez** y ciérrala. Así crea su carpeta
-6. **Copia tu carpeta de MW2** en la app Archivos: *En mi iPhone > IW4 Pocket > Games*. Vale cualquier nombre, si contiene `zone`
-7. **Empareja un mando** en los ajustes de Bluetooth (PS4/DualShock 4 verificado) y abre la app. La primera carga es lenta y la pantalla puede quedarse rosa un rato
+4. **O añade la source en SideStore:** [![Add to SideStore](https://img.shields.io/badge/Add%20to-SideStore-5b3df5?style=for-the-badge)](sidestore://source?url=https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json) (tócalo desde tu iPhone y elige *IW4 Pocket*; las versiones de prueba dicen TEST). Enlace de la source: `https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json`
+5. **Instálala con SideStore** (toca **+**, elige el archivo). Si ya tienes una versión anterior, instala **encima**: desinstalar borra tus archivos del juego
+6. **Abre la app una vez** y ciérrala. Así crea su carpeta
+7. **Copia tu carpeta de MW2** en la app Archivos: *En mi iPhone > IW4 Pocket > Games*. Vale cualquier nombre, si contiene `zone`
+8. **Empareja un mando** en los ajustes de Bluetooth (PS4/DualShock 4 verificado) y abre la app. La primera carga es lenta y la pantalla puede quedarse rosa un rato
 
 ## 📱 ¿Funcionará en mi dispositivo?
 
@@ -68,7 +69,7 @@ No hace falta saber programar. Lleva unos 15 minutos más la copia de archivos.
 - **Mando no detectado**: empárejalo primero en Bluetooth y reabre la app
 - **La app se cierra en un mapa**: es el problema de memoria conocido. Envía el registro
 - **Para limitar texturas**: añade un archivo de texto `iw4l-texture-cap.txt` con solo un número, por ejemplo `256`, y reinicia la app por completo
-- **Avanzado:** un archivo de texto `iw4l-env.txt` con líneas `IW4L_NOMBRE=valor` ajusta los interruptores del motor sin recompilar. Solo se aceptan los ajustes del menú IW4 Pocket (por ejemplo `IW4L_RENDER_SCALE=0.67`), más `IW4L_BOTS=5` (bots en cada partida, también en el lobby), `IW4L_SKIP_CAMO=1` (sin camuflajes de armas) y `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot` y reglas de partida o de bots). Lo demás se ignora y el registro indica la línea
+- **Avanzado:** un archivo de texto `iw4l-env.txt` con líneas `IW4L_NOMBRE=valor` ajusta los interruptores del motor sin recompilar. Solo se aceptan los ajustes del menú IW4 Pocket (por ejemplo `IW4L_RENDER_SCALE=0.67`), más `IW4L_BOTS=5` (bots al empezar la partida), `IW4L_SKIP_CAMO=1` (sin camuflajes de armas) y `IW4L_CMDS=map mp_rust; bot add 5` (solo `map`, `bot` y reglas de partida o de bots). Lo demás se ignora y el registro indica la línea
 
 ## 🛠️ Compilarlo tú mismo
 
