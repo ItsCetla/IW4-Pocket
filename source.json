@@ -74,6 +74,14 @@
           "minOSVersion": "15.0"
         },
         {
+          "version": "0.3.6",
+          "date": "2026-10-15T02:44:38Z",
+          "size": 38919279,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.6/IW4.Pocket.ipa",
+          "localizedDescription": "TEST VERSION - not checked on enough phones. **Not yet tested on a phone.** Bots you can add in the lobby and during a match, an option to leave out weapon camo skins, a shorter options menu, and new bot names.",
+          "minOSVersion": "15.0"
+        },
+        {
           "version": "0.3.5",
           "date": "2026-10-15T00:14:06Z",
           "size": 38891401,
