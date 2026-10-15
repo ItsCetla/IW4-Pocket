@@ -27,13 +27,14 @@ for rel in releases:
     test = rel["prerelease"]
     note = (rel.get("body") or "").strip().splitlines()
     summary = next((l.strip() for l in note[1:] if l.strip() and not l.startswith("#")), "")
+    summary = summary.replace("**", "").replace("`", "")
     versions.append({
         "version": rel["tag_name"].lstrip("v"),
         "buildVersion": None,
         "date": rel["published_at"],
         "size": ipa["size"],
         "downloadURL": ipa["browser_download_url"],
-        "localizedDescription": ("TEST VERSION - not checked on enough phones. " if test else "") + summary[:300],
+        "localizedDescription": ("TEST VERSION - not checked on enough phones. " if test else "") + (summary[:297] + "..." if len(summary) > 300 else summary),
         "minOSVersion": "15.0",
         "_test": test,
         "_date": rel["published_at"],

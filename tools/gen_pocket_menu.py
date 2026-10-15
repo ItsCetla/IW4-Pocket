@@ -32,7 +32,7 @@ OPTIONS = [
      "Frees shader memory while loading. Auto is on for the Low profile.",
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
     ("ui_pocket_camo", "Weapon camo skins",
-     "Skip leaves the camos out and saves memory. Auto keeps them.",
+     "Skip leaves the camos out. It did not save memory in tests. Auto keeps them.",
      [("Auto", "auto"), ("Skip", "skip"), ("Keep", "keep")]),
     ("ui_pocket_latency", "Frames in flight",
      "2 is smoother but uses more graphics memory.",

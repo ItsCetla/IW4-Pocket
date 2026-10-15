@@ -723,7 +723,7 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Skip leaves the camos out and saves memory. Auto keeps them.",
+     "text_key": "Skip leaves the camos out. It did not save memory in tests. Auto keeps them.",
      "rect": {
       "x": 232,
       "y": 158,
