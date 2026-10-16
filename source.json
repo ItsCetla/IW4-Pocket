@@ -82,11 +82,11 @@
           "minOSVersion": "15.0"
         },
         {
-          "version": "0.3.5",
-          "date": "2026-10-15T00:14:06Z",
-          "size": 38891401,
-          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.5/IW4.Pocket.ipa",
-          "localizedDescription": "TEST VERSION - not checked on enough phones. For phones with a 3 GB memory grant. On an iPhone 13 Pro Max, 0.3.4 loaded mp_rust and a match ran for about a minute, then iOS closed the app: the allocator was holding about 450 MiB of free pages that the app was not using but iOS still counted. Not yet tested on a phone.",
+          "version": "0.3.7",
+          "date": "2026-10-16T23:59:04Z",
+          "size": 38959587,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.7/IW4.Pocket.ipa",
+          "localizedDescription": "TEST VERSION - not checked on enough phones. Not tested on a phone yet. This build adds touch controls, a BOTS row in the Private Match menu, and more memory measurements. It does not fix the memory limit: on a phone with about 3 GB for the app, a match can still end when iOS closes the app. Please say what you see.",
           "minOSVersion": "15.0"
         },
         {
