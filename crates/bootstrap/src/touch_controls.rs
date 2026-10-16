@@ -279,13 +279,13 @@ fn key_message(window: Entity, key: KeyCode, state: ButtonState) -> KeyboardInpu
     }
 }
 
-struct Sinks<'a, 'w> {
+struct Sinks<'a, 'k, 'm> {
     window: Entity,
-    keys: &'a mut MessageWriter<'w, KeyboardInput>,
-    mouse: &'a mut MessageWriter<'w, MouseButtonInput>,
+    keys: &'a mut MessageWriter<'k, KeyboardInput>,
+    mouse: &'a mut MessageWriter<'m, MouseButtonInput>,
 }
 
-impl Sinks<'_, '_> {
+impl Sinks<'_, '_, '_> {
     fn press(&mut self, out: Out, state: ButtonState) {
         match out {
             Out::Key(key) => {
@@ -348,13 +348,12 @@ fn drive_touch(
                     );
                     touch.position.distance(center) <= b.size * 0.5 + 8.0
                 });
-                let has = |wanted: fn(&Role) -> bool| held.roles.values().any(wanted);
+                let has_stick = held.roles.values().any(|r| matches!(r, Role::Stick { .. }));
+                let has_look = held.roles.values().any(|r| matches!(r, Role::Look { .. }));
                 if let Some(index) = hit {
                     held.roles.insert(touch.id, Role::Button(index));
                     sinks.press(BUTTONS[index].out, ButtonState::Pressed);
-                } else if touch.position.x < width * STICK_ZONE
-                    && !has(|r| matches!(r, Role::Stick { .. }))
-                {
+                } else if touch.position.x < width * STICK_ZONE && !has_stick {
                     held.roles.insert(
                         touch.id,
                         Role::Stick {
@@ -362,7 +361,7 @@ fn drive_touch(
                         },
                     );
                     stick = Some(Vec2::ZERO);
-                } else if !has(|r| matches!(r, Role::Look { .. })) {
+                } else if !has_look {
                     held.roles.insert(
                         touch.id,
                         Role::Look {
