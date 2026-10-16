@@ -72,11 +72,12 @@ pub(crate) fn spawn(
     *world.ensure_player(id) = ps;
     diag::info!(
         Sim,
-        "spawn: script client={} {sessionstate} at [{:.1}, {:.1}, {:.1}]",
+        "spawn: script client={} {sessionstate} at [{:.1}, {:.1}, {:.1}]{}",
         id.0,
         origin[0],
         origin[1],
-        origin[2]
+        origin[2],
+        diag::ios_env::event_memory_tag()
     );
     let life_sequence = {
         let meta = world.client_meta_mut(id);
