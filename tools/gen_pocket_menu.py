@@ -17,45 +17,49 @@ label_t = ctrl["item_copies"][1]
 # dvar, label, one-line description, [(shown, value)]
 OPTIONS = [
     ("ui_pocket_tier", "Device profile",
-     "Auto picks how much to load from your phone's memory.",
+     "Auto picks it from your memory.",
      [("Auto", "auto"), ("Low", "low"), ("Medium", "mid"), ("High", "high")]),
     ("ui_pocket_scale", "Render scale",
-     "Draws below screen resolution. Faster, blurrier. Auto is full size.",
+     "Lower is faster and blurrier.",
      [("Auto", "auto"), ("0.5", "0.5"), ("0.67", "0.67"), ("0.75", "0.75"), ("0.85", "0.85")]),
     ("ui_pocket_pace", "Frame limit",
-     "Caps frames per second. Auto means no cap.",
+     "Caps frames per second.",
      [("Auto", "auto"), ("30", "30"), ("40", "40"), ("60", "60")]),
     ("ui_pocket_texture", "Texture size",
-     "Smaller uses less memory and looks blurrier.",
+     "Smaller uses less memory.",
      [("Auto", "auto"), ("128", "128"), ("256", "256"), ("512", "512"), ("1024", "1024")]),
     ("ui_pocket_lean", "Lean shaders",
-     "Frees shader memory while loading. Auto is on for the Low profile.",
+     "Frees shader memory at load.",
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
     ("ui_pocket_camo", "Weapon camo skins",
-     "Skip leaves the camos out. It did not save memory in tests. Auto keeps them.",
+     "Skip did not save memory.",
      [("Auto", "auto"), ("Skip", "skip"), ("Keep", "keep")]),
     ("ui_pocket_latency", "Frames in flight",
-     "2 is smoother but uses more graphics memory.",
+     "2 is smoother, uses more.",
      [("Auto", "auto"), ("1", "1"), ("2", "2")]),
     ("ui_pocket_promotion", "120 Hz in matches",
-     "Smoother on 120 Hz phones, uses more battery.",
+     "Smoother on 120 Hz phones.",
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
     ("ui_pocket_promodelay", "120 Hz delay (s)",
-     "Seconds at 60 Hz after a match starts, before 120 Hz. Auto is 60.",
+     "Secs at 60 Hz before 120.",
      [("Auto", "auto"), ("0", "0"), ("30", "30"), ("60", "60"), ("120", "120")]),
     ("ui_pocket_bc", "Compressed textures",
-     "Auto uses them when the GPU can. Off uses more memory.",
+     "Off uses more memory.",
      [("Auto", "auto"), ("Off", "off")]),
     ("ui_pocket_shadows", "Dynamic shadows",
-     "Auto turns them off on phones that cannot draw them.",
+     "Auto: off if not supported.",
      [("Auto", "auto"), ("Off", "off"), ("On", "on")]),
     ("ui_pocket_clip", "Replay clip buffer",
-     "Keeps the last 45 s for the clip command. Uses memory. Auto is off.",
+     "Last 45 s for clips.",
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
     ("ui_pocket_touch", "On-screen controls",
-     "Touch stick and buttons. Auto shows them in a match when no controller is connected.",
+     "Auto: shown with no controller.",
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
 ]
+
+
+DESC_X = 122      # where the grey description starts, after the longest name
+DESC_RIGHT = 74   # room kept free for the value on the right
 
 
 def hexname(name):
@@ -84,7 +88,8 @@ def option_rows(dvar, label, desc, choices, index):
     hf["text_key"] = desc
     hf["name"] = f"{dvar}_desc"
     hf["text_scale"] = 0.22
-    hf["rect"] = {"x": 232, "y": y + 15, "w": 344, "h": 12}
+    # Same row as the name, starting after it and stopping before the value on the right.
+    hf["rect"] = {"x": 232 + DESC_X, "y": y, "w": 344 - DESC_X - DESC_RIGHT, "h": 20}
     hf["fore_color"] = [0.75, 0.75, 0.75, 1]
     return [control, name, hint]
 
