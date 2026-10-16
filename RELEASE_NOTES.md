@@ -1,21 +1,20 @@
-# IW4 Pocket 0.3.6
+# IW4 Pocket 0.3.7
 
-**Tested on one phone** (iPhone 13 Pro Max, about 3 GB for the app): the lobby and in-match bot rows work and `mp_rust` loads, but a match still ends when iOS closes the app for memory after a few minutes. This release does not fix that. It adds bots you can add in the lobby and during a match, an option to leave out weapon camo skins, a shorter options menu, and new bot names.
+**Not tested on a phone yet.** This build adds touch controls, a BOTS row in the Private Match menu, and more memory measurements. It does not fix the memory limit: on a phone with about 3 GB for the app, a match can still end when iOS closes the app. Please say what you see.
 
-**Bots** (issues #4 and #6)
-- **Lobby:** a **BOTS** row in game setup, before the match (0 to 10).
-- **During a match:** open the **Options** menu (Start) and tap **Add 1 bot** or **Add 5 bots**. Only the host adds bots; for everyone else the rows do nothing. If the rows do not show up, send `iw4l-boot.log`: it lists the menus it looked at.
-- `IW4L_BOTS=5` in `iw4l-env.txt` still sets how many bots a match starts with, and `IW4L_CMDS=map mp_rust; bot add 5` works as before (only `map`, `bot`, and `set`/`seta` on match and bot rules). Neither has a row in the options menu.
-- New bot names (2009-2010 style and a few memes), up to 15 characters.
-- Credits: `IW4L_BOTS` by [LemonMoo](https://github.com/LemonMoo) (Cade Palmer), the lobby bot row by [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Both cherry-picked with their authorship, changed to share one value.
+**On-screen controls**
+- Options -> IW4 Pocket options -> **On-screen controls**: Auto, On or Off. Auto shows them during a match when no controller is connected.
+- Left thumb: move stick (push it all the way forward to sprint). Drag anywhere on the right to look. Round buttons: FIRE, AIM, JUMP, RELOAD, CROUCH, FRAG, TACT, KNIFE, SWAP, BOARD and MENU.
+- They send keyboard and mouse input, not a fake controller, so no controller icons appear. The button positions are a first guess and may need moving: send a screenshot.
 
-**Options menu**
-- **IW4 Pocket options** now has two pages: the first with the settings that matter most (profile, render scale, frame limit, texture size, lean shaders, weapon camo skins) and a second with the rest. "Free spare memory" is gone: in tests it gave back 0 MiB. Old `IW4L_HEAP_RELIEF` lines in `iw4l-env.txt` are ignored.
-- **Weapon camo skins** (Auto keeps them, **Skip** leaves them out). The log has a `camouflage:` line saying what was kept or left out. Measured on the 13 Pro Max with the same map: Skip removed all 8360 + 8360 camo models, but memory after loading was the same (2511 MiB with Skip, 2512 MiB with the camos kept). So it is **not a memory saver**; it only leaves the camos out. Idea and first code by [mk2rs2000](https://github.com/mk2rs2000).
+**Bots in the lobby**
+- Private Match menu: a **BOTS** row under GAME SETUP (host only). Tap to add one, 0 to 10. The bots are listed in the player list on the right. The earlier BOT and BOT COUNT rows inside Game Setup overlapped the original menu and are gone.
 
-**SideStore source**
-- Add `https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json` in SideStore (Sources, +). Test versions say TEST.
+**Memory log (for finding what uses memory)**
+- The log now has `keep xmodel`, `keep xanim` and `keep weapon` rows: how much of the weapon growth is the models and animations they point to.
+- The spawn and killcam lines now end with the footprint and heap at that moment, so each life can be compared.
+- A small fix for muzzle flashes and effects that stopped after the first minutes with bots, and one that frees the last match's body animations before the next map loads. Neither is measured yet.
 
-For phones with about 3 GB for the app: set **Render scale** to 0.67 or 0.5. That helps a little; the app can still be closed by iOS during a match.
+**Not in this release:** a different memory allocator (not tried on iOS), and weapons loaded on demand (the weapon rows will say where the memory is first).
 
 Please send `iw4l-boot.log` (and `iw4l-boot.crash.log` if the app closes) and say how you installed the app.
