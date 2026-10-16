@@ -90,6 +90,11 @@ pub(crate) const OPTIONS: &[Opt] = &[
         env: "IW4L_CLIP_RING",
         map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
     },
+    Opt {
+        dvar: "ui_pocket_touch",
+        env: "IW4L_TOUCH_CONTROLS",
+        map: &[("auto", None), ("on", Some("1")), ("off", Some("0"))],
+    },
 ];
 
 /// The menu value for what `iw4l-env.txt` currently holds. A value the menu cannot show

@@ -234,6 +234,7 @@ pub fn valid_file_setting(name: &str, value: &str) -> bool {
         "IW4L_HEAP_RELIEF" => matches!(value, "0" | "1"),
         // 1 = do not prepare weapon camouflage skins (saves memory; guns lose their camos).
         "IW4L_SKIP_CAMO" => matches!(value, "0" | "1"),
+        "IW4L_TOUCH_CONTROLS" => matches!(value, "0" | "1"),
         // Startup commands for iOS (no console there), e.g. `map mp_rust; bot add 5`.
         "IW4L_CMDS" => valid_startup_cmds(value),
         // Bots added to every hosted match; the console's `bot add` needs a keyboard.

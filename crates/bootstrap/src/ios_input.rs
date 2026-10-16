@@ -197,10 +197,24 @@ fn touch_as_mouse(
     mut windows: Query<(Entity, &mut Window), With<PrimaryWindow>>,
     mut buttons: MessageWriter<MouseButtonInput>,
     mut active: Local<Option<u64>>,
+    overlay: Option<Res<crate::touch_controls::TouchControlsActive>>,
 ) {
     let Ok((entity, mut window)) = windows.single_mut() else {
         return;
     };
+    // The on-screen controls own every touch while they are shown.
+    if overlay.is_some_and(|o| o.0) {
+        if let Some(id) = active.take() {
+            let _ = id;
+            buttons.write(MouseButtonInput {
+                button: MouseButton::Left,
+                state: ButtonState::Released,
+                window: entity,
+            });
+        }
+        for _ in touches.read() {}
+        return;
+    }
     for touch in touches.read() {
         match touch.phase {
             TouchPhase::Started => {

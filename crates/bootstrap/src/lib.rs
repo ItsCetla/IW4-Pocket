@@ -5,6 +5,8 @@ mod frame_pace;
 mod idle_timer;
 #[cfg(target_os = "ios")]
 mod ios_input;
+#[cfg(target_os = "ios")]
+mod touch_controls;
 mod launch;
 mod open_url;
 mod plugins;

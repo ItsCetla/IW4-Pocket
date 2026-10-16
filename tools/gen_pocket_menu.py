@@ -52,6 +52,9 @@ OPTIONS = [
     ("ui_pocket_clip", "Replay clip buffer",
      "Keeps the last 45 s for the clip command. Uses memory. Auto is off.",
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
+    ("ui_pocket_touch", "On-screen controls",
+     "Touch stick and buttons. Auto shows them in a match when no controller is connected.",
+     [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
 ]
 
 
