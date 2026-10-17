@@ -15,6 +15,7 @@
 <key>CADisableMinimumFrameDurationOnPhone</key><true/>
 <key>UIDeviceFamily</key><array><integer>1</integer><integer>2</integer></array>
 <key>UIRequiredDeviceCapabilities</key><array><string>arm64</string><string>metal</string></array>
+<key>NSLocalNetworkUsageDescription</key><string>IW4 Pocket connects to your own game server to find and join online lobbies.</string>
 <key>UIFileSharingEnabled</key><true/>
 <key>LSSupportsOpeningDocumentsInPlace</key><true/>
 <key>UIRequiresFullScreen</key><true/>
