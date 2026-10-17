@@ -125,6 +125,17 @@ pub fn footprint_bytes() -> Option<u64> {
     }
 }
 
+/// " | footprint N MiB (heap N MiB)" for lines that mark a life event (spawn, killcam), so the
+/// log shows what each event costs. Empty off iOS.
+pub fn event_memory_tag() -> String {
+    const MIB: u64 = 1024 * 1024;
+    match (footprint_bytes(), heap_in_use_bytes()) {
+        (Some(foot), Some(heap)) => format!(" | footprint {} MiB, heap {} MiB", foot / MIB, heap / MIB),
+        (Some(foot), None) => format!(" | footprint {} MiB", foot / MIB),
+        _ => String::new(),
+    }
+}
+
 /// (malloc bytes in use, malloc bytes reserved), over all zones.
 pub fn heap_bytes() -> Option<(u64, u64)> {
     #[cfg(target_os = "ios")]

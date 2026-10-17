@@ -27,6 +27,10 @@ jobs:
             ~/.cargo/registry
             target
           key: ios-ipa-${{ hashFiles('Cargo.lock') }}
+          # Cargo.lock changes with every version bump, so the exact key almost never hits.
+          # Fall back to the newest earlier cache: cargo then rebuilds only what changed.
+          restore-keys: |
+            ios-ipa-
       - name: Build iw4l for iOS
         env:
           IW4L_BUILD_NUMBER: "1"

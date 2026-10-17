@@ -5,7 +5,7 @@ use crate::controller::HostController;
 
 pub const MAX_HOST_BOTS: u32 = 20;
 
-const BOT_NAMES: [&str; 60] = [
+const BOT_NAMES: &[&str] = &[
     "xXsn1perXx",
     "xX_QuickScope_X",
     "xXNoScopeXx",
@@ -66,7 +66,245 @@ const BOT_NAMES: [&str; 60] = [
     "WheresMyTeam",
     "Camper_Carl",
     "AFK_Andy",
+    "ChatGPTDeezNuts",
+    "OnlyRAMs",
+    "CtrlAltDefeat",
+    "AltF4YourMom",
+    "404NoBitches",
+    "StackOverHoe",
+    "SudoEatMyAss",
+    "BlueScreenBalls",
+    "CallOfBooty",
+    "CumAndConquer",
+    "WankOfWarcraft",
+    "AssCreed",
+    "RedDeadErection",
+    "EldenSchlong",
+    "NoScopeNoBitches",
+    "PrematureReload",
+    "TacticalTeabag",
+    "CampAndCope",
+    "ObiWanCanBlowMe",
+    "DarthVibrator",
+    "HarryPooter",
+    "LordOfTheDings",
+    "ShrekOnMyFace",
+    "WalterWank",
+    "BetterCallBalls",
+    "GandalfTheGay",
+    "FrodoTeaBaggins",
+    "WillyWanker",
+    "MrLeast",
+    "BeastDeezNuts",
+    "SubscribeOrDie",
+    "RaidShadowBalls",
+    "NordVPNis",
+    "FyreFestVIP",
+    "CryptoRugDaddy",
+    "OnlyScams",
+    "ApologyUkulele",
+    "ColossalSkillIssue",
+    "SamAltF4",
+    "ClippyGotHard",
+    "DeepSeekDeez",
+    "GrokTuah",
+    "GitPushMyAss",
+    "HotfixMyBalls",
+    "SeggsFault",
+    "AcceptMyCookies",
+    "MicroSoftDick",
+    "RebootyCall",
+    "DukeNutted",
+    "MasterQueef",
+    "SolidSnakeOil",
+    "MetalGearSuck",
+    "AssEffect",
+    "GirthOfWar",
+    "MortalCumback",
+    "FapSouls",
+    "SekiroNoBitches",
+    "Battlefield69",
+    "PayToWhine",
+    "FlashbangMyAss",
+    "CountFapula",
+    "Dumbledong",
+    "HagridGotHard",
+    "Voldemortgage",
+    "ThanosDidHalf",
+    "TheWankingDead",
+    "BreakingBalls",
+    "StrangerDongs",
+    "JohnWank",
+    "JackOffSparrow",
+    "HawkTuah404",
+    "MrBreast",
+    "PewDiePieChart",
+    "iShowDebt",
+    "SkibidiTaxFraud",
+    "SigmaBalls",
+    "RizzInPeace",
+    "SponsoredByDebt",
+    "TrustMeBroCoin",
+    "LinkInMyBussy",
+    "YourMomsDuo",
+    "MyWifeLeft",
+    "DivorcedByPing",
+    "BornToRespawn",
+    "UnpaidHitman",
+    "SendDudes",
+    "TeabagReceipt",
+    "OopsWrongHole",
 ];
+
+// The protocol stores 16 bytes including NUL. All approved names are ASCII.
+// Keep the full pool above, but use the same explicit 15-byte display name in
+// the lobby and authoritative game state (including the two longer names).
+const BOT_NAME_BYTES: usize = 15;
+
+fn display_name(name: &'static str) -> &'static str {
+    &name[..name.len().min(BOT_NAME_BYTES)]
+}
+
+fn shuffle_names(names: &mut [&'static str], mut random: impl FnMut() -> u64) {
+    for i in (1..names.len()).rev() {
+        // Rejection sampling avoids modulo bias.
+        let bound = (i + 1) as u64;
+        let threshold = bound.wrapping_neg() % bound;
+        let value = loop {
+            let value = random();
+            if value >= threshold {
+                break value;
+            }
+        };
+        names.swap(i, (value % bound) as usize);
+    }
+}
+
+/// Joke clan tags. A tag goes in front of a name only when `[TAG]name` still fits the
+/// 15 bytes the protocol allows; the name itself is never cut to make room.
+const CLAN_TAGS: &[&str] = &[
+    "420", "69", "GG", "EZ", "TTV", "MLG", "FBI", "NSA", "CIA", "IRS", "DMV", "HR", "LOL",
+    "LMAO", "WTF", "OMG", "BRB", "AFK", "RIP", "OOF", "BAN", "BOT", "SUS", "UWU", "NPC", "RNG",
+    "LAG", "FPS", "KDA", "DAD", "MOM", "DUI", "ASS", "BUM", "FAP", "HOE", "DEEZ", "COPE",
+    "BRUH", "SKIB", "RIZZ", "GOON", "SIGM", "NUT", "WANK", "BALZ", "TITS", "YOLO", "SWAG",
+    "NOOB", "PWNT", "HAX", "TRY", "SKLL", "ISSU", "CAMP", "TBAG", "SCAM", "FOMO", "HODL",
+    "ONLY", "SIMP", "KARN", "MEME", "EDGY", "DRIP", "BEEF", "LARP", "NERF", "BUFF", "GIT",
+    "SUDO", "RTFM", "TODO", "NULL", "VOID", "404", "500", "WIFI", "5G", "VPN", "DNS", "RAM",
+];
+
+/// Probability (in tenths) that a name that has room for one gets a tag.
+const TAG_CHANCE_TENTHS: u64 = 7;
+
+fn entropy_seed() -> u64 {
+    let mut entropy = [0u8; 8];
+    match getrandom::fill(&mut entropy) {
+        Ok(()) => u64::from_le_bytes(entropy),
+        Err(error) => {
+            diag::warn!(
+                Sim,
+                "bots: name shuffle entropy unavailable: {error}; using counter fallback"
+            );
+            static FALLBACK: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(1);
+            FALLBACK
+                .fetch_add(0x9e37_79b9, std::sync::atomic::Ordering::Relaxed)
+                .wrapping_mul(0xd1b5_4a32_d192_ed03)
+        }
+    }
+}
+
+/// SplitMix64: independent from bot AI and account identity RNGs.
+fn splitmix(state: &mut u64) -> u64 {
+    *state = state.wrapping_add(0x9e37_79b9_7f4a_7c15);
+    let mut z = *state;
+    z = (z ^ (z >> 30)).wrapping_mul(0xbf58_476d_1ce4_e5b9);
+    z = (z ^ (z >> 27)).wrapping_mul(0x94d0_49bb_1331_11eb);
+    z ^ (z >> 31)
+}
+
+/// Each composed `[TAG]name` is leaked once and reused, so repeated rerolls cannot grow
+/// memory beyond the number of distinct tag/name pairs.
+fn intern(text: String) -> &'static str {
+    static POOL: std::sync::Mutex<Option<std::collections::HashMap<String, &'static str>>> =
+        std::sync::Mutex::new(None);
+    let mut guard = POOL.lock().unwrap_or_else(|e| e.into_inner());
+    let map = guard.get_or_insert_with(Default::default);
+    if let Some(found) = map.get(&text) {
+        return found;
+    }
+    let leaked: &'static str = Box::leak(text.clone().into_boxed_str());
+    map.insert(text, leaked);
+    leaked
+}
+
+fn with_tag(name: &'static str, random: &mut impl FnMut() -> u64) -> &'static str {
+    if random() % 10 >= TAG_CHANCE_TENTHS {
+        return name;
+    }
+    let fitting: Vec<&str> = CLAN_TAGS
+        .iter()
+        .copied()
+        .filter(|tag| tag.len() + 2 + name.len() <= BOT_NAME_BYTES)
+        .collect();
+    if fitting.is_empty() {
+        return name;
+    }
+    let tag = fitting[(random() % fitting.len() as u64) as usize];
+    intern(format!("[{tag}]{name}"))
+}
+
+/// A fresh random order of the whole pool, each name with or without a clan tag.
+fn draw_names() -> Vec<&'static str> {
+    let mut names: Vec<_> = BOT_NAMES.iter().map(|name| display_name(name)).collect();
+    let mut state = entropy_seed();
+    shuffle_names(&mut names, || splitmix(&mut state));
+    names
+        .into_iter()
+        .map(|name| with_tag(name, &mut || splitmix(&mut state)))
+        .collect()
+}
+
+struct Draw {
+    /// The bot count this order was drawn for; a different count draws again.
+    count: u32,
+    order: Vec<&'static str>,
+}
+
+static DRAW: std::sync::Mutex<Option<Draw>> = std::sync::Mutex::new(None);
+
+fn lock_draw() -> std::sync::MutexGuard<'static, Option<Draw>> {
+    DRAW.lock().unwrap_or_else(|e| e.into_inner())
+}
+
+/// The names the lobby shows for `count` bots. Adding or removing a bot draws a new
+/// random order; the same count keeps the same names (lobby refresh, map load), and the
+/// match then takes exactly these names.
+pub fn lobby_bot_names(count: u32) -> Vec<&'static str> {
+    let mut guard = lock_draw();
+    let stale = guard.as_ref().is_none_or(|draw| draw.count != count);
+    if stale {
+        *guard = Some(Draw {
+            count,
+            order: draw_names(),
+        });
+    }
+    let draw = guard.as_ref().expect("draw was just made");
+    (0..count as usize)
+        .map(|i| draw.order[i % draw.order.len()])
+        .collect()
+}
+
+/// The current order, drawn on first use. Bots added in a match (also by console
+/// command) follow it without redrawing it.
+fn match_names() -> Vec<&'static str> {
+    let mut guard = lock_draw();
+    guard
+        .get_or_insert_with(|| Draw {
+            count: 0,
+            order: draw_names(),
+        })
+        .order
+        .clone()
+}
 
 #[derive(Resource, Debug, Default)]
 pub struct BotAddQueue(pub Vec<BotAddRequest>);
@@ -207,13 +445,11 @@ impl BotRoster {
             }
             let brain = (!dummy)
                 .then(|| HostController::new(seed ^ (u64::from(id.0) << 32) ^ u64::from(i)));
-            let available: Vec<_> = BOT_NAMES
-                .iter()
-                .copied()
-                .filter(|name| !self.bots.iter().any(|bot| bot.name == *name))
-                .collect();
-            let random = u64::from_le_bytes(account[..8].try_into().unwrap());
-            let name = available[(random % available.len() as u64) as usize];
+            // Same order as the lobby draw, skipping bots already present.
+            let name = match_names()
+                .into_iter()
+                .find(|name| !self.bots.iter().any(|bot| bot.name == *name))
+                .unwrap_or("bot");
             self.bots.push(BotSlot {
                 id,
                 name,
@@ -253,4 +489,95 @@ pub fn default_class_index(seed: u64, client: ClientId, pick: u32) -> u8 {
         .wrapping_add(u64::from(client.0).wrapping_mul(0xBF58_476D_1CE4_E5B9))
         .wrapping_add(u64::from(pick).wrapping_mul(0x94D0_49BB_1331_11EB));
     (mix >> 33) as u8
+}
+
+#[cfg(test)]
+mod name_tests {
+    use super::*;
+
+    #[test]
+    fn pool_is_ascii_unique_and_protocol_safe() {
+        assert_eq!(BOT_NAMES.len(), 148);
+        let mut visible = std::collections::HashSet::new();
+        for &name in BOT_NAMES {
+            assert!(name.is_ascii());
+            let shown = display_name(name);
+            assert!(shown.len() <= BOT_NAME_BYTES);
+            assert!(visible.insert(shown), "duplicate display name: {shown}");
+            let packed = entity_iw4::pack_client_state_name(shown);
+            assert_eq!(&packed[..shown.len()], shown.as_bytes());
+            assert_eq!(packed[shown.len()], 0);
+        }
+        assert!(BOT_NAMES.contains(&"GandalfTheGay"));
+        assert_eq!(display_name("NoScopeNoBitches"), "NoScopeNoBitche");
+    }
+
+    #[test]
+    fn shuffle_is_permutation_not_fixed_order() {
+        let mut names = BOT_NAMES.to_vec();
+        shuffle_names(&mut names, || u64::MAX);
+        assert_ne!(names, BOT_NAMES);
+        names.sort_unstable();
+        let mut expected = BOT_NAMES.to_vec();
+        expected.sort_unstable();
+        assert_eq!(names, expected);
+    }
+
+    fn untagged(name: &str) -> &str {
+        name.strip_prefix('[')
+            .and_then(|rest| rest.split_once(']'))
+            .map_or(name, |(_, base)| base)
+    }
+
+    #[test]
+    fn tags_fit_the_protocol_and_never_change_a_name() {
+        assert!(CLAN_TAGS.len() >= 60);
+        let mut seen = std::collections::HashSet::new();
+        for tag in CLAN_TAGS {
+            assert!(tag.is_ascii() && !tag.contains(['[', ']']));
+            assert!(seen.insert(*tag), "duplicate tag {tag}");
+        }
+        let originals: std::collections::HashSet<_> =
+            BOT_NAMES.iter().map(|name| display_name(name)).collect();
+        let mut tagged = 0;
+        for _ in 0..40 {
+            let drawn = draw_names();
+            assert_eq!(drawn.len(), BOT_NAMES.len());
+            let mut bases = std::collections::HashSet::new();
+            for name in &drawn {
+                assert!(name.is_ascii() && name.len() <= BOT_NAME_BYTES, "{name}");
+                assert!(originals.contains(untagged(name)), "{name}");
+                assert!(bases.insert(untagged(name)), "base name used twice: {name}");
+                let packed = entity_iw4::pack_client_state_name(name);
+                assert_eq!(&packed[..name.len()], name.as_bytes());
+                tagged += usize::from(untagged(name) != *name);
+            }
+            assert_eq!(bases, originals);
+        }
+        assert!(tagged > 0, "no name ever received a tag");
+    }
+
+    #[test]
+    fn lobby_names_are_redrawn_when_the_count_changes() {
+        // One test body: the draw is shared state and tests run in parallel.
+        let five = lobby_bot_names(5);
+        assert_eq!(five, lobby_bot_names(5), "same count must stay stable");
+        let six = lobby_bot_names(6);
+        assert_eq!(six.len(), 6);
+        assert_eq!(six, lobby_bot_names(6));
+        assert_ne!(six[..5], five[..], "adding a bot must draw a new order");
+        let four = lobby_bot_names(4);
+        assert_ne!(four[..], six[..4], "removing a bot must draw a new order");
+
+        // The match takes exactly the names the lobby showed for this count.
+        let shown = lobby_bot_names(MAX_HOST_BOTS);
+        let mut roster = BotRoster::default();
+        roster.add_bots(5, &[], true);
+        roster.add_bots(MAX_HOST_BOTS - 5, &[], true);
+        assert_eq!(
+            roster.bots.iter().map(|b| b.name).collect::<Vec<_>>(),
+            shown
+        );
+        assert_eq!(shown, lobby_bot_names(MAX_HOST_BOTS));
+    }
 }

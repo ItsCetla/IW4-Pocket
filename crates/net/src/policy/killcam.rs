@@ -32,12 +32,13 @@ pub(crate) fn play_script_seats(
         if started_at_ms == now_ms {
             diag::info!(
                 Net,
-                "killcam: script seat viewer={} spectating={} entity={} archive_ms={} length_ms={}",
+                "killcam: script seat viewer={} spectating={} entity={} archive_ms={} length_ms={}{}",
                 viewer.0,
                 seat.spectator_client,
                 seat.kill_cam_entity,
                 seat.archive_ms,
-                seat.length_ms
+                seat.length_ms,
+                diag::ios_env::event_memory_tag()
             );
         }
         let mut session = KillcamSession {

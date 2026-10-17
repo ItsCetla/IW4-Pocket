@@ -47,6 +47,12 @@ No coding needed. It takes about 15 minutes plus the file copy.
 6. **Copy your MW2 folder** into the Files app: *On My iPhone > IW4 Pocket > Games*. Any folder name works, as long as it contains `zone` and `main`
 7. **Pair a controller** in Bluetooth settings (PS4/DualShock 4 is verified), then open the app. The first load is slow and the screen can stay pink for a while
 
+### Stable or TEST in SideStore
+
+Add the source using the button above, then refresh it in SideStore. This is **one app**, not separate stable/test installs. For TEST builds, open SideStore **Settings > Enable Beta Updates** (a global setting), select the **nightly** track if shown, and refresh the source. With beta updates off, the source defaults to stable; turning them off does not automatically downgrade an installed nightly. Older clients without channel support see only stable.
+
+The UI may show `0.3.7 (21)`; the notes identify it as **TEST 0.3.7c**. These steps follow the SideStore source contract, but have not been verified on a phone. TEST builds are experimental; the memory crash is not confirmed fixed. **Do not uninstall**: update over the existing app to keep game files.
+
 ## 📱 Will it work on my device?
 
 - ✅ **Tested:** iPhone 13 Pro Max (6 GB RAM, ~3 GB granted), iOS 27: menus work, match loading gets as far as the shaders. iPhone 17 Pro Max (6 GB granted): full matches with bots, reported by treuenten

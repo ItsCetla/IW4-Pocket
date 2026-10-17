@@ -1417,6 +1417,9 @@ impl AssetLinkSink for CommonWalkSink {
         slot: Ptr,
         insert_slot: Option<Ptr>,
     ) -> fastfile_iw4::Result<()> {
+        // Heap rows for what the walk keeps per body, so the log shows how much of a
+        // weapon's growth is really its models and animations.
+        let capture_mark = diag::asset_heap::begin();
         if let Some(sound) = self.sound.as_mut() {
             sound.iw4_loaded(stream, ty, slot, insert_slot);
         }
@@ -1471,6 +1474,15 @@ impl AssetLinkSink for CommonWalkSink {
             }
             self.models.capture(stream);
         }
+        diag::asset_heap::end(
+            match ty {
+                AssetType::XModel => "keep xmodel",
+                AssetType::XAnimParts => "keep xanim",
+                AssetType::Weapon => "keep weapon",
+                _ => "keep other",
+            },
+            capture_mark,
+        );
         Ok(())
     }
 

@@ -17,6 +17,7 @@ MARKERS = (
     b"iw4l-memory-settings.txt", b"device tier:", b"IW4L_RESIDENT_MAP", b"IW4L_IOS_BC", b"heap net growth per asset kind", b"RENDER ERROR", b"IW4L_FRAME_LATENCY", b"IW4L_PROMOTION", b"idle timer:", b"frame pacing:",
     b"session summary:", b"previous run:", b"gpu: adapter=", b"IW4L_TIER", b"IW4L_TEXTURE_CAP", b"IW4L_SHADOWS",
     b"IW4 Pocket options", b"shadow memory:", b"no 32-bit float filtering",
+    b"frame_archive:", b"payload estimate, not allocator bytes",
 )
 
 
@@ -73,7 +74,7 @@ def verify(path):
         prefix = "Payload/IW4L.app/"
         info = plistlib.loads(archive.read(prefix + "Info.plist"))
         require(info["CFBundleIdentifier"] == "com.markussela.iw4l", "bundle identifier changed")
-        require(info["CFBundleShortVersionString"] == version, "launcher and plist versions differ")
+        require(info["CFBundleShortVersionString"] == version.split("-", 1)[0], "launcher and plist versions differ")
         require(info == expected, "packaged plist differs from source")
         binary = archive.read(prefix + info["CFBundleExecutable"])
         result = macho_symbols(binary)

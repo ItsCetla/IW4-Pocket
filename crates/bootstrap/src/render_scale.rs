@@ -3,7 +3,7 @@
 //! million), and its logs show the graphics chip is what holds a match at 50-60
 //! fps: 12-14 ms of GPU time a frame against 5-8 ms on the main thread.
 //!
-//! `IW4L_RENDER_SCALE` (0.5 to 1.0; off unless set) lowers the view's content
+//! `IW4L_RENDER_SCALE` (0.2 to 1.0; off unless set) lowers the view's content
 //! scale once the window exists, so the drawable and every pass drawn into it
 //! shrink by that factor on each side; Core Animation stretches the result over
 //! the screen. Window sizes in points, and with them the menus and the HUD
@@ -40,11 +40,11 @@ mod ios {
             app.add_systems(Update, report_size);
             return;
         };
-        if !(0.5..1.0).contains(&scale) {
+        if !(0.2..1.0).contains(&scale) {
             if scale != 1.0 {
                 diag::warn!(
                     Launch,
-                    "render scale: {RENDER_SCALE_ENV}={scale} is outside 0.5-1.0, drawing at full size"
+                    "render scale: {RENDER_SCALE_ENV}={scale} is outside 0.2-1.0, drawing at full size"
                 );
             }
             app.add_systems(Update, report_size);

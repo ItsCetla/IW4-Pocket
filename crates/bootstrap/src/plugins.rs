@@ -231,6 +231,8 @@ pub fn default_plugins_with_quiet_log(mut window: WindowPlugin) -> bevy::app::Pl
         });
     #[cfg(target_os = "ios")]
     let plugins = plugins.add(crate::ios_input::IosInputPlugin);
+    #[cfg(target_os = "ios")]
+    let plugins = plugins.add(crate::touch_controls::TouchControlsPlugin);
     if pipelined_rendering() {
         plugins
     } else {

@@ -1,21 +1,30 @@
-# IW4 Pocket 0.3.6
+# IW4 Pocket 0.3.7c — build 21
 
-**Tested on one phone** (iPhone 13 Pro Max, about 3 GB for the app): the lobby and in-match bot rows work and `mp_rust` loads, but a match still ends when iOS closes the app for memory after a few minutes. This release does not fix that. It adds bots you can add in the lobby and during a match, an option to leave out weapon camo skins, a shorter options menu, and new bot names.
+**Experimental prerelease. Not verified on a phone.** Menu, bot names and options changes. It does not fix the memory crash: that is still unproven and the 0.3.7b log showed about the same footprint (~3067 MiB).
 
-**Bots** (issues #4 and #6)
-- **Lobby:** a **BOTS** row in game setup, before the match (0 to 10).
-- **During a match:** open the **Options** menu (Start) and tap **Add 1 bot** or **Add 5 bots**. Only the host adds bots; for everyone else the rows do nothing. If the rows do not show up, send `iw4l-boot.log`: it lists the menus it looked at.
-- `IW4L_BOTS=5` in `iw4l-env.txt` still sets how many bots a match starts with, and `IW4L_CMDS=map mp_rust; bot add 5` works as before (only `map`, `bot`, and `set`/`seta` on match and bot rules). Neither has a row in the options menu.
-- New bot names (2009-2010 style and a few memes), up to 15 characters.
-- Credits: `IW4L_BOTS` by [LemonMoo](https://github.com/LemonMoo) (Cade Palmer), the lobby bot row by [AdrianTomasDiez](https://github.com/AdrianTomasDiez). Both cherry-picked with their authorship, changed to share one value.
+## IW4 Pocket options menu
+- Rows are spaced further apart and each description sits under its option, over two lines, saying what it does and what it costs.
+- Render scale now offers 0.4, 0.3 and 0.2 besides the earlier values (Auto/On/Off style, adjustable by hand). Lower values draw fewer pixels and use less GPU memory, and look blurrier. The saving is an estimate from pixel counts, not a measurement.
 
-**Options menu**
-- **IW4 Pocket options** now has two pages: the first with the settings that matter most (profile, render scale, frame limit, texture size, lean shaders, weapon camo skins) and a second with the rest. "Free spare memory" is gone: in tests it gave back 0 MiB. Old `IW4L_HEAP_RELIEF` lines in `iw4l-env.txt` are ignored.
-- **Weapon camo skins** (Auto keeps them, **Skip** leaves them out). The log has a `camouflage:` line saying what was kept or left out. Measured on the 13 Pro Max with the same map: Skip removed all 8360 + 8360 camo models, but memory after loading was the same (2511 MiB with Skip, 2512 MiB with the camos kept). So it is **not a memory saver**; it only leaves the camos out. Idea and first code by [mk2rs2000](https://github.com/mk2rs2000).
+## Bots
+- Names are drawn again every time the number of bots changes (lobby add/remove); the same number keeps the same names. Lobby and match use the same order.
+- Joke clan tags (83) such as `[420]` are put in front of some names. A tag is added only if `[TAG]name` still fits the 15 bytes the protocol allows; the name itself is never cut or changed. Existing names are untouched.
 
-**SideStore source**
-- Add `https://raw.githubusercontent.com/MarkusSela/IW4-Pocket/main/source.json` in SideStore (Sources, +). Test versions say TEST.
+## Menu and SideStore
+- Main menu: the release name is shown small in the bottom-right corner.
+- SideStore source: the newest stable release stays first, newer pre-releases are listed after it marked TEST, and older pre-releases and older stable releases are hidden.
 
-For phones with about 3 GB for the app: set **Render scale** to 0.67 or 0.5. That helps a little; the app can still be closed by iOS during a match.
+## Diagnostics
+- `mem:` lines now include the memory outside the Rust heap (footprint minus reserved heap), to tell whether growth comes from graphics memory.
 
-Please send `iw4l-boot.log` (and `iw4l-boot.crash.log` if the app closes) and say how you installed the app.
+## Fix
+- Test `nested_client_and_objective_strings_grow_the_estimate` compared against the wrong baseline; the assertion was corrected. The estimator itself is unchanged.
+
+## Not included
+- Weapons on demand: on Low the weapon cache is already 0 MiB (`IW4L_FPV_RETAIN_MIB=0`), so there is nothing proven to free.
+- No allocator replacement.
+
+## Version
+- Label **0.3.7c**; Cargo `0.3.7-beta.2`; bundle build **21**.
+
+Verification scope: Python source-contract checks, `sim` memory tests and the bot-name logic were run on the server. `bots`, `console` and `launcher` are compiled only by the iOS CI. Nothing here has been tried on a device.

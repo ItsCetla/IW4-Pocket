@@ -45,6 +45,7 @@ pub mod script_gaps;
 mod script_player;
 mod smodel_grid;
 mod snapshot;
+mod snapshot_memory;
 mod sound_alias_cs;
 pub mod spawn;
 mod step;

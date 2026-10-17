@@ -91,8 +91,9 @@ fn spawn_memory_logger() {
                 let moved = diag::memtrack::IMAGE_MOVED_BYTES.load(std::sync::atomic::Ordering::Relaxed) / (1024 * 1024);
                 let tex_mb =
                     diag::IOS_TEXTURE_BYTES.load(std::sync::atomic::Ordering::Relaxed) / (1024 * 1024);
+                let outside = footprint.saturating_sub(heap_reserved);
                 diag::boot_crumb(&format!(
-                    "mem: footprint {footprint} MiB | iOS still allows {available_mb} MiB | heap live {heap_used} MiB, reserved {heap_reserved} MiB | optional FPV retained live {fpv_retained} MiB (overlaps active assets) | textures expanded cumulative {tex_mb} MiB | Bevy image moved cumulative {moved} MiB | {}",
+                    "mem: footprint {footprint} MiB | iOS still allows {available_mb} MiB | heap live {heap_used} MiB, reserved {heap_reserved} MiB | optional FPV retained live {fpv_retained} MiB (overlaps active assets) | textures expanded cumulative {tex_mb} MiB | Bevy image moved cumulative {moved} MiB | outside heap (footprint - heap reserved) {outside} MiB | {}",
                     diag::memtrack::snapshot_line()
                 ));
                 last_mb = footprint;
@@ -128,6 +129,9 @@ fn install_signal_logging() {
     }
 }
 
+/// Release name shown small in the main menu (the Cargo version is `0.3.7-beta.2`).
+const APP_LABEL: &str = "0.3.7c";
+
 fn main() {
     #[cfg(target_os = "ios")]
     {
@@ -147,6 +151,7 @@ fn main() {
         diag::ios_env::rotate_log(&docs.join("iw4l-boot.log"));
         diag::boot_crumb("1 main entered, sandbox ready");
         diag::boot_crumb(&diag::session::previous_run_note(&previous));
+        diag::memory_settings::record_app_version(APP_LABEL);
         diag::boot_crumb(&diag::ios_env::device_report(env!("CARGO_PKG_VERSION")));
         for line in diag::ios_env::apply_env_file(&docs.join("iw4l-env.txt")) {
             diag::boot_crumb(&format!("iw4l-env.txt: {line}"));
