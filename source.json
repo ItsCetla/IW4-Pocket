@@ -19,27 +19,55 @@
       "versions": [
         {
           "version": "0.3.6",
+          "buildVersion": "18",
           "date": "2026-10-15T02:44:38Z",
           "size": 38919279,
           "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.6/IW4.Pocket.ipa",
           "localizedDescription": "Tested on one phone (iPhone 13 Pro Max, about 3 GB for the app): the lobby and in-match bot rows work and mp_rust loads, but a match still ends when iOS closes the app for memory after a few minutes. This release does not fix that. It adds bots you can add in the lobby and during a match, an opti...",
-          "minOSVersion": "15.0"
+          "minOSVersion": "15.0",
+          "sha256": "e5dccf81423e6d4cb285ac766f8462101ce79d671712ba23e2544288dd2607bb"
+        }
+      ],
+      "releaseChannels": [
+        {
+          "track": "stable",
+          "releases": [
+            {
+              "version": "0.3.6",
+              "buildVersion": "18",
+              "date": "2026-10-15T02:44:38Z",
+              "size": 38919279,
+              "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.6/IW4.Pocket.ipa",
+              "localizedDescription": "Tested on one phone (iPhone 13 Pro Max, about 3 GB for the app): the lobby and in-match bot rows work and mp_rust loads, but a match still ends when iOS closes the app for memory after a few minutes. This release does not fix that. It adds bots you can add in the lobby and during a match, an opti...",
+              "minOSVersion": "15.0",
+              "sha256": "e5dccf81423e6d4cb285ac766f8462101ce79d671712ba23e2544288dd2607bb"
+            }
+          ]
         },
         {
-          "version": "0.3.7c",
-          "date": "2026-10-17T11:59:52Z",
-          "size": 38966283,
-          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.7c/IW4.Pocket.ipa",
-          "localizedDescription": "TEST VERSION - not checked on enough phones. Experimental prerelease. Not verified on a phone. Menu, bot names and options changes. It does not fix the memory crash: that is still unproven and the 0.3.7b log showed about the same footprint (~3067 MiB).",
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "0.3.7b",
-          "date": "2026-10-17T02:31:07Z",
-          "size": 38963383,
-          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.7b/IW4.Pocket.ipa",
-          "localizedDescription": "TEST VERSION - not checked on enough phones. Experimental prerelease. Not verified on a phone. This changes snapshot archive memory accounting; it is not a confirmed fix for iOS closing a match. No device memory saving or stability improvement has been measured yet.",
-          "minOSVersion": "15.0"
+          "track": "nightly",
+          "releases": [
+            {
+              "version": "0.3.7",
+              "buildVersion": "21",
+              "date": "2026-10-17T11:59:52Z",
+              "size": 38966283,
+              "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.7c/IW4.Pocket.ipa",
+              "localizedDescription": "TEST 0.3.7c — Experimental prerelease. Not verified on a phone. No confirmed fix for the memory crash. Experimental prerelease. Not verified on a phone. Menu, bot names and options changes. It does not fix the memory crash: that is still unproven and the 0.3.7b log showed about the same footprint (~3067 MiB).",
+              "minOSVersion": "15.0",
+              "sha256": "55b188fe470dcf4851dda099567bc5188effa675ac66227f8f32316433616562"
+            },
+            {
+              "version": "0.3.7",
+              "buildVersion": "20",
+              "date": "2026-10-17T02:31:07Z",
+              "size": 38963383,
+              "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.7b/IW4.Pocket.ipa",
+              "localizedDescription": "TEST 0.3.7b — Experimental prerelease. Not verified on a phone. No confirmed fix for the memory crash. Experimental prerelease. Not verified on a phone. This changes snapshot archive memory accounting; it is not a confirmed fix for iOS closing a match. No device memory saving or stability improvement has been measured yet.",
+              "minOSVersion": "15.0",
+              "sha256": "a16e1c4b41ed5805971f5a02d5b01742addb4e815e1508ef22fe077f1d184ea3"
+            }
+          ]
         }
       ]
     }
