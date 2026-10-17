@@ -39,12 +39,12 @@ A port of the open-source [IW4L](https://github.com/vladtrc/iw4L) engine to iOS.
 
 No coding needed. It takes about 15 minutes plus the file copy.
 
-1. **Get the game files.** You need your own copy of *Modern Warfare 2 (2009)* for **PC** (the Steam version). The folder must contain a subfolder named `zone`. This project does not provide or link to game files
+1. **Get the game files.** You need your own copy of *Modern Warfare 2 (2009)* for **PC** (the Steam version). The folder must contain **both** subfolders `zone` and `main` (`main` holds the `.iwd` files with the images, fonts and sounds; without it the menu is only blank boxes). This project does not provide or link to game files
 2. **Install SideStore** on your iPhone by following the [official guide](https://sidestore.io). It is the tool that installs apps like this one
 3. **Download the app:** [IW4.Pocket.ipa](https://github.com/MarkusSela/IW4-Pocket/releases/latest/download/IW4.Pocket.ipa) (or open the [release page](https://github.com/MarkusSela/IW4-Pocket/releases/latest))
 4. **Install it with SideStore** (tap **+**, pick the file). If you already have an older version, install **over** it: uninstalling deletes your game files
 5. **Open the app once**, then close it. This creates its folder
-6. **Copy your MW2 folder** into the Files app: *On My iPhone > IW4 Pocket > Games*. Any folder name works, as long as it contains `zone`
+6. **Copy your MW2 folder** into the Files app: *On My iPhone > IW4 Pocket > Games*. Any folder name works, as long as it contains `zone` and `main`
 7. **Pair a controller** in Bluetooth settings (PS4/DualShock 4 is verified), then open the app. The first load is slow and the screen can stay pink for a while
 
 ## 📱 Will it work on my device?

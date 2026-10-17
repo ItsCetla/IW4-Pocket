@@ -342,6 +342,12 @@ fn run_menu(
             primary_window: Some(Window {
                 title: "iw4l".into(),
                 resolution: (1280, 720).into(),
+                // iOS: open at the screen's size, not 1280x720 points
+                // (see ui::options::apply_window_settings).
+                #[cfg(target_os = "ios")]
+                mode: bevy::window::WindowMode::BorderlessFullscreen(
+                    bevy::window::MonitorSelection::Primary,
+                ),
                 ..default()
             }),
             ..default()
@@ -559,6 +565,10 @@ fn run_map(
                 },
                 resolution: (ACCEPTANCE_WIDTH, ACCEPTANCE_HEIGHT).into(),
                 present_mode,
+                #[cfg(target_os = "ios")]
+                mode: bevy::window::WindowMode::BorderlessFullscreen(
+                    bevy::window::MonitorSelection::Primary,
+                ),
                 ..default()
             }),
             ..default()

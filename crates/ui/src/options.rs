@@ -46,14 +46,25 @@ pub(crate) fn apply_window_settings(
     let Ok(mut window) = windows.single_mut() else {
         return;
     };
-    window
-        .resolution
-        .set_physical_resolution(settings.resolution.width, settings.resolution.height);
-    window.mode = if settings.fullscreen {
-        bevy::window::WindowMode::BorderlessFullscreen(MonitorSelection::Current)
-    } else {
-        bevy::window::WindowMode::Windowed
-    };
+    // iOS has no windowed mode. A windowed window gets the requested size in
+    // points, and 1280x720 points is larger than any iPhone screen, so the
+    // picture and the menus were cut off (issue #8). Always fill the screen
+    // and let winit report its size.
+    #[cfg(target_os = "ios")]
+    {
+        window.mode = bevy::window::WindowMode::BorderlessFullscreen(MonitorSelection::Primary);
+    }
+    #[cfg(not(target_os = "ios"))]
+    {
+        window
+            .resolution
+            .set_physical_resolution(settings.resolution.width, settings.resolution.height);
+        window.mode = if settings.fullscreen {
+            bevy::window::WindowMode::BorderlessFullscreen(MonitorSelection::Current)
+        } else {
+            bevy::window::WindowMode::Windowed
+        };
+    }
     window.present_mode = present_mode;
     *applied = Some(display);
 }
