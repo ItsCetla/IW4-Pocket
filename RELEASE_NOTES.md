@@ -1,22 +1,30 @@
-# IW4 Pocket 0.3.7b — build 20
+# IW4 Pocket 0.3.7c — build 21
 
-**Experimental prerelease. Not verified on a phone.** This changes snapshot archive memory accounting; it is not a confirmed fix for iOS closing a match. No device memory saving or stability improvement has been measured yet.
+**Experimental prerelease. Not verified on a phone.** Menu, bot names and options changes. It does not fix the memory crash: that is still unproven and the 0.3.7b log showed about the same footprint (~3067 MiB).
 
-## Snapshot archive
-- The authority archive now estimates owned snapshot memory recursively: inline structs, vector/string capacities, client metadata, HUD/configstrings, objectives, world/entity state, model and animation descriptors. These descriptors are not full copies of mesh or texture assets.
-- The archive retains at most 1,200 ticks and 32 MiB of **accounted payload and container capacity**. Allocator metadata/rounding are not measured; BTreeMap nodes use a conservative allowance. This is not a process-footprint cap.
-- Old frames are evicted before cloning a new snapshot. A single frame exceeding the budget is rejected rather than retained without a bound. Duplicate/old ticks are rejected before cloning. Clearing releases archive container capacity.
-- Killcam/spectator lookup continues to use the retained history. A heavier snapshot may shorten that history; requests older than it clamp to the oldest retained frame. This does not remove killcam or spectator support.
-- `frame_archive:` samples report frames, records, accounted/peak bytes, evictions, oversized rejections, retained duration and tick range, alongside the existing heap/footprint memory tag on iOS. Samples occur on the first accepted/new-tick submission, every 200 submissions (about 10 simulated seconds at 20 Hz), and before clearing. They are estimates, not allocator measurements.
+## IW4 Pocket options menu
+- Rows are spaced further apart and each description sits under its option, over two lines, saying what it does and what it costs.
+- Render scale now offers 0.4, 0.3 and 0.2 besides the earlier values (Auto/On/Off style, adjustable by hand). Lower values draw fewer pixels and use less GPU memory, and look blurrier. The saving is an estimate from pixel counts, not a measurement.
 
-## Private match and bots
-- Rust is preferred on the initial map selection when installed. If unavailable, the first installed IW4 map is used. An existing map choice is preserved.
-- The 60 existing bot names remain, with all 88 approved English nicknames added. Name order is randomized once per app session and remains stable across lobby refreshes and match loading; lobby and in-game bots share the order. If OS randomness fails, the original stable order is used and a warning is logged.
-- The game protocol allows 15 name bytes plus a NUL terminator. The pool retains the full approved names, but both lobby and game use the same ASCII prefix when necessary: `NoScopeNoBitches` → `NoScopeNoBitche`; `ColossalSkillIssue` → `ColossalSkillIs`.
+## Bots
+- Names are drawn again every time the number of bots changes (lobby add/remove); the same number keeps the same names. Lobby and match use the same order.
+- Joke clan tags (83) such as `[420]` are put in front of some names. A tag is added only if `[TAG]name` still fits the 15 bytes the protocol allows; the name itself is never cut or changed. Existing names are untouched.
 
-## Version and verification scope
-- Display/release label: **0.3.7b**; Cargo: `0.3.7-beta.1`; iOS numeric short version: `0.3.7`; bundle build: **20**.
-- Regression tests were added for recursive memory estimates, archive budgets/eviction/oversized frames/clear/lookup, and bot names/order. Source-contract checks are separate from compiled Rust tests; passing them does not prove device gameplay.
-- No allocator replacement, speculative asset unloading, or on-demand weapon loading is included. Existing touch controls and IW4 Pocket options are unchanged.
+## Menu and SideStore
+- Main menu: the release name is shown small in the bottom-right corner.
+- SideStore source: the newest stable release stays first, newer pre-releases are listed after it marked TEST, and older pre-releases and older stable releases are hidden.
 
-For phone verification, play for at least one simulated minute with bots, test death/killcam and return to the lobby, then send `iw4l-boot.log` (and `iw4l-boot.crash.log` if iOS closes the app). Archive telemetry must be correlated with heap and footprint before attributing memory pressure or claiming savings.
+## Diagnostics
+- `mem:` lines now include the memory outside the Rust heap (footprint minus reserved heap), to tell whether growth comes from graphics memory.
+
+## Fix
+- Test `nested_client_and_objective_strings_grow_the_estimate` compared against the wrong baseline; the assertion was corrected. The estimator itself is unchanged.
+
+## Not included
+- Weapons on demand: on Low the weapon cache is already 0 MiB (`IW4L_FPV_RETAIN_MIB=0`), so there is nothing proven to free.
+- No allocator replacement.
+
+## Version
+- Label **0.3.7c**; Cargo `0.3.7-beta.2`; bundle build **21**.
+
+Verification scope: Python source-contract checks, `sim` memory tests and the bot-name logic were run on the server. `bots`, `console` and `launcher` are compiled only by the iOS CI. Nothing here has been tried on a device.

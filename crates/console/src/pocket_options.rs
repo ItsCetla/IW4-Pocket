@@ -32,7 +32,16 @@ pub(crate) const OPTIONS: &[Opt] = &[
     Opt {
         dvar: "ui_pocket_scale",
         env: "IW4L_RENDER_SCALE",
-        map: &[("auto", None), ("0.5", Some("0.5")), ("0.67", Some("0.67")), ("0.75", Some("0.75")), ("0.85", Some("0.85"))],
+        map: &[
+            ("auto", None),
+            ("0.2", Some("0.2")),
+            ("0.3", Some("0.3")),
+            ("0.4", Some("0.4")),
+            ("0.5", Some("0.5")),
+            ("0.67", Some("0.67")),
+            ("0.75", Some("0.75")),
+            ("0.85", Some("0.85")),
+        ],
     },
     Opt {
         dvar: "ui_pocket_pace",
@@ -171,6 +180,10 @@ pub(crate) fn pocket_options_menu(
             state.current.push(shown);
         }
         dvars.set("ui_pocket_info", info_line());
+        let version = diag::memory_settings::app_version();
+        if !version.is_empty() {
+            dvars.set("ui_pocket_version", format!("IW4 Pocket {version}"));
+        }
     }
     for command in events.read() {
         if !matches!(command.name.as_str(), "set" | "seta") {

@@ -712,7 +712,7 @@ pub(crate) fn route(
     let bots_row = !state.public && party.in_lobby && party.is_host;
     if bots_row {
         let wanted = services.bots.as_ref().map_or(0, |b| b.0);
-        lobby_names.extend((0..wanted).map(|i| bots::lobby_bot_name(i).to_owned()));
+        lobby_names.extend(bots::lobby_bot_names(wanted).into_iter().map(str::to_owned));
         dvars.set(
             "ui_lobby_players",
             format!("PLAYERS: {} / 18", lobby_names.len()),

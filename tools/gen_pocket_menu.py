@@ -14,52 +14,53 @@ ctrl = json.load(open(f"{ROOT}/crates/ui/menus/controller.json"))[0]
 multi_t = ctrl["item_copies"][0]
 label_t = ctrl["item_copies"][1]
 
-# dvar, label, one-line description, [(shown, value)]
+# dvar, label, description (two short lines, shown under the row), [(shown, value)]
 OPTIONS = [
     ("ui_pocket_tier", "Device profile",
-     "Auto picks it from your memory.",
+     ("Memory preset for this phone.", "Auto picks it from the memory iOS gives the app."),
      [("Auto", "auto"), ("Low", "low"), ("Medium", "mid"), ("High", "high")]),
     ("ui_pocket_scale", "Render scale",
-     "Lower is faster and blurrier.",
-     [("Auto", "auto"), ("0.5", "0.5"), ("0.67", "0.67"), ("0.75", "0.75"), ("0.85", "0.85")]),
+     ("Game resolution. Lower is blurrier but faster.", "It frees only a little memory."),
+     [("Auto", "auto"), ("0.2", "0.2"), ("0.3", "0.3"), ("0.4", "0.4"), ("0.5", "0.5"),
+      ("0.67", "0.67"), ("0.75", "0.75"), ("0.85", "0.85")]),
     ("ui_pocket_pace", "Frame limit",
-     "Caps frames per second.",
+     ("Caps frames per second.", "Lower runs cooler and saves battery."),
      [("Auto", "auto"), ("30", "30"), ("40", "40"), ("60", "60")]),
     ("ui_pocket_texture", "Texture size",
-     "Smaller uses less memory.",
+     ("Largest texture size kept in memory.", "Smaller frees memory but looks softer."),
      [("Auto", "auto"), ("128", "128"), ("256", "256"), ("512", "512"), ("1024", "1024")]),
     ("ui_pocket_lean", "Lean shaders",
-     "Frees shader memory at load.",
+     ("Frees shader data once the map has loaded.", "Off uses much more memory."),
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
     ("ui_pocket_camo", "Weapon camo skins",
-     "Skip did not save memory.",
+     ("Skip removes camo skins from guns.", "In tests it did not save memory."),
      [("Auto", "auto"), ("Skip", "skip"), ("Keep", "keep")]),
     ("ui_pocket_latency", "Frames in flight",
-     "2 is smoother, uses more.",
+     ("Frames the phone prepares ahead.", "1 uses less memory, 2 is smoother."),
      [("Auto", "auto"), ("1", "1"), ("2", "2")]),
     ("ui_pocket_promotion", "120 Hz in matches",
-     "Smoother on 120 Hz phones.",
+     ("Asks for 120 Hz during matches on phones", "that support it. Off stays at 60 Hz."),
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
     ("ui_pocket_promodelay", "120 Hz delay (s)",
-     "Secs at 60 Hz before 120.",
+     ("Seconds at 60 Hz in a match", "before switching to 120 Hz."),
      [("Auto", "auto"), ("0", "0"), ("30", "30"), ("60", "60"), ("120", "120")]),
     ("ui_pocket_bc", "Compressed textures",
-     "Off uses more memory.",
+     ("Auto keeps textures compressed.", "Off uses a lot more memory; for tests only."),
      [("Auto", "auto"), ("Off", "off")]),
     ("ui_pocket_shadows", "Dynamic shadows",
-     "Auto: off if not supported.",
+     ("Auto turns them off if the phone cannot", "draw them. On forces them."),
      [("Auto", "auto"), ("Off", "off"), ("On", "on")]),
     ("ui_pocket_clip", "Replay clip buffer",
-     "Last 45 s for clips.",
+     ("Keeps the last 45 seconds for clips.", "Off frees that memory."),
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
     ("ui_pocket_touch", "On-screen controls",
-     "Auto: shown with no controller.",
+     ("Touch buttons on the screen. Auto shows", "them only when no controller is connected."),
      [("Auto", "auto"), ("On", "on"), ("Off", "off")]),
 ]
 
-
-DESC_X = 122      # where the grey description starts, after the longest name
-DESC_RIGHT = 74   # room kept free for the value on the right
+ROW = 36          # distance between two rows (it was 23: descriptions need room)
+FIRST_Y = 28
+DESC_DY = (15, 24)  # the two description lines sit under the row, right below its name
 
 
 def hexname(name):
@@ -71,7 +72,7 @@ def dyn(name):
 
 
 def option_rows(dvar, label, desc, choices, index):
-    y = 28 + 23 * index
+    y = FIRST_Y + ROW * index
     control = copy.deepcopy(multi_t)
     f = control["fields"]
     f["dvar"] = dvar
@@ -83,15 +84,19 @@ def option_rows(dvar, label, desc, choices, index):
     nf["text_key"] = label
     nf["name"] = f"{dvar}_label"
     nf["rect"] = {"x": 232, "y": y, "w": 344, "h": 20}
-    hint = copy.deepcopy(label_t)
-    hf = hint["fields"]
-    hf["text_key"] = desc
-    hf["name"] = f"{dvar}_desc"
-    hf["text_scale"] = 0.22
-    # Same row as the name, starting after it and stopping before the value on the right.
-    hf["rect"] = {"x": 232 + DESC_X, "y": y, "w": 344 - DESC_X - DESC_RIGHT, "h": 20}
-    hf["fore_color"] = [0.75, 0.75, 0.75, 1]
-    return [control, name, hint]
+    rows = [control, name]
+    # The description copies the name's alignment (right edge of the name), one line
+    # per item, under the row. It never shares a line with the name or the value.
+    for n, (line, dy) in enumerate(zip(desc, DESC_DY)):
+        hint = copy.deepcopy(label_t)
+        hf = hint["fields"]
+        hf["text_key"] = line
+        hf["name"] = f"{dvar}_desc{n}"
+        hf["text_scale"] = 0.21
+        hf["rect"] = {"x": 232, "y": y + dy, "w": 344, "h": 10}
+        hf["fore_color"] = [0.75, 0.75, 0.75, 1]
+        rows.append(hint)
+    return rows
 
 
 def dynamic_label(name, dvar, y, scale=0.25):
@@ -114,7 +119,7 @@ def page_menu(number, rows, first_index):
     copies = []
     for i, option in enumerate(rows):
         copies += option_rows(*option, i)
-    y_info = 28 + 23 * len(rows) + 4
+    y_info = FIRST_Y + ROW * len(rows) + 2
     copies.append(dynamic_label(f"pocket_info{number}", "ui_pocket_info", y_info))
     nxt = copy.deepcopy(multi_t)
     nf = nxt["fields"]

@@ -229,6 +229,9 @@ mod tests {
             .clients
             .push((ClientId(1), ClientSnapshotMeta::default()));
         let before = s.owned_bytes();
+        // A clone keeps no spare capacity, so it is compared with a clone made before
+        // the strings were added, not with the original's measurement.
+        let cloned_before = s.clone().owned_bytes();
         s.meta.clients[0]
             .1
             .client_dvars
@@ -240,7 +243,7 @@ mod tests {
         assert!(s.owned_bytes() >= before + 16384);
         let cloned = s.clone();
         assert_eq!(cloned, s);
-        assert!(cloned.owned_bytes() >= before + 16384);
+        assert!(cloned.owned_bytes() >= cloned_before + 16384);
     }
 
     #[test]

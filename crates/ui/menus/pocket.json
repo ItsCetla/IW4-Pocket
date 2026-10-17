@@ -183,15 +183,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Auto picks it from your memory.",
+     "text_key": "Memory preset for this phone.",
      "rect": {
-      "x": 354,
-      "y": 28,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 43,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_tier_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_tier_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Auto picks it from the memory iOS gives the app.",
+     "rect": {
+      "x": 232,
+      "y": 52,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_tier_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -210,6 +231,18 @@
       [
        "Auto",
        "auto"
+      ],
+      [
+       "0.2",
+       "0.2"
+      ],
+      [
+       "0.3",
+       "0.3"
+      ],
+      [
+       "0.4",
+       "0.4"
       ],
       [
        "0.5",
@@ -243,7 +276,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 51,
+      "y": 64,
       "w": 344,
       "h": 20
      },
@@ -283,7 +316,7 @@
      "text_key": "Render scale",
      "rect": {
       "x": 232,
-      "y": 51,
+      "y": 64,
       "w": 344,
       "h": 20
      },
@@ -295,15 +328,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Lower is faster and blurrier.",
+     "text_key": "Game resolution. Lower is blurrier but faster.",
      "rect": {
-      "x": 354,
-      "y": 51,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 79,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_scale_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_scale_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "It frees only a little memory.",
+     "rect": {
+      "x": 232,
+      "y": 88,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_scale_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -351,7 +405,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 74,
+      "y": 100,
       "w": 344,
       "h": 20
      },
@@ -391,7 +445,7 @@
      "text_key": "Frame limit",
      "rect": {
       "x": 232,
-      "y": 74,
+      "y": 100,
       "w": 344,
       "h": 20
      },
@@ -405,13 +459,34 @@
      "vis_exp": "1",
      "text_key": "Caps frames per second.",
      "rect": {
-      "x": 354,
-      "y": 74,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 115,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_pace_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_pace_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Lower runs cooler and saves battery.",
+     "rect": {
+      "x": 232,
+      "y": 124,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_pace_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -463,7 +538,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 97,
+      "y": 136,
       "w": 344,
       "h": 20
      },
@@ -503,7 +578,7 @@
      "text_key": "Texture size",
      "rect": {
       "x": 232,
-      "y": 97,
+      "y": 136,
       "w": 344,
       "h": 20
      },
@@ -515,15 +590,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Smaller uses less memory.",
+     "text_key": "Largest texture size kept in memory.",
      "rect": {
-      "x": 354,
-      "y": 97,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 151,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_texture_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_texture_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Smaller frees memory but looks softer.",
+     "rect": {
+      "x": 232,
+      "y": 160,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_texture_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -567,7 +663,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 120,
+      "y": 172,
       "w": 344,
       "h": 20
      },
@@ -607,7 +703,7 @@
      "text_key": "Lean shaders",
      "rect": {
       "x": 232,
-      "y": 120,
+      "y": 172,
       "w": 344,
       "h": 20
      },
@@ -619,15 +715,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Frees shader memory at load.",
+     "text_key": "Frees shader data once the map has loaded.",
      "rect": {
-      "x": 354,
-      "y": 120,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 187,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_lean_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_lean_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Off uses much more memory.",
+     "rect": {
+      "x": 232,
+      "y": 196,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_lean_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -671,7 +788,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 143,
+      "y": 208,
       "w": 344,
       "h": 20
      },
@@ -711,7 +828,7 @@
      "text_key": "Weapon camo skins",
      "rect": {
       "x": 232,
-      "y": 143,
+      "y": 208,
       "w": 344,
       "h": 20
      },
@@ -723,15 +840,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Skip did not save memory.",
+     "text_key": "Skip removes camo skins from guns.",
      "rect": {
-      "x": 354,
-      "y": 143,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 223,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_camo_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_camo_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "In tests it did not save memory.",
+     "rect": {
+      "x": 232,
+      "y": 232,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_camo_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -747,7 +885,7 @@
      "text_key": "",
      "rect": {
       "x": 232,
-      "y": 170,
+      "y": 246,
       "w": 344,
       "h": 20
      },
@@ -784,7 +922,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 192,
+      "y": 268,
       "w": 344,
       "h": 20
      },
@@ -839,7 +977,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 214,
+      "y": 290,
       "w": 344,
       "h": 20
      },
@@ -879,7 +1017,7 @@
      "text_key": "Report a problem on GitHub",
      "rect": {
       "x": 232,
-      "y": 214,
+      "y": 290,
       "w": 344,
       "h": 20
      },
@@ -894,7 +1032,7 @@
      "text_key": "",
      "rect": {
       "x": 232,
-      "y": 236,
+      "y": 312,
       "w": 344,
       "h": 20
      },
@@ -1091,15 +1229,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "2 is smoother, uses more.",
+     "text_key": "Frames the phone prepares ahead.",
      "rect": {
-      "x": 354,
-      "y": 28,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 43,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_latency_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_latency_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "1 uses less memory, 2 is smoother.",
+     "rect": {
+      "x": 232,
+      "y": 52,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_latency_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -1143,7 +1302,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 51,
+      "y": 64,
       "w": 344,
       "h": 20
      },
@@ -1183,7 +1342,7 @@
      "text_key": "120 Hz in matches",
      "rect": {
       "x": 232,
-      "y": 51,
+      "y": 64,
       "w": 344,
       "h": 20
      },
@@ -1195,15 +1354,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Smoother on 120 Hz phones.",
+     "text_key": "Asks for 120 Hz during matches on phones",
      "rect": {
-      "x": 354,
-      "y": 51,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 79,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_promotion_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_promotion_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "that support it. Off stays at 60 Hz.",
+     "rect": {
+      "x": 232,
+      "y": 88,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_promotion_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -1255,7 +1435,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 74,
+      "y": 100,
       "w": 344,
       "h": 20
      },
@@ -1295,7 +1475,7 @@
      "text_key": "120 Hz delay (s)",
      "rect": {
       "x": 232,
-      "y": 74,
+      "y": 100,
       "w": 344,
       "h": 20
      },
@@ -1307,15 +1487,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Secs at 60 Hz before 120.",
+     "text_key": "Seconds at 60 Hz in a match",
      "rect": {
-      "x": 354,
-      "y": 74,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 115,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_promodelay_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_promodelay_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "before switching to 120 Hz.",
+     "rect": {
+      "x": 232,
+      "y": 124,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_promodelay_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -1355,7 +1556,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 97,
+      "y": 136,
       "w": 344,
       "h": 20
      },
@@ -1395,7 +1596,7 @@
      "text_key": "Compressed textures",
      "rect": {
       "x": 232,
-      "y": 97,
+      "y": 136,
       "w": 344,
       "h": 20
      },
@@ -1407,15 +1608,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Off uses more memory.",
+     "text_key": "Auto keeps textures compressed.",
      "rect": {
-      "x": 354,
-      "y": 97,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 151,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_bc_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_bc_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Off uses a lot more memory; for tests only.",
+     "rect": {
+      "x": 232,
+      "y": 160,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_bc_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -1459,7 +1681,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 120,
+      "y": 172,
       "w": 344,
       "h": 20
      },
@@ -1499,7 +1721,7 @@
      "text_key": "Dynamic shadows",
      "rect": {
       "x": 232,
-      "y": 120,
+      "y": 172,
       "w": 344,
       "h": 20
      },
@@ -1511,15 +1733,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Auto: off if not supported.",
+     "text_key": "Auto turns them off if the phone cannot",
      "rect": {
-      "x": 354,
-      "y": 120,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 187,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_shadows_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_shadows_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "draw them. On forces them.",
+     "rect": {
+      "x": 232,
+      "y": 196,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_shadows_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -1563,7 +1806,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 143,
+      "y": 208,
       "w": 344,
       "h": 20
      },
@@ -1603,7 +1846,7 @@
      "text_key": "Replay clip buffer",
      "rect": {
       "x": 232,
-      "y": 143,
+      "y": 208,
       "w": 344,
       "h": 20
      },
@@ -1615,15 +1858,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Last 45 s for clips.",
+     "text_key": "Keeps the last 45 seconds for clips.",
      "rect": {
-      "x": 354,
-      "y": 143,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 223,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_clip_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_clip_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "Off frees that memory.",
+     "rect": {
+      "x": 232,
+      "y": 232,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_clip_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -1667,7 +1931,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 166,
+      "y": 244,
       "w": 344,
       "h": 20
      },
@@ -1707,7 +1971,7 @@
      "text_key": "On-screen controls",
      "rect": {
       "x": 232,
-      "y": 166,
+      "y": 244,
       "w": 344,
       "h": 20
      },
@@ -1719,15 +1983,36 @@
     "name": "video_display_mode_label",
     "fields": {
      "vis_exp": "1",
-     "text_key": "Auto: shown with no controller.",
+     "text_key": "Touch buttons on the screen. Auto shows",
      "rect": {
-      "x": 354,
-      "y": 166,
-      "w": 148,
-      "h": 20
+      "x": 232,
+      "y": 259,
+      "w": 344,
+      "h": 10
      },
-     "text_scale": 0.22,
-     "name": "ui_pocket_touch_desc",
+     "text_scale": 0.21,
+     "name": "ui_pocket_touch_desc0",
+     "fore_color": [
+      0.75,
+      0.75,
+      0.75,
+      1
+     ]
+    }
+   },
+   {
+    "name": "video_display_mode_label",
+    "fields": {
+     "vis_exp": "1",
+     "text_key": "them only when no controller is connected.",
+     "rect": {
+      "x": 232,
+      "y": 268,
+      "w": 344,
+      "h": 10
+     },
+     "text_scale": 0.21,
+     "name": "ui_pocket_touch_desc1",
      "fore_color": [
       0.75,
       0.75,
@@ -1743,7 +2028,7 @@
      "text_key": "",
      "rect": {
       "x": 232,
-      "y": 193,
+      "y": 282,
       "w": 344,
       "h": 20
      },
@@ -1780,7 +2065,7 @@
      ],
      "rect": {
       "x": 232,
-      "y": 215,
+      "y": 304,
       "w": 344,
       "h": 20
      },
@@ -1820,7 +2105,7 @@
      "text_key": "",
      "rect": {
       "x": 232,
-      "y": 237,
+      "y": 326,
       "w": 344,
       "h": 20
      },
