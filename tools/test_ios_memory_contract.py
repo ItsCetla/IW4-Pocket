@@ -16,7 +16,9 @@ class Contract(unittest.TestCase):
     def test_versions_agree(self):
         cargo = re.search(r'^version = "([^"]+)"$', text("crates/launcher/Cargo.toml"), re.M).group(1)
         plist = plistlib.loads((ROOT / "ios/Info.plist").read_bytes())
-        self.assertEqual(plist["CFBundleShortVersionString"], cargo)
+        self.assertEqual(plist["CFBundleShortVersionString"], cargo.split("-", 1)[0])
+        self.assertEqual(cargo, "0.3.7-beta.1")
+        self.assertEqual(plist["CFBundleVersion"], "20")
         self.assertEqual(plist["CFBundleIdentifier"], "com.markussela.iw4l")
         lock = re.search(r'name = "launcher"\nversion = "([^"]+)"', text("Cargo.lock"))
         self.assertIsNotNone(lock)

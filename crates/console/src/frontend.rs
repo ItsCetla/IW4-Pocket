@@ -234,7 +234,8 @@ pub(crate) fn route(
         }
     }
     if dvars.get("ui_mapname").is_none()
-        && let Some(map) = maps.maps().find(|map| map.starts_with("iw4:"))
+        && let Some(map) = maps.maps().find(|map| map.as_str() == "iw4:mp_rust")
+            .or_else(|| maps.maps().find(|map| map.starts_with("iw4:")))
     {
         dvars.set("ui_mapname", map.clone());
     }

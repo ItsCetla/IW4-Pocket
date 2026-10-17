@@ -1,20 +1,22 @@
-# IW4 Pocket 0.3.7
+# IW4 Pocket 0.3.7b — build 20
 
-**Not tested on a phone yet.** This build adds touch controls, a BOTS row in the Private Match menu, and more memory measurements. It does not fix the memory limit: on a phone with about 3 GB for the app, a match can still end when iOS closes the app. Please say what you see.
+**Experimental prerelease. Not verified on a phone.** This changes snapshot archive memory accounting; it is not a confirmed fix for iOS closing a match. No device memory saving or stability improvement has been measured yet.
 
-**On-screen controls**
-- Options -> IW4 Pocket options -> **On-screen controls**: Auto, On or Off. Auto shows them during a match when no controller is connected.
-- Left thumb: move stick (push it all the way forward to sprint). Drag anywhere on the right to look. Round buttons: FIRE, AIM, JUMP, RELOAD, CROUCH, FRAG, TACT, KNIFE, SWAP, BOARD and MENU.
-- They send keyboard and mouse input, not a fake controller, so no controller icons appear. The button positions are a first guess and may need moving: send a screenshot.
+## Snapshot archive
+- The authority archive now estimates owned snapshot memory recursively: inline structs, vector/string capacities, client metadata, HUD/configstrings, objectives, world/entity state, model and animation descriptors. These descriptors are not full copies of mesh or texture assets.
+- The archive retains at most 1,200 ticks and 32 MiB of **accounted payload and container capacity**. Allocator metadata/rounding are not measured; BTreeMap nodes use a conservative allowance. This is not a process-footprint cap.
+- Old frames are evicted before cloning a new snapshot. A single frame exceeding the budget is rejected rather than retained without a bound. Duplicate/old ticks are rejected before cloning. Clearing releases archive container capacity.
+- Killcam/spectator lookup continues to use the retained history. A heavier snapshot may shorten that history; requests older than it clamp to the oldest retained frame. This does not remove killcam or spectator support.
+- `frame_archive:` samples report frames, records, accounted/peak bytes, evictions, oversized rejections, retained duration and tick range, alongside the existing heap/footprint memory tag on iOS. Samples occur on the first accepted/new-tick submission, every 200 submissions (about 10 simulated seconds at 20 Hz), and before clearing. They are estimates, not allocator measurements.
 
-**Bots in the lobby**
-- Private Match menu: a **BOTS** row under GAME SETUP (host only). Tap to add one, 0 to 10. The bots are listed in the player list on the right. The earlier BOT and BOT COUNT rows inside Game Setup overlapped the original menu and are gone.
+## Private match and bots
+- Rust is preferred on the initial map selection when installed. If unavailable, the first installed IW4 map is used. An existing map choice is preserved.
+- The 60 existing bot names remain, with all 88 approved English nicknames added. Name order is randomized once per app session and remains stable across lobby refreshes and match loading; lobby and in-game bots share the order. If OS randomness fails, the original stable order is used and a warning is logged.
+- The game protocol allows 15 name bytes plus a NUL terminator. The pool retains the full approved names, but both lobby and game use the same ASCII prefix when necessary: `NoScopeNoBitches` → `NoScopeNoBitche`; `ColossalSkillIssue` → `ColossalSkillIs`.
 
-**Memory log (for finding what uses memory)**
-- The log now has `keep xmodel`, `keep xanim` and `keep weapon` rows: how much of the weapon growth is the models and animations they point to.
-- The spawn and killcam lines now end with the footprint and heap at that moment, so each life can be compared.
-- A small fix for muzzle flashes and effects that stopped after the first minutes with bots, and one that frees the last match's body animations before the next map loads. Neither is measured yet.
+## Version and verification scope
+- Display/release label: **0.3.7b**; Cargo: `0.3.7-beta.1`; iOS numeric short version: `0.3.7`; bundle build: **20**.
+- Regression tests were added for recursive memory estimates, archive budgets/eviction/oversized frames/clear/lookup, and bot names/order. Source-contract checks are separate from compiled Rust tests; passing them does not prove device gameplay.
+- No allocator replacement, speculative asset unloading, or on-demand weapon loading is included. Existing touch controls and IW4 Pocket options are unchanged.
 
-**Not in this release:** a different memory allocator (not tried on iOS), and weapons loaded on demand (the weapon rows will say where the memory is first).
-
-Please send `iw4l-boot.log` (and `iw4l-boot.crash.log` if the app closes) and say how you installed the app.
+For phone verification, play for at least one simulated minute with bots, test death/killcam and return to the lobby, then send `iw4l-boot.log` (and `iw4l-boot.crash.log` if iOS closes the app). Archive telemetry must be correlated with heap and footprint before attributing memory pressure or claiming savings.
