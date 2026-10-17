@@ -82,6 +82,14 @@
           "minOSVersion": "15.0"
         },
         {
+          "version": "0.3.7b",
+          "date": "2026-10-17T02:31:07Z",
+          "size": 38963383,
+          "downloadURL": "https://github.com/MarkusSela/IW4-Pocket/releases/download/v0.3.7b/IW4.Pocket.ipa",
+          "localizedDescription": "TEST VERSION - not checked on enough phones. Experimental prerelease. Not verified on a phone. This changes snapshot archive memory accounting; it is not a confirmed fix for iOS closing a match. No device memory saving or stability improvement has been measured yet.",
+          "minOSVersion": "15.0"
+        },
+        {
           "version": "0.3.7",
           "date": "2026-10-16T23:59:04Z",
           "size": 38959587,
